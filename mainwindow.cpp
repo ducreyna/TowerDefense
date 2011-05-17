@@ -173,24 +173,28 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
 {
     if(type == "EAU")
     {
+        S->removeItem(S->getPrecedent());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
     }
     else if(type == "PIERRE")
     {
+        S->removeItem(S->getPrecedent());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
     }
     else if(type == "PEINTURE")
     {
+        S->removeItem(S->getPrecedent());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
     }
     else
     {
+        S->removeItem(S->getPrecedent());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
@@ -201,18 +205,22 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
 {
     if(type == "EAU")
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->setData(0,type.c_str());
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue);
+        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
     }
     else if(type == "PIERRE")
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray)->setData(0,type.c_str());
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray);
+        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
     }
     else if(type == "PEINTURE")
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta)->setData(0,type.c_str());
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta);
+        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
     }
     else
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray)->setData(0,type.c_str());
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray);
+        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
     }
 }
