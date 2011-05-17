@@ -23,8 +23,8 @@ void MainWindow::ChargerGraphiques() {
 
     //--- CHARGEMENT DU TERRAIN ---
 
-    QPixmap herbe = QPixmap("/Users/nathan/Documents/TowerDefense/data/herbe.jpg");
-    QPixmap but = QPixmap("/Users/nathan/Documents/TowerDefense/data/but.png");
+    QPixmap herbe = QPixmap("data/herbe.jpg");
+    QPixmap but = QPixmap("data/but.png");
 
     S->setBackgroundBrush(herbe);
 
@@ -129,8 +129,8 @@ void MainWindow::ChargerGraphiques() {
 
 void MainWindow::on_loadMap_clicked()
 {
-    f.chargerCarte("/Users/nathan/Documents/TowerDefense/data/map.txt");
-    f.chargerVague("/Users/nathan/Documents/TowerDefense/data/waves.txt");
+    f.chargerCarte("data/map.txt");
+    f.chargerVague("data/waves.txt");
     carte = f.getCarte();
     vague = f.getVague();
     ChargerGraphiques();
