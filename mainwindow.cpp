@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent) :
     S = new MyQGraphicsScene(ui->terrain);
 
     QObject::connect(S,SIGNAL(ajouterTour(int,int,std::string)),this,SLOT(ajouterTour(int,int,std::string)));
+    QObject::connect(S,SIGNAL(tourMouseTracking(int,int,std::string)),this,SLOT(tourMouseTracking(int,int,std::string)));
 }
 
 MainWindow::~MainWindow() {
@@ -119,7 +120,7 @@ void MainWindow::ChargerGraphiques() {
             else // de l'herbe
             {
                 // on ajoute un item afin de respecter le quadrillage 16x16
-                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::transparent)->setData(0,"HERBE");
+                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
             }
         }
     }
@@ -142,26 +143,30 @@ void MainWindow::on_newWave_clicked()
 
 void MainWindow::on_waterTowers_clicked()
 {
+    ui->choice->setText("Vous avez choisi: ");
     S->setTourDemandee("EAU");
     ui->choice->setText(ui->choice->text()+"EAU");
 }
 
 void MainWindow::on_stoneTowers_clicked()
 {
+    ui->choice->setText("Vous avez choisi: ");
     S->setTourDemandee("PIERRE");
-    ui->choice->setText(ui->choice->text()+"EAU");
+    ui->choice->setText(ui->choice->text()+"PIERRE");
 }
 
 void MainWindow::on_paintTowers_clicked()
 {
+    ui->choice->setText("Vous avez choisi: ");
     S->setTourDemandee("PEINTURE");
-    ui->choice->setText(ui->choice->text()+"EAU");
+    ui->choice->setText(ui->choice->text()+"PEINTURE");
 }
 
 void MainWindow::on_petanqueTowers_clicked()
 {
+    ui->choice->setText("Vous avez choisi: ");
     S->setTourDemandee("PETANQUE");
-    ui->choice->setText(ui->choice->text()+"EAU");
+    ui->choice->setText(ui->choice->text()+"PETANQUE");
 }
 
 void MainWindow::ajouterTour(int x, int y, std::string type)
@@ -170,20 +175,44 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     {
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->setData(0,type.c_str());
         S->setTourDemandee("");
+        ui->choice->setText("Vous avez choisi: ");
     }
     else if(type == "PIERRE")
     {
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray)->setData(0,type.c_str());
         S->setTourDemandee("");
+        ui->choice->setText("Vous avez choisi: ");
     }
     else if(type == "PEINTURE")
     {
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta)->setData(0,type.c_str());
         S->setTourDemandee("");
+        ui->choice->setText("Vous avez choisi: ");
     }
     else
     {
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray)->setData(0,type.c_str());
         S->setTourDemandee("");
+        ui->choice->setText("Vous avez choisi: ");
+    }
+}
+
+void MainWindow::tourMouseTracking(int x, int y,std::string type)
+{
+    if(type == "EAU")
+    {
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->setData(0,type.c_str());
+    }
+    else if(type == "PIERRE")
+    {
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray)->setData(0,type.c_str());
+    }
+    else if(type == "PEINTURE")
+    {
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta)->setData(0,type.c_str());
+    }
+    else
+    {
+        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray)->setData(0,type.c_str());
     }
 }
