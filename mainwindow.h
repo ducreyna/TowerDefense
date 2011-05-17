@@ -45,6 +45,7 @@ private slots:
 
 public slots:
     void ajouterTour(int x, int y, std::string type);
+    void tourMouseTracking(int x, int y,std::string type);
 
 };
 
