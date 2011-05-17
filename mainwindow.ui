@@ -88,7 +88,7 @@
       <rect>
        <x>120</x>
        <y>90</y>
-       <width>71</width>
+       <width>91</width>
        <height>23</height>
       </rect>
      </property>
@@ -96,17 +96,30 @@
       <string>Vendre</string>
      </property>
     </widget>
-    <widget class="QLabel" name="labelCaracteristics">
+    <widget class="QLabel" name="type">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>20</y>
-       <width>161</width>
-       <height>61</height>
+       <y>30</y>
+       <width>171</width>
+       <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Type: X, Lvl : Y, Range: Z</string>
+      <string>Type: </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="level">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>60</y>
+       <width>181</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Niveau: </string>
      </property>
     </widget>
    </widget>
@@ -177,9 +190,9 @@
     <widget class="QLabel" name="choice">
      <property name="geometry">
       <rect>
-       <x>31</x>
+       <x>10</x>
        <y>120</y>
-       <width>161</width>
+       <width>211</width>
        <height>20</height>
       </rect>
      </property>
