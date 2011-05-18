@@ -5,6 +5,7 @@
 #include <QGraphicsView>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsItem>
+#include <QList>
 
 #include <iostream>
 

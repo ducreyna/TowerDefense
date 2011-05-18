@@ -14,19 +14,31 @@ void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(tourDemandee == "EAU")
     {
-        emit ajouterTour(x,y,"EAU");
+        removeItem(getPrecedent());
+        removeItem(getPrecedent2());
+        I = itemAt(x,y);
+        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"EAU");
     }
     else if(tourDemandee == "PIERRE")
     {
-        emit ajouterTour(x,y,"PIERRE");
+        removeItem(getPrecedent());
+        removeItem(getPrecedent2());
+        I = itemAt(x,y);
+        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"PIERRE");
     }
     else if(tourDemandee == "PEINTURE")
     {
-        emit ajouterTour(x,y,"PEINTURE");
+        removeItem(getPrecedent());
+        removeItem(getPrecedent2());
+        I = itemAt(x,y);
+        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"PEINTURE");
     }
     else if(tourDemandee == "PETANQUE")
     {
-        emit ajouterTour(x,y,"PETANQUE");
+        removeItem(getPrecedent());
+        removeItem(getPrecedent2());
+        I = itemAt(x,y);
+        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"PETANQUE");
     }
 
      if(I->data(0).toString() == "EAU" || I->data(0).toString() == "PIERRE" || I->data(0).toString() == "PEINTURE" || I->data(0).toString() == "PETANQUE")
