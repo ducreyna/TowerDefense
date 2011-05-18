@@ -10,7 +10,10 @@ SOURCES += \
     mainwindow.cpp \
     myqgraphicsscene.cpp \
     defense.cpp \
-    eau.cpp
+    eau.cpp \
+    pierre.cpp \
+    peinture.cpp \
+    petanque.cpp
 
 HEADERS += \
     fichier.h \
@@ -22,7 +25,10 @@ HEADERS += \
     mainwindow.h \
     myqgraphicsscene.h \
     defense.h \
-    eau.h
+    eau.h \
+    pierre.h \
+    peinture.h \
+    petanque.h
 
 FORMS += \
     mainwindow.ui
