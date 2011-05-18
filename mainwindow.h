@@ -12,6 +12,7 @@
 #include "fichier.h"
 #include "fourmi.h"
 #include "myqgraphicsscene.h"
+#include "eau.h"
 
 using namespace TOWERDEFENSE;
 

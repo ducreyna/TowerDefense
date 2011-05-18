@@ -158,7 +158,7 @@ void MainWindow::ChargerGraphiques() {
             else // de l'herbe
             {
                 // on ajoute un item afin de respecter le quadrillage 16x16
-                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::transparent)->setData(0,"HERBE");
+                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
             }
         }
     }
@@ -209,9 +209,10 @@ void MainWindow::on_petanqueTowers_clicked()
 
 void MainWindow::ajouterTour(int x, int y, std::string type)
 {
-    if(type == "EAU")
+    /*if(type == "EAU")
     {
         S->removeItem(S->getPrecedent());
+        S->removeItem(S->getPrecedent2());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
@@ -219,6 +220,7 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     else if(type == "PIERRE")
     {
         S->removeItem(S->getPrecedent());
+        S->removeItem(S->getPrecedent2());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
@@ -226,6 +228,7 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     else if(type == "PEINTURE")
     {
         S->removeItem(S->getPrecedent());
+        S->removeItem(S->getPrecedent2());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
@@ -233,32 +236,73 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     else
     {
         S->removeItem(S->getPrecedent());
+        S->removeItem(S->getPrecedent2());
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray)->setData(0,type.c_str());
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
-    }
+    }*/
 }
 
 void MainWindow::tourMouseTracking(int x, int y,std::string type)
 {
     if(type == "EAU")
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue);
-        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
+        Eau *e = new Eau(1,(x/32)*32,(y/32)*32,0);
+        S->addItem(e);
+        //S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue);
+        //QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
+        //S->addEllipse((x/32)*32-2*32/2,(y/32)*32-2*32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
+
+        //S->addEllipse((x/32)*32-2*32/2,(y/32)*32-2*32/2,32*3,32*3,QPen(Qt::white),Qt::transparent)->setData(0,"HERBE");
+        //QGraphicsItem *I = S->itemAt((x/32)*32+2*32/2,(y/32)*32+2*32/2);
+        //QCursor c = S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->cursor();
+
+        //S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue);
+        //QGraphicsEllipseItem *e = new QGraphicsEllipseItem(x,y,32,32);
+        //e->setBrush(Qt::blue);
+        //ui->terrain->setCursor(e->cursor());
+        //if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
+        //{
+            //ui->terrain->setCursor(Qt::ArrowCursor);
+            //S->removeItem(S->getPrecedent());
+            //S->removeItem(S->getPrecedent2());
+        //}
+        //S->setPrecedent2(I);
     }
     else if(type == "PIERRE")
     {
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray);
-        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
+        QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
+        S->addEllipse((x/32)*32-32/2,(y/32)*32-32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
+        if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
+        {
+            S->removeItem(S->getPrecedent());
+            S->removeItem(S->getPrecedent2());
+        }
+        S->setPrecedent2(I);
     }
     else if(type == "PEINTURE")
     {
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta);
-        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
+        QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
+        S->addEllipse((x/32)*32-32/2,(y/32)*32-32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
+        if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
+        {
+            S->removeItem(S->getPrecedent());
+            S->removeItem(S->getPrecedent2());
+        }
+        S->setPrecedent2(I);
     }
     else
     {
         S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray);
-        if(S->getPrecedent() != 0) S->removeItem(S->getPrecedent());
+        QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
+        S->addEllipse((x/32)*32-32/2,(y/32)*32-32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
+        if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
+        {
+            S->removeItem(S->getPrecedent());
+            S->removeItem(S->getPrecedent2());
+        }
+        S->setPrecedent2(I);
     }
 }
