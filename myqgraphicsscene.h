@@ -15,6 +15,7 @@ class MyQGraphicsScene : public QGraphicsScene
 private:
     std::string tourDemandee;
     QGraphicsItem *precedent;
+    QGraphicsItem *precedent2;
 
 public:
     // Constructeur
@@ -32,9 +33,14 @@ public:
       */
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent );
 
+    void removeItem(QGraphicsItem *item);
+
     void setTourDemandee(std::string tour);
 
     QGraphicsItem* getPrecedent()const;
+    QGraphicsItem* getPrecedent2()const;
+
+    void setPrecedent2(QGraphicsItem* I);
 
 signals:
     void ajouterTour(int x, int y, std::string type);

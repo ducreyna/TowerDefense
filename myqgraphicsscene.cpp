@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-MyQGraphicsScene::MyQGraphicsScene(QGraphicsView *parent):QGraphicsScene(parent),tourDemandee(""),precedent(0)
+MyQGraphicsScene::MyQGraphicsScene(QGraphicsView *parent):QGraphicsScene(parent),tourDemandee(""),precedent(0),precedent2(0)
 {}
 
 void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -34,6 +34,7 @@ void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         removeItem(I);
     }
      precedent = 0;
+     precedent2 = 0;
 }
 
 void MyQGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -68,9 +69,21 @@ void MyQGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
     }
 }
 
+void MyQGraphicsScene::removeItem(QGraphicsItem *item)
+{
+    QGraphicsScene::removeItem(item);
+    delete item;
+}
+
 void MyQGraphicsScene::setTourDemandee(std::string tour)
 {
     tourDemandee = tour;
 }
 
 QGraphicsItem* MyQGraphicsScene::getPrecedent()const { return precedent;}
+QGraphicsItem* MyQGraphicsScene::getPrecedent2()const { return precedent2;}
+
+void MyQGraphicsScene::setPrecedent2(QGraphicsItem *I)
+{
+    precedent2 = I;
+}
