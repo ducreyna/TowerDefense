@@ -13,6 +13,9 @@
 #include "fourmi.h"
 #include "myqgraphicsscene.h"
 #include "eau.h"
+#include "pierre.h"
+#include "peinture.h"
+#include "petanque.h"
 
 using namespace TOWERDEFENSE;
 

@@ -209,38 +209,34 @@ void MainWindow::on_petanqueTowers_clicked()
 
 void MainWindow::ajouterTour(int x, int y, std::string type)
 {
-    /*if(type == "EAU")
+    if(type == "EAU")
     {
-        S->removeItem(S->getPrecedent());
-        S->removeItem(S->getPrecedent2());
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->setData(0,type.c_str());
+        Eau *e = new Eau(1,(x/32)*32,(y/32)*32,0);
+        S->addItem(e);
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
     }
     else if(type == "PIERRE")
     {
-        S->removeItem(S->getPrecedent());
-        S->removeItem(S->getPrecedent2());
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray)->setData(0,type.c_str());
+        Pierre *p = new Pierre(1,(x/32)*32,(y/32)*32,0);
+        S->addItem(p);
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
     }
     else if(type == "PEINTURE")
     {
-        S->removeItem(S->getPrecedent());
-        S->removeItem(S->getPrecedent2());
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta)->setData(0,type.c_str());
+        Peinture *p = new Peinture(1,(x/32)*32,(y/32)*32,0);
+        S->addItem(p);
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
     }
     else
     {
-        S->removeItem(S->getPrecedent());
-        S->removeItem(S->getPrecedent2());
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray)->setData(0,type.c_str());
+        Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
+        S->addItem(p);
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
-    }*/
+    }
 }
 
 void MainWindow::tourMouseTracking(int x, int y,std::string type)
@@ -248,32 +244,24 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
     if(type == "EAU")
     {
         Eau *e = new Eau(1,(x/32)*32,(y/32)*32,0);
+        QGraphicsItem *I = S->addEllipse((x/32)*32-(e->getPortee()-1)*32/2,(y/32)*32-(e->getPortee()-1)*32/2,32*e->getPortee(),32*e->getPortee(),QPen(Qt::white),Qt::transparent);
+        I->setData(0,"HERBE");
         S->addItem(e);
-        //S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue);
-        //QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
-        //S->addEllipse((x/32)*32-2*32/2,(y/32)*32-2*32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
 
-        //S->addEllipse((x/32)*32-2*32/2,(y/32)*32-2*32/2,32*3,32*3,QPen(Qt::white),Qt::transparent)->setData(0,"HERBE");
-        //QGraphicsItem *I = S->itemAt((x/32)*32+2*32/2,(y/32)*32+2*32/2);
-        //QCursor c = S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue)->cursor();
-
-        //S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::blue);
-        //QGraphicsEllipseItem *e = new QGraphicsEllipseItem(x,y,32,32);
-        //e->setBrush(Qt::blue);
-        //ui->terrain->setCursor(e->cursor());
-        //if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
-        //{
-            //ui->terrain->setCursor(Qt::ArrowCursor);
-            //S->removeItem(S->getPrecedent());
-            //S->removeItem(S->getPrecedent2());
-        //}
-        //S->setPrecedent2(I);
+        if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
+        {
+            S->removeItem(S->getPrecedent());
+            S->removeItem(S->getPrecedent2());
+        }
+        S->setPrecedent2(I);
     }
     else if(type == "PIERRE")
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::lightGray);
-        QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
-        S->addEllipse((x/32)*32-32/2,(y/32)*32-32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
+        Pierre *p = new Pierre(1,(x/32)*32,(y/32)*32,0);
+        QGraphicsItem *I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
+        I->setData(0,"HERBE");
+        S->addItem(p);
+
         if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
         {
             S->removeItem(S->getPrecedent());
@@ -283,9 +271,12 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
     }
     else if(type == "PEINTURE")
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::magenta);
-        QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
-        S->addEllipse((x/32)*32-32/2,(y/32)*32-32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
+        Peinture *p = new Peinture(1,(x/32)*32,(y/32)*32,0);
+        std::cout << p->getPortee() << std::endl;
+        QGraphicsItem *I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
+        I->setData(0,"HERBE");
+        S->addItem(p);
+
         if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
         {
             S->removeItem(S->getPrecedent());
@@ -295,9 +286,12 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
     }
     else
     {
-        S->addEllipse((x/32)*32,(y/32)*32,32,32,QPen(Qt::transparent),Qt::darkGray);
-        QGraphicsItem *I = S->itemAt((x/32)*32+16,(y/32)*32+16);
-        S->addEllipse((x/32)*32-32/2,(y/32)*32-32/2,32*3,32*3,QPen(Qt::white),Qt::transparent);
+        Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
+        std::cout << p->getPortee() << std::endl;
+        QGraphicsItem *I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
+        I->setData(0,"HERBE");
+        S->addItem(p);
+
         if(S->getPrecedent() != 0 && S->getPrecedent2() != 0)
         {
             S->removeItem(S->getPrecedent());
