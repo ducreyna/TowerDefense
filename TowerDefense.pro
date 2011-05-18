@@ -28,7 +28,8 @@ HEADERS += \
     eau.h \
     pierre.h \
     peinture.h \
-    petanque.h
+    petanque.h \
+    constantes.h
 
 FORMS += \
     mainwindow.ui
