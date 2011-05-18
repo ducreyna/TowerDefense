@@ -9,7 +9,7 @@ class Pierre : public Defense
 {
 public:
     Pierre();
-    Pierre(const int niveau);
+    Pierre(const int niveau,const int x,const int y,QGraphicsItem *parent=0);
 
     double attaquer();
     void ameliorer();

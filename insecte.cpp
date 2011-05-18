@@ -4,7 +4,7 @@ namespace TOWERDEFENSE{
 
 Insecte::Insecte(){}
 
-Insecte::Insecte(const int taille, const int vitalite, const int resistance, const int vitesse, const Type_deplacement deplacement):taille(taille),vitalite(vitalite),resistance(resistance),vitesse(vitesse),deplacement(deplacement){
+Insecte::Insecte(const int taille, const int vitalite, const int resistance, const int vitesse, const Type_deplacement deplacement, QGraphicsItem *parent):QGraphicsItem(parent),taille(taille),vitalite(vitalite),resistance(resistance),vitesse(vitesse),deplacement(deplacement){
 }
 
 void Insecte::setDeplacement(Type_deplacement deplacement){

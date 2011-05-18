@@ -6,7 +6,7 @@ Peinture::Peinture()
 {
 }
 
-Peinture::Peinture(const int niveau):Defense(niveau,4+niveau/2,2,4*pow(niveau,1.5),25,60,30,VIDE,PEINTURE)
+Peinture::Peinture(const int niveau,const int x,const int y,QGraphicsItem *parent):Defense(niveau,4+niveau/2,2,4*pow(niveau,1.5),25,60,30,parent,VIDE,PEINTURE)
 {
 
 }

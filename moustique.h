@@ -9,7 +9,7 @@ class Moustique : public Insecte
 {
 public:
     Moustique();
-    Moustique(const int taille);
+    Moustique(const int taille,const int x, const int y, QGraphicsItem *parent=0);
 
     /*!
       * Methode permettant de traiter les degats recus par un moustique
@@ -26,6 +26,9 @@ public:
       * Methode permettant le passage du deplacement de type RAMPANT vers VOLANT
       */
     void toVolant();
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 }
 

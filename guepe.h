@@ -9,7 +9,7 @@ class Guepe: public Insecte
 {
 public:
     Guepe();
-    Guepe(const int taille);
+    Guepe(const int taille,const int x, const int y, QGraphicsItem *parent=0);
 
     /*!
       * Methode permettant de traiter les degats recus par une guepe
@@ -22,6 +22,9 @@ public:
      * \return double les degats causes
      */
     double degatsCauses();
+
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 };
 }
 

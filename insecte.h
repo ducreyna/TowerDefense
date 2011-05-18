@@ -1,13 +1,16 @@
 #ifndef INSECTE_H
 #define INSECTE_H
 
+#include <QGraphicsItem>
+#include <QPainter>
+
 #include "math.h"
+
+#include <constantes.h>
 
 namespace TOWERDEFENSE{
 
-enum Type_deplacement {RAMPANT,VOLANT};
-
-class Insecte
+class Insecte : public QGraphicsItem
 {
 protected:
     int taille;
@@ -18,7 +21,7 @@ protected:
 
 public:
     Insecte();
-    Insecte(const int taille, const int vitalite, const int resistance, const int vitesse, const Type_deplacement deplacement);
+    Insecte(const int taille, const int vitalite, const int resistance, const int vitesse, const Type_deplacement deplacement,QGraphicsItem *parent=0);
 
     /*!
       * Accesseur modifiant l'attribut vitalite
