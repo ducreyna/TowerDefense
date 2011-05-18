@@ -23,10 +23,19 @@ void MainWindow::ChargerGraphiques() {
 
     //--- CHARGEMENT DU TERRAIN ---
 
+    QPixmap cheminHorizontal("data/Chemin/cheminHorizontal.jpg");
+    QPixmap cheminVertical("data/Chemin/cheminVertical.jpg");
+    QPixmap coinBD("data/Chemin/coinBD.jpg");
+    QPixmap coinBG("data/Chemin/coinBG.jpg");
+    QPixmap coinHD("data/Chemin/coinHD.jpg");
+    QPixmap coinHG("data/Chemin/coinHG.jpg");
     QPixmap herbe = QPixmap("data/herbe.jpg");
     QPixmap but = QPixmap("data/but.png");
+    QPixmap boue = QPixmap("data/Chemin/boue.jpg");
 
     S->setBackgroundBrush(herbe);
+
+    QGraphicsPixmapItem *I;
 
     for(int i=0;i<16;++i){
         for(int j=0;j<16;++j){
@@ -34,35 +43,61 @@ void MainWindow::ChargerGraphiques() {
             {
                 if(carte[i][j] == 1)      // vers le NORD
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD");
+                    I = S->addPixmap(cheminVertical);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"NORD");
                 }
                 else if(carte[i][j] == 2)   // vers le SUD
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD");
+                    I = S->addPixmap(cheminVertical);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"SUD");
                 }
                 else if(carte[i][j] == 4)   // vers l'EST
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"EST");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"EST");
+                    I = S->addPixmap(cheminHorizontal);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"EST");
                 }
                 else if(carte[i][j] == 8)   // vers l'OUEST
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"OUEST");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"OUEST");
+                    I = S->addPixmap(cheminHorizontal);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"OUEST");
                 }
                 else if(carte[i][j] == 5)   // vers le Nord EST
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD_EST");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD_EST");
+                    I = S->addPixmap(coinBD);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"NORD_EST");
                 }
                 else if(carte[i][j] == 6)   // vers le Sud EST
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD_EST");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD_EST");
+                    if(carte[i-1][j] != 2) I = S->addPixmap(coinHD);
+                    else I = S->addPixmap(coinBG);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"SUD_EST");
                 }
                 else if(carte[i][j] == 9)   // vers le Nord OUEST
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD_OUEST");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD_OUEST");
+                    I = S->addPixmap(coinBG);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"NORD_OUEST");
                 }
                 else if(carte[i][j] == 10)  // vers le Sud OUEST
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD_OUEST");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD_OUEST");
+                    if(carte[i-1][j] != 2) I = S->addPixmap(coinHG);
+                    else I = S->addPixmap(coinBD);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"SUD_OUEST");
                 }
 
                         // TRAITER LES DIFFERENTS DEPARTS
@@ -114,13 +149,16 @@ void MainWindow::ChargerGraphiques() {
                 }
                 else if(carte[i][j] == 64) // la boue
                 {
-                    S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::darkGreen)->setData(0,"BOUE");
+                    //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::darkGreen)->setData(0,"BOUE");
+                    I = S->addPixmap(boue);
+                    I->setPos(j*32,i*32);
+                    I->setData(0,"BOUE");
                 }
             }
             else // de l'herbe
             {
                 // on ajoute un item afin de respecter le quadrillage 16x16
-                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
+                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::transparent)->setData(0,"HERBE");
             }
         }
     }
@@ -138,7 +176,7 @@ void MainWindow::on_loadMap_clicked()
 
 void MainWindow::on_newWave_clicked()
 {
-    std::cout << S->itemAt(2*32,3*32) << std::endl;
+
 }
 
 void MainWindow::on_waterTowers_clicked()
