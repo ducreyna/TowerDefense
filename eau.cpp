@@ -14,6 +14,9 @@ double Eau::attaquer()
 void Eau::ameliorer()
 {
     niveau++;
+    portee = 3 + niveau/2;
+    cadence = 4 - niveau/2;
+    frappe = 5 * pow(niveau,1.5);
 }
 
 }
