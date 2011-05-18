@@ -29,6 +29,8 @@ public:
 
     virtual double attaquer() = 0;
     virtual void ameliorer() = 0;
+
+    double getPortee()const;
 };
 }
 

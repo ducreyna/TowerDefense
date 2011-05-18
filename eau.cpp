@@ -6,6 +6,7 @@ Eau::Eau(const int niveau,const int x, const int y,QGraphicsItem *parent):Defens
 {
     setX(x);
     setY(y);
+    setData(0,"EAU");
 }
 
 double Eau::attaquer()
@@ -31,9 +32,6 @@ void Eau::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     painter->setPen(QPen(Qt::NoPen));
     painter->setBrush(Qt::blue);
     painter->drawEllipse(0,0,32,32);
-    //painter->setPen(QPen(Qt::white));
-    //painter->setBrush(Qt::transparent);
-    //painter->drawEllipse(0,0,64,64);
 }
 
 }
