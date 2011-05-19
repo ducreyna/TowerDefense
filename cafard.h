@@ -6,19 +6,19 @@
 namespace TOWERDEFENSE{
 
 class Cafard : public Insecte
-{
+{   
 public:
     Cafard();
-    Cafard(const int taille,const int x, const int y, QGraphicsItem *parent=0);
+    Cafard(const double taille,const int x, const int y, QGraphicsPixmapItem *parent=0);
 
     /*!
       * Methode permettant de traiter les degats recus par un cafard
       * \param degats les degats subis par l'attaque
       */
-    void recevoirDegats(int degats);
+    void recevoirDegats(double degats);
 
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+protected:
+    void advance(int phase);
 };
 }
 

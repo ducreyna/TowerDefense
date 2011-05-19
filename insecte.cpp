@@ -4,23 +4,31 @@ namespace TOWERDEFENSE{
 
 Insecte::Insecte(){}
 
-Insecte::Insecte(const int taille, const int vitalite, const int resistance, const int vitesse, const Type_deplacement deplacement, QGraphicsItem *parent):QGraphicsItem(parent),taille(taille),vitalite(vitalite),resistance(resistance),vitesse(vitesse),deplacement(deplacement){
+Insecte::Insecte(const double taille, const double vitalite, const double resistance, const double vitesse, const Type_deplacement deplacement, QGraphicsPixmapItem *parent):QGraphicsPixmapItem(parent),taille(taille),vitalite(vitalite),resistance(resistance),vitesse(vitesse),deplacement(deplacement){
 }
 
 void Insecte::setDeplacement(Type_deplacement deplacement){
     this->deplacement = deplacement;
 }
 
-void Insecte::setResistance(int resistance){
+void Insecte::setResistance(double resistance){
     this->resistance = resistance;
 }
 
-void Insecte::setVitalite(int vitalite){
+void Insecte::setVitalite(double vitalite){
     this->vitalite = vitalite;
 }
 
-void Insecte::setVitesse(int vitesse){
+void Insecte::setVitesse(double vitesse){
     this->vitesse = vitesse;
+}
+
+void Insecte::increaseAnimationStep() {
+
+    // Avance à la frame suivante de l'animation
+    animState++;
+    if(animState >= animPixmap.size())
+        animState = 0;
 }
 
 }

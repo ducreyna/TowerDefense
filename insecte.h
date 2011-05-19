@@ -1,8 +1,11 @@
 #ifndef INSECTE_H
 #define INSECTE_H
 
-#include <QGraphicsItem>
-#include <QPainter>
+#include <QGraphicsPixmapItem>
+#include <Qlist>
+#include <QString>
+
+#include <iostream>
 
 #include "math.h"
 
@@ -10,36 +13,39 @@
 
 namespace TOWERDEFENSE{
 
-class Insecte : public QGraphicsItem
+class Insecte : public QGraphicsPixmapItem
 {
 protected:
-    int taille;
-    int vitalite;
-    int resistance;
-    int vitesse;
+    double taille;
+    double vitalite;
+    double resistance;
+    double vitesse;
     Type_deplacement deplacement;
+
+    QList<QPixmap*> animPixmap;
+    int animState;
 
 public:
     Insecte();
-    Insecte(const int taille, const int vitalite, const int resistance, const int vitesse, const Type_deplacement deplacement,QGraphicsItem *parent=0);
+    Insecte(const double taille, const double vitalite, const double resistance, const double vitesse, const Type_deplacement deplacement,QGraphicsPixmapItem *parent=0);
 
     /*!
       * Accesseur modifiant l'attribut vitalite
       * \param vitalite la nouvelle vitalite de l'insecte
       */
-    void setVitalite(int vitalite);
+    void setVitalite(double vitalite);
 
     /*!
      * Accesseur modifiant l'attribut resistance
      *\param resistance la nouvelle resistante de l'insecte
      */
-    void setResistance(int resistance);
+    void setResistance(double resistance);
 
     /*!
       * Accesseur modifiant l'attribut vitesse
       * \param vitesse la nouvelle vitesse de l'insecte
       */
-    void setVitesse(int vitesse);
+    void setVitesse(double vitesse);
 
     /*!
       * Accesseur modifiant l'attribut deplacement
@@ -51,7 +57,9 @@ public:
       * Methode virtuelle pure permettant de traiter les degats recus par un insecte
       * \param degats les degats subis par l'attaque
       */
-    virtual void recevoirDegats(int degats) = 0;
+    virtual void recevoirDegats(double degats) = 0;
+
+    void increaseAnimationStep();
 };
 }
 

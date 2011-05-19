@@ -4,23 +4,46 @@ namespace TOWERDEFENSE{
 
 Cafard::Cafard(){}
 
-Cafard::Cafard(const int taille,const int x, const int y, QGraphicsItem *parent):Insecte(taille,10*pow(taille,2),5*pow(taille,2),2,RAMPANT,parent)
+Cafard::Cafard(const double taille,const int x, const int y, QGraphicsPixmapItem *parent):Insecte(taille,10*pow(taille,2),5*pow(taille,2),2,RAMPANT,parent)
 {
-    setX(x);
-    setY(y);
+    for(int i = 0; i < 3; ++i)
+    {
+        QPixmap* animTemp = new QPixmap("data/cafard" + QString::number(i+1) + ".png");
+        *animTemp = animTemp->scaled(taille*32,taille*32);
+        animPixmap.push_back(animTemp);
+    }
+    animState = 0; // Première frame de l'animation à 0
+
+    // Image et taille
+    this->setPixmap(*animPixmap.first());
+
+    // Position
+    this->setPos(x,y);
 }
 
-void Cafard::recevoirDegats(int degats){
+void Cafard::recevoirDegats(double degats){
     vitalite = vitalite - (degats-resistance);
 }
 
-QRectF Cafard::boundingRect() const
+void Cafard::advance(int phase)
 {
-    return QRectF(0,0,32,32); // A Modifier suivant l'image je pense
-}
+// Si 'phase' vaut 0, rien ne se passe
+    if(!phase)
+        return;
+    // ...sinon, on met à jour l'item
 
-void Cafard::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
+    // Met à jour l'image de l'animation
+    this->setPixmap(*animPixmap[animState]);
+    this->increaseAnimationStep();
+
+
+    this->setPos(x()+vitesse*+1,y()+vitesse*+1);
+
+    // Oriente l'image dans le bon sens
+    // (nb : transformation par rapport au centre de l'image)
+    this->setTransformOriginPoint(this->boundingRect().center().x(),this->boundingRect().center().y());
+    this->setRotation(1*90);
+
 
 }
 }
