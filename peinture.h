@@ -9,7 +9,7 @@ class Peinture : public Defense
 {
 public:
     Peinture();
-    Peinture(const int niveau,const int x,const int y,QGraphicsItem *parent=0);
+    Peinture(const double niveau,const int x,const int y,QGraphicsItem *parent=0);
 
     double attaquer();
     void ameliorer();

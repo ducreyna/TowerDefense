@@ -11,7 +11,7 @@ class Eau : public Defense
 {
 public:
     Eau();
-    Eau(const int niveau,const int x,const int y,QGraphicsItem *parent=0);
+    Eau(const double niveau,const int x,const int y,QGraphicsItem *parent=0);
 
     double attaquer();
     void ameliorer();

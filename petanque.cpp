@@ -6,7 +6,7 @@ Petanque::Petanque()
 {
 }
 
-Petanque::Petanque(const int niveau,const int x,const int y,QGraphicsItem *parent):Defense(niveau,3+niveau,0.5,15*pow(niveau,1.5),40,80,20,parent,RAMPANT,BOULE)
+Petanque::Petanque(const double niveau,const int x,const int y,QGraphicsItem *parent):Defense(niveau,3+niveau,0.5,15*pow(niveau,1.5),40,80,20,parent,RAMPANT,BOULE)
 {
     setX(x);
     setY(y);

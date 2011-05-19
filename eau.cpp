@@ -2,7 +2,7 @@
 
 namespace TOWERDEFENSE{
 
-Eau::Eau(const int niveau,const int x, const int y,QGraphicsItem *parent):Defense(niveau,3+niveau/2,(4-niveau/2),5*pow(niveau,1.5),20,45,40,parent)
+Eau::Eau(const double niveau,const int x, const int y,QGraphicsItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,1.5),20,45,40,parent)
 {
     setX(x);
     setY(y);
