@@ -278,7 +278,6 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
     else if(type == "PEINTURE")
     {
         Peinture *p = new Peinture(1,(x/32)*32,(y/32)*32,0);
-        std::cout << p->getPortee() << std::endl;
         QGraphicsItem *I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
         I->setData(0,"HERBE");
         S->addItem(p);
@@ -293,7 +292,6 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
     else
     {
         Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
-        std::cout << p->getPortee() << std::endl;
         QGraphicsItem *I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
         I->setData(0,"HERBE");
         S->addItem(p);
