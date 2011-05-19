@@ -7,9 +7,11 @@
 #include <QGraphicsPixmapItem>
 #include <QGraphicsItem>
 #include <QPixmap>
+#include <QTimer>
 
 #include <iostream>
 #include "fichier.h"
+#include "cafard.h"
 #include "fourmi.h"
 #include "myqgraphicsscene.h"
 #include "eau.h"
@@ -38,6 +40,8 @@ private:
     Fichier f;
     int** carte;
     double** vague;
+
+    QTimer* timer;
 
 private slots:
     void on_loadMap_clicked();

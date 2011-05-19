@@ -10,9 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle("Tower Defense");
 
     S = new MyQGraphicsScene(ui->terrain);
+    timer = new QTimer();
 
     QObject::connect(S,SIGNAL(ajouterTour(int,int,std::string)),this,SLOT(ajouterTour(int,int,std::string)));
     QObject::connect(S,SIGNAL(tourMouseTracking(int,int,std::string)),this,SLOT(tourMouseTracking(int,int,std::string)));
+    QObject::connect(timer, SIGNAL(timeout()), S, SLOT(advance()));
 }
 
 MainWindow::~MainWindow() {
@@ -176,7 +178,11 @@ void MainWindow::on_loadMap_clicked()
 
 void MainWindow::on_newWave_clicked()
 {
-
+    Cafard *c = new Cafard(1,0,0,0);
+    Fourmi *f = new Fourmi(1.7,0,0,0);
+    S->addItem(c);
+    S->addItem(f);
+    timer->start(1000 / 20);
 }
 
 void MainWindow::on_waterTowers_clicked()
