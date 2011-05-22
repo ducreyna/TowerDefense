@@ -2,11 +2,17 @@
 
 namespace TOWERDEFENSE{
 
-Eau::Eau(const double niveau,const int x, const int y,QGraphicsItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,1.5),20,45,40,parent)
+Eau::Eau(const double niveau,const int x, const int y,QGraphicsItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,1.5),8,20,45,40,parent)
 {
-    setX(x);
-    setY(y);
     setData(0,"EAU");
+
+    QPixmap* tour = new QPixmap("data/Tour/tourEau.png");
+
+    // Image et taille
+    this->setPixmap(*tour);
+
+    // Position
+    this->setPos(x,y);
 }
 
 double Eau::attaquer()
@@ -14,24 +20,34 @@ double Eau::attaquer()
     return frappe;
 }
 
-void Eau::ameliorer()
+bool Eau::ameliorer()
 {
-    niveau++;
-    portee = 3 + niveau/2;
-    cadence = 4 - niveau/2;
-    frappe = 5 * pow(niveau,1.5);
+    try
+    {
+        if(niveau == 1)
+        {
+            niveau++;
+            portee = 3 + niveau/2;
+            cadence = 4 - niveau/2;
+            frappe = 5 * pow(niveau,1.5);
+            cout += amelioration_1;
+            return true;
+        }
+        else if(niveau == 2)
+        {
+            niveau++;
+            portee = 3 + niveau/2;
+            cadence = 4 - niveau/2;
+            frappe = 5 * pow(niveau,1.5);
+            cout += amelioration_2;
+            return true;
+        }
+        else throw std::exception();
+    }
+    catch(std::exception& e)
+    {
+        QMessageBox(QMessageBox::Information,"Amelioration impossible","La tour est de niveau maximal").exec();
+        return false;
+    }
 }
-
-QRectF Eau::boundingRect()const
-{
-    return QRectF(0,0,32,32);
-}
-
-void Eau::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    painter->setPen(QPen(Qt::NoPen));
-    painter->setBrush(Qt::blue);
-    painter->drawEllipse(0,0,32,32);
-}
-
 }
