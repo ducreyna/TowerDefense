@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->petanqueTowers->setEnabled(false);
     ui->upButton->setEnabled(false);
     ui->sellButton->setEnabled(false);
-    ui->lcdMoney->display(400);
+    ui->lcdMoney->display(40);
     ui->lcdtLives->display(50);
 
     S = new MyQGraphicsScene(ui->terrain);
