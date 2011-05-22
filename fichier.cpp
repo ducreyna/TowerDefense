@@ -48,13 +48,13 @@ bool Fichier::chargerCarte(const std::string & chemin)
 
             while(!fichier.eof())
             {
-                if(j == 16)
+                if(i == 16)
                 {
-                    ++i;
-                    j = 0;
+                    ++j;
+                    i = 0;
                 }
                 fichier >> carte[i][j];
-                ++j;
+                ++i;
             }
 
             fichier.close();  // on ferme le fichier

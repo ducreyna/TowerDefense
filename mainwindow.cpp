@@ -47,58 +47,58 @@ void MainWindow::ChargerGraphiques() {
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD");
                     I = S->addPixmap(cheminVertical);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"NORD");
                 }
                 else if(carte[i][j] == 2)   // vers le SUD
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD");
                     I = S->addPixmap(cheminVertical);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"SUD");
                 }
                 else if(carte[i][j] == 4)   // vers l'EST
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"EST");
                     I = S->addPixmap(cheminHorizontal);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"EST");
                 }
                 else if(carte[i][j] == 8)   // vers l'OUEST
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"OUEST");
                     I = S->addPixmap(cheminHorizontal);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"OUEST");
                 }
                 else if(carte[i][j] == 5)   // vers le Nord EST
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD_EST");
                     I = S->addPixmap(coinBD);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"NORD_EST");
                 }
                 else if(carte[i][j] == 6)   // vers le Sud EST
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD_EST");
-                    if(carte[i-1][j] != 2) I = S->addPixmap(coinHD);
+                    if(carte[i][j-1] != 2) I = S->addPixmap(coinHD);
                     else I = S->addPixmap(coinBG);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"SUD_EST");
                 }
                 else if(carte[i][j] == 9)   // vers le Nord OUEST
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"NORD_OUEST");
                     I = S->addPixmap(coinBG);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"NORD_OUEST");
                 }
                 else if(carte[i][j] == 10)  // vers le Sud OUEST
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::green)->setData(0,"SUD_OUEST");
-                    if(carte[i-1][j] != 2) I = S->addPixmap(coinHG);
+                    if(carte[i][j-1] != 2) I = S->addPixmap(coinHG);
                     else I = S->addPixmap(coinBD);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"SUD_OUEST");
                 }
 
@@ -108,35 +108,35 @@ void MainWindow::ChargerGraphiques() {
                 {
                     if(carte[i][j] == 17)      // vers le NORD
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_NORD");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_NORD");
                     }
                     else if(carte[i][j] == 18)   // vers le SUD
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_SUD");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_SUD");
                     }
                     else if(carte[i][j] == 19)   // vers l'EST
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_EST");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_EST");
                     }
                     else if(carte[i][j] == 24)   // vers l'OUEST
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_OUEST");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_OUEST");
                     }
                     else if(carte[i][j] == 21)   // vers le Nord EST
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_NORD_EST");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_NORD_EST");
                     }
                     else if(carte[i][j] == 22)   // vers le Sud EST
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_SUD_EST");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_SUD_EST");
                     }
                     else if(carte[i][j] == 25)   // vers le Nord OUEST
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_NORD_OUEST");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_NORD_OUEST");
                     }
                     else if(carte[i][j] == 26)  // vers le Sud OUEST
                     {
-                        S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_SUD_OUEST");
+                        S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::transparent),Qt::red)->setData(0,"DEPART_SUD_OUEST");
                     }
                 }
                 else if(carte[i][j] == 32) // le but
@@ -146,21 +146,21 @@ void MainWindow::ChargerGraphiques() {
                     float scale2 = (float)32/but.size().height();
                     if(scale2 > scale1) scale1 = scale2;
                     I->setScale(scale1);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"BUT");
                 }
                 else if(carte[i][j] == 64) // la boue
                 {
                     //S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::transparent),Qt::darkGreen)->setData(0,"BOUE");
                     I = S->addPixmap(boue);
-                    I->setPos(j*32,i*32);
+                    I->setPos(i*32,j*32);
                     I->setData(0,"BOUE");
                 }
             }
             else // de l'herbe
             {
                 // on ajoute un item afin de respecter le quadrillage 16x16
-                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
+                S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
             }
         }
     }
