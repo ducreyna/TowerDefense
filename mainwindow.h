@@ -8,11 +8,15 @@
 #include <QGraphicsItem>
 #include <QPixmap>
 #include <QTimer>
+#include <QMessageBox>
+#include <exception>
 
 #include <iostream>
 #include "fichier.h"
 #include "cafard.h"
 #include "fourmi.h"
+#include "guepe.h"
+#include "moustique.h"
 #include "myqgraphicsscene.h"
 #include "eau.h"
 #include "pierre.h"
@@ -32,7 +36,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void ChargerGraphiques();
 
 private:
     Ui::MainWindow *ui;
@@ -40,8 +43,10 @@ private:
     Fichier f;
     int** carte;
     double** vague;
-
     QTimer* timer;
+
+    void chargerGraphiques();
+    void verifierToursConstructibles();
 
 private slots:
     void on_loadMap_clicked();
@@ -50,10 +55,13 @@ private slots:
     void on_stoneTowers_clicked();
     void on_paintTowers_clicked();
     void on_petanqueTowers_clicked();
+    void on_upButton_clicked();
+    void on_sellButton_clicked();
 
 public slots:
     void ajouterTour(int x, int y, std::string type);
     void tourMouseTracking(int x, int y,std::string type);
+    void tourSelectionnee(int x, int y, QGraphicsItem *tour);
 
 };
 
