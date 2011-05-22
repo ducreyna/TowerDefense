@@ -5,8 +5,6 @@
 #include <Qlist>
 #include <QString>
 
-#include <iostream>
-
 #include "math.h"
 
 #include <constantes.h>
