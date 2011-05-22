@@ -43,7 +43,5 @@ void Cafard::advance(int phase)
     // (nb : transformation par rapport au centre de l'image)
     this->setTransformOriginPoint(this->boundingRect().center().x(),this->boundingRect().center().y());
     this->setRotation(1*90);
-
-
 }
 }
