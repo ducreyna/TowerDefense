@@ -17,6 +17,8 @@ private:
     std::string tourDemandee;
     QGraphicsItem *precedent;
     QGraphicsItem *precedent2;
+    QGraphicsItem *tourPortee;
+    QGraphicsItem *tourAmelioration;
 
 public:
     // Constructeur
@@ -40,12 +42,17 @@ public:
 
     QGraphicsItem* getPrecedent()const;
     QGraphicsItem* getPrecedent2()const;
+    QGraphicsItem* getTourPortee()const;
+    QGraphicsItem* getTourAmelioration()const;
 
-    void setPrecedent2(QGraphicsItem* I);
+    void setPrecedent2(QGraphicsItem *I);
+    void setTourPortee(QGraphicsItem *I);
+    void setTourAmelioration(QGraphicsItem *I);
 
 signals:
     void ajouterTour(int x, int y, std::string type);
     void tourMouseTracking(int x, int y,std::string type);
+    void tourSelectionnee(int x, int y, QGraphicsItem *tour);
 
 };
 

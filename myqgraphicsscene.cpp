@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-MyQGraphicsScene::MyQGraphicsScene(QGraphicsView *parent):QGraphicsScene(parent),tourDemandee(""),precedent(0),precedent2(0)
+MyQGraphicsScene::MyQGraphicsScene(QGraphicsView *parent):QGraphicsScene(parent),tourDemandee(""),precedent(0),precedent2(0),tourPortee(0)
 {}
 
 void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -10,43 +10,44 @@ void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     int x = mouseEvent->scenePos().x();
     int y = mouseEvent->scenePos().y();
 
+    if(tourPortee != 0)
+    {
+        this->removeItem(tourPortee);
+        tourPortee = 0;
+        emit this->tourSelectionnee(0,0,0);
+    }
+
     QGraphicsItem * I = itemAt(x,y);
 
-    if(tourDemandee == "EAU")
+    if(tourDemandee != "")
     {
-        removeItem(getPrecedent());
-        removeItem(getPrecedent2());
-        I = itemAt(x,y);
-        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"EAU");
-    }
-    else if(tourDemandee == "PIERRE")
-    {
-        removeItem(getPrecedent());
-        removeItem(getPrecedent2());
-        I = itemAt(x,y);
-        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"PIERRE");
-    }
-    else if(tourDemandee == "PEINTURE")
-    {
-        removeItem(getPrecedent());
-        removeItem(getPrecedent2());
-        I = itemAt(x,y);
-        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"PEINTURE");
-    }
-    else if(tourDemandee == "PETANQUE")
-    {
-        removeItem(getPrecedent());
-        removeItem(getPrecedent2());
-        I = itemAt(x,y);
-        if(I->data(0).toString() == "HERBE") emit ajouterTour(x,y,"PETANQUE");
-    }
+        this->removeItem(getPrecedent());
+        this->removeItem(getPrecedent2());
+        I = this->itemAt(x,y);
 
-     if(I->data(0).toString() == "EAU" || I->data(0).toString() == "PIERRE" || I->data(0).toString() == "PEINTURE" || I->data(0).toString() == "PETANQUE")
+        if(tourDemandee == "EAU" && I->data(0).toString() == "HERBE")
+        {
+            emit this->ajouterTour(x,y,"EAU");
+        }
+        else if(tourDemandee == "PIERRE" && I->data(0).toString() == "HERBE")
+        {
+            emit this->ajouterTour(x,y,"PIERRE");
+        }
+        else if(tourDemandee == "PEINTURE" && I->data(0).toString() == "HERBE")
+        {
+            emit this->ajouterTour(x,y,"PEINTURE");
+        }
+        else if(tourDemandee == "PETANQUE" && I->data(0).toString() == "HERBE")
+        {
+            emit this->ajouterTour(x,y,"PETANQUE");
+        }
+     }
+    if(I->data(0).toString() == "EAU" || I->data(0).toString() == "PIERRE" || I->data(0).toString() == "PEINTURE" || I->data(0).toString() == "PETANQUE")
     {
-        removeItem(I);
+        emit this->tourSelectionnee(x,y,I);
     }
-     precedent = 0;
-     precedent2 = 0;
+    precedent = 0;
+    precedent2 = 0;
 }
 
 void MyQGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -92,10 +93,22 @@ void MyQGraphicsScene::setTourDemandee(std::string tour)
     tourDemandee = tour;
 }
 
-QGraphicsItem* MyQGraphicsScene::getPrecedent()const { return precedent;}
-QGraphicsItem* MyQGraphicsScene::getPrecedent2()const { return precedent2;}
+QGraphicsItem* MyQGraphicsScene::getPrecedent()const { return precedent; }
+QGraphicsItem* MyQGraphicsScene::getPrecedent2()const { return precedent2; }
+QGraphicsItem* MyQGraphicsScene::getTourPortee()const { return tourPortee; }
+QGraphicsItem* MyQGraphicsScene::getTourAmelioration()const { return tourAmelioration; }
 
 void MyQGraphicsScene::setPrecedent2(QGraphicsItem *I)
 {
     precedent2 = I;
+}
+
+void MyQGraphicsScene::setTourPortee(QGraphicsItem *I)
+{
+    this->tourPortee = I;
+}
+
+void MyQGraphicsScene::setTourAmelioration(QGraphicsItem *I)
+{
+    this->tourAmelioration = I;
 }
