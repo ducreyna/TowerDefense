@@ -36,14 +36,15 @@ void Cafard::advance(int phase)
     this->setPixmap(*animPixmap[animState]);
     this->increaseAnimationStep();
 
+    // deprecated
 
-    this->setPos(x()+vitesse*+1,y()+vitesse*+1);
+    //this->setPos(x()+vitesse*+1,y()+vitesse*+1);
 
     // Oriente l'image dans le bon sens
     // (nb : transformation par rapport au centre de l'image)
-    this->setTransformOriginPoint(this->boundingRect().center().x(),this->boundingRect().center().y());
-    this->setRotation(1*90);
+    //this->setTransformOriginPoint(this->boundingRect().center().x(),this->boundingRect().center().y());
+    //this->setRotation(1*90);
 
-
+    Insecte::advance(phase);
 }
 }
