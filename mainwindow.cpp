@@ -206,14 +206,14 @@ void MainWindow::on_newWave_clicked()
         //vagues[i]->buildVague(departX*32,departY*32);
     }
 
-    Cafard * test = dynamic_cast<Cafard*>(InsecteFactory::create(InsecteFactory::TYPE_CAFARD,2,path));
-    Fourmi * f = dynamic_cast<Fourmi*>(InsecteFactory::create(InsecteFactory::TYPE_FOURMI,1.5,path));
+    Cafard * test = dynamic_cast<Cafard*>(InsecteFactory::create(InsecteFactory::TYPE_CAFARD,1,path));
+    Fourmi * f = dynamic_cast<Fourmi*>(InsecteFactory::create(InsecteFactory::TYPE_FOURMI,1.7,path));
     test->setPos(departX*32,departY*32);
     f->setPos(departX*32,departY*32);
 
     S->addItem(f);
     S->addItem(test);
-    mainTimer->start(1000 / 20);
+    mainTimer->start(20);
 }
 
 void MainWindow::on_waterTowers_clicked()
