@@ -5,7 +5,7 @@ namespace TOWERDEFENSE{
 Fichier::Fichier()
 {
     carte = new int*[16];
-    vague = new double*[20];
+    //vague = new double*[20];
 
     //initialisation de la carte
     for(int i = 0; i < 16; ++i)
@@ -16,27 +16,18 @@ Fichier::Fichier()
             carte[i][j] = 0;
         }
     }
-
-    //initialisation des vagues
-    for(int i = 0; i < 20; ++i)
-    {
-        vague[i] = new double[5];
-        for(int j = 0; j < 5; ++j)
-        {
-            vague[i][j] = 0;
-        }
-    }
 }
 
 Fichier::~Fichier()
 {
     delete[] carte;
-    delete[] vague;
 }
 
 int** Fichier::getCarte()const { return carte; }
 
-double** Fichier::getVague()const { return vague; }
+QVector<Vague *> Fichier::getVagues() const { return vagues; }
+
+QList<int> * Fichier::getPath() const { return path; }
 
 bool Fichier::chargerCarte(const std::string & chemin)
 {
@@ -63,104 +54,182 @@ bool Fichier::chargerCarte(const std::string & chemin)
         else  return false;
 }
 
+bool Fichier::chargerPath()
+{
+    int departX,departY,i,j;
+
+    this->path = new QList<int>();
+
+    // recherche du départ, détermination de la direction du départ.
+    bool found = false;
+    for(i=0; i<16 && !found; i++)
+    {
+        for(j=0; j < 16 && !found; j++)
+        {
+            if(carte[j][i] < 32 && carte[j][i] >= 17)
+            {
+                found = true;
+            }
+        }
+    }
+
+    departX = max(0,j-1);
+    departY = max(0,i-1);
+
+    this->path->push_back(carte[departX][departY] % 16);
+
+    this->path->append(buildPathRecursively(departX,departY,departX,departY));
+
+    return true;
+}
+
+QList<int> Fichier::buildPathRecursively(int currX, int currY, int prevX, int prevY)
+{
+
+    QList<int> temp;
+    int newX, newY;
+
+    if(currX-1 >= 0 && currX-1 != prevX && carte[currX-1][currY] >= 1 && carte[currX-1][currY] <= 10)
+    {
+        newX = currX-1;
+        newY = currY;
+    }
+    else if(currX+1 <= 16 && currX+1 != prevX && carte[currX+1][currY] >= 1 && carte[currX+1][currY] <= 10)
+    {
+        newX = currX+1;
+        newY = currY;
+    }
+    else if(currY-1 >= 0 && currY-1 != prevY && carte[currX][currY-1] >= 1 && carte[currX][currY-1] <= 10)
+    {
+        newX = currX;
+        newY = currY-1;
+    }
+    else if(currY+1 <= 16 && currY+1 != prevY && carte[currX][currY+1] >= 1 && carte[currX][currY+1] <= 10)
+    {
+        newX = currX;
+        newY = currY+1;
+    }
+    else
+    {
+        return temp;
+    }
+
+    temp.push_back(carte[newX][newY]);
+
+    temp.append(buildPathRecursively(newX,newY,currX,currY));
+
+    return temp;
+}
+
 bool Fichier::chargerVague(const std::string &chemin)
 {
     std::ifstream fichier(chemin.c_str(), std::ios::in);  // on ouvre le fichier en lecture
 
         if(fichier)  // si l'ouverture a réussi
         {
-            int l(0),c(0);
-            int nbClassesEnnemis(0);
-            int numeroVague(1);
-            bool debutVague(false);
+            int j(0);
             std::string ligne;
-            QString insecte;
+            QString commentaire;
+            QString typeInsecte;
+            int type;
+            QString taille;
             QString nombre;
+            QString intervalle;
+            Vague * vague;
+
+            QVector<Vague*> composition;
+            QVector<Vague*> vagues;
 
             while(getline(fichier, ligne))
             {
-                vague[l][c] = numeroVague;
+                j = 0;
 
-                for(unsigned int j = 0; j < ligne.size(); ++j)
+                // récupération du commentaire
+                while(ligne[j] != ';')
                 {
-                    if(debutVague)
-                    {
-                        while(ligne[j] != ':')
-                        {
-                            insecte.push_back(QChar(ligne[j]));
-                            j++;
-                        }
-                        c++;
+                    commentaire.push_back(QChar(ligne[j]));
+                    j++;
+                }
 
-                        if(insecte == "fourmi")
-                        {
-                            vague[l][c] = 1;
-                        }
-                        else if(insecte == "cafard")
-                        {
-                            vague[l][c] = 2;
-                        }
-                        else if(insecte == "guepe")
-                        {
-                            vague[l][c] = 3;
-                        }
-                        else if(insecte == "moustique")
-                        {
-                            vague[l][c] = 4;
-                        }
-                        c++;
-                        insecte.clear();
-                        debutVague = false;
+                composition.clear(); // on vide le vecteur temporaire de composition
+
+                while(ligne[j]!=';' && ligne[j] != '\n')
+                {
+
+                    while(ligne[j] != ':')
+                    {
+                        typeInsecte.push_back(QChar(ligne[j]));
                         j++;
                     }
 
-                    if(ligne[j] != ':' && ligne[j] != ';' && nbClassesEnnemis > 0)
+                    j++;
+
+                    if(typeInsecte.compare("fourmi"))
+                    {
+                        type = InsecteFactory::TYPE_FOURMI;
+                    }
+                    else if(typeInsecte.compare("guepe"))
+                    {
+                        type = InsecteFactory::TYPE_GUEPE;
+                    }
+                    else if(typeInsecte.compare("cafard"))
+                    {
+                        type = InsecteFactory::TYPE_CAFARD;
+                    }
+                    else if(typeInsecte.compare("moustique"))
+                    {
+                        type = InsecteFactory::TYPE_MOUSTIQUE;
+                    }
+                    else
+                    {
+                        throw runtime_error(0);
+                    }
+
+                    while(ligne[j] != ':')
+                    {
+                        taille.push_back(QChar(ligne[j]));
+                        j++;
+                    }
+
+                    j++;
+
+                    while(ligne[j] != ':')
                     {
                         nombre.push_back(QChar(ligne[j]));
-                    }
-                    else if(ligne[j] == ':' && nbClassesEnnemis > 0)
-                    {
-                        vague[l][c] = nombre.toDouble();
-                        nombre.clear();
-                        c++;
+                        j++;
                     }
 
-                    if(ligne[j] == ';')
+                    j++;
+
+                    while(ligne[j] != ':' && ligne[j] != ';' && ligne[j] != '\n')
                     {
-                        if(nbClassesEnnemis > 0)
-                        {
-                            vague[l][c] = nombre.toDouble();
-                            nombre.clear();
-                            l++;
-                            c = 0;
-                            vague[l][c] = numeroVague;
-                        }
-                        nbClassesEnnemis++;
-                        debutVague = true;
+                        intervalle.push_back(QChar(ligne[j]));
+                        j++;
                     }
+
+                    vague = new VagueConcrete(type,taille.toInt(),nombre.toInt(),intervalle.toInt(),commentaire.toStdString());
+                    composition.push_back(vague);
+
+                    j++;
                 }
-                vague[l][c] = nombre.toDouble();
-                nombre.clear();
 
-                nbClassesEnnemis = 0;
-                numeroVague++;
-                l++;
-                c = 0;
+                // si on a une vague composée
+                if(composition.size() > 1)
+                {
+                    vague = new VagueCompose(composition);
+                }
+
+                vagues.push_back(vague);
             }
 
-            fichier.close();  // on ferme le fichier
+            this->vagues = vagues;
             return true;
         }
-        else  return false;
-}
+        else
+        {
+            return false;
+        }
 
-int Fichier::NombreVagues() const
-{
-    int i(0);
-
-    while(vague[i][0] != 0) ++i;
-
-    return i;
 }
 
 }
