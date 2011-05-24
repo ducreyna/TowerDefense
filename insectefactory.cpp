@@ -8,28 +8,30 @@ int const InsecteFactory::TYPE_GUEPE        = 3;
 int const InsecteFactory::TYPE_MOUSTIQUE    = 4;
 
 
-Insecte* InsecteFactory::create(int type, int size)
+Insecte* InsecteFactory::create(int type, int size, QList<int> *path)
 {
     Insecte * insecteToCreate;
 
     switch(type)
     {
         case InsecteFactory::TYPE_CAFARD:
-            insecteToCreate = new Cafard(size);
+            insecteToCreate = new Cafard(size,0,0);
             break;
         case InsecteFactory::TYPE_FOURMI:
-            insecteToCreate = new Fourmi(size);
+            insecteToCreate = new Fourmi(size,0,0);
             break;
         case InsecteFactory::TYPE_GUEPE:
-            insecteToCreate = new Guepe(size);
+            insecteToCreate = new Guepe(size,0,0);
             break;
         case InsecteFactory::TYPE_MOUSTIQUE:
-            insecteToCreate = new Moustique(size);
+            insecteToCreate = new Moustique(size,0,0);
             break;
         default:
             throw invalid_argument(0);
             break;
     }
+
+    insecteToCreate->setPath(path);
 
     return insecteToCreate;
 }
