@@ -44,7 +44,7 @@ void Insecte::advance(int phase)
     int dir = path->at(counter), deltaX, deltaY;
     double newX = x(), newY = y();
 
-    int speed = vitesse*32*0.02; // en pixel/20ms
+    double speed = vitesse*32*0.02; // en pixel/20ms
 
     if(dir == 1)
     {
