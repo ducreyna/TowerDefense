@@ -10,11 +10,11 @@ MainWindow::MainWindow(QWidget *parent) :
     setWindowTitle("Tower Defense");
 
     S = new MyQGraphicsScene(ui->terrain);
-    timer = new QTimer();
+    mainTimer = new QTimer();
 
     QObject::connect(S,SIGNAL(ajouterTour(int,int,std::string)),this,SLOT(ajouterTour(int,int,std::string)));
     QObject::connect(S,SIGNAL(tourMouseTracking(int,int,std::string)),this,SLOT(tourMouseTracking(int,int,std::string)));
-    QObject::connect(timer, SIGNAL(timeout()), S, SLOT(advance()));
+    QObject::connect(mainTimer, SIGNAL(timeout()), S, SLOT(advance()));
 }
 
 MainWindow::~MainWindow() {
@@ -170,19 +170,50 @@ void MainWindow::ChargerGraphiques() {
 void MainWindow::on_loadMap_clicked()
 {
     f.chargerCarte("data/map.txt");
-    f.chargerVague("data/waves.txt");
+    //f.chargerVague("data/waves.txt");
+    f.chargerPath();
+
     carte = f.getCarte();
-    vague = f.getVague();
+    vagues = f.getVagues();
+
+    path = f.getPath();
+
     ChargerGraphiques();
 }
 
 void MainWindow::on_newWave_clicked()
 {
-    Cafard *c = new Cafard(1,0,0,0);
-    Fourmi *f = new Fourmi(1.7,0,0,0);
-    S->addItem(c);
+    int i,j,departX,departY;
+    bool found = false;
+
+    for(i=0; i<16 && !found; i++)
+    {
+        for(j=0; j < 16 && !found; j++)
+        {
+            if(carte[j][i] < 32 && carte[j][i] >= 17)
+            {
+                found = true;
+            }
+        }
+    }
+
+    departX = max(0,j-1);
+    departY = max(0,i-1);
+
+    // initialisation des vagues
+    for(i=0; i < vagues.size(); i++)
+    {
+        //vagues[i]->buildVague(departX*32,departY*32);
+    }
+
+    Cafard * test = dynamic_cast<Cafard*>(InsecteFactory::create(InsecteFactory::TYPE_CAFARD,2,path));
+    Fourmi * f = dynamic_cast<Fourmi*>(InsecteFactory::create(InsecteFactory::TYPE_FOURMI,1.5,path));
+    test->setPos(departX*32,departY*32);
+    f->setPos(departX*32,departY*32);
+
     S->addItem(f);
-    timer->start(1000 / 20);
+    S->addItem(test);
+    mainTimer->start(1000 / 20);
 }
 
 void MainWindow::on_waterTowers_clicked()
@@ -242,6 +273,20 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
         S->addItem(p);
         S->setTourDemandee("");
         ui->choice->setText("Vous avez choisi: ");
+    }
+}
+
+void MainWindow::on_pause_button_clicked()
+{
+    if(mainTimer->isActive())
+    {
+        mainTimer->stop();
+        ui->pause_button->setText("Reprendre");
+    }
+    else
+    {
+        mainTimer->start();
+        ui->pause_button->setText("Pause");
     }
 }
 

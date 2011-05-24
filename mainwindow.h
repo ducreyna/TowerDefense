@@ -38,10 +38,11 @@ private:
     Ui::MainWindow *ui;
     MyQGraphicsScene * S;
     Fichier f;
+    QTimer * mainTimer;
     int** carte;
-    double** vague;
 
-    QTimer* timer;
+    QVector<Vague *> vagues;
+    QList<int> * path;
 
 private slots:
     void on_loadMap_clicked();
@@ -50,6 +51,7 @@ private slots:
     void on_stoneTowers_clicked();
     void on_paintTowers_clicked();
     void on_petanqueTowers_clicked();
+    void on_pause_button_clicked();
 
 public slots:
     void ajouterTour(int x, int y, std::string type);
