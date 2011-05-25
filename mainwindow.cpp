@@ -21,12 +21,12 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->lcdtLives->display(50);
 
     S = new MyQGraphicsScene(ui->terrain);
-    timer = new QTimer();
+    mainTimer = new QTimer();
 
     QObject::connect(S,SIGNAL(ajouterTour(int,int,std::string)),this,SLOT(ajouterTour(int,int,std::string)));
     QObject::connect(S,SIGNAL(tourMouseTracking(int,int,std::string)),this,SLOT(tourMouseTracking(int,int,std::string)));
     QObject::connect(S,SIGNAL(tourSelectionnee(int,int,QGraphicsItem*)),this,SLOT(tourSelectionnee(int,int,QGraphicsItem*)));
-    QObject::connect(timer, SIGNAL(timeout()), S, SLOT(advance()));
+    QObject::connect(mainTimer, SIGNAL(timeout()), S, SLOT(advance()));
 }
 
 MainWindow::~MainWindow() {
@@ -79,12 +79,14 @@ void MainWindow::chargerGraphiques() {
                 }
                 else if(carte[i][j] == 5)   // vers le Nord EST
                 {
+
                     if(carte[i+1][j] != 1 && carte[i+1][j] != 17) I = S->addPixmap(coinBD);
                     else I = S->addPixmap(coinHG);
                     I->setData(0,"NORD_EST");
                 }
                 else if(carte[i][j] == 6)   // vers le Sud EST
                 {
+
                     if(carte[i-1][j] != 2 && carte[i-1][j] != 18) I = S->addPixmap(coinHD);
                     else I = S->addPixmap(coinBG);
                     I->setData(0,"SUD_EST");
@@ -93,12 +95,14 @@ void MainWindow::chargerGraphiques() {
                 {
                     if(carte[i+1][j] != 1 && carte[i+1][j] != 17) I = S->addPixmap(coinBG);
                     else I = S->addPixmap(coinHD);
+
                     I->setData(0,"NORD_OUEST");
                 }
                 else if(carte[i][j] == 10)  // vers le Sud OUEST
                 {
                     if(carte[i-1][j] != 2 && carte[i-1][j] != 18) I = S->addPixmap(coinHG);
                     else I = S->addPixmap(coinBD);
+
                     I->setData(0,"SUD_OUEST");
                 }
 
@@ -165,12 +169,12 @@ void MainWindow::chargerGraphiques() {
                     I = S->addPixmap(boue);
                     I->setData(0,"BOUE");
                 }
-                I->setPos(j*32,i*32);
+                I->setPos(i*32,j*32);
             }
             else // de l'herbe
             {
                 // on ajoute un item afin de respecter le quadrillage 16x16
-                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::NoPen),Qt::transparent)->setData(0,"HERBE");
+                S->addRect(i*32,j*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
             }
         }
     }
@@ -219,24 +223,51 @@ void MainWindow::on_loadMap_clicked()
 {
     f.chargerCarte("data/map.txt");
     f.chargerVague("data/waves.txt");
+    f.chargerPath();
+
     carte = f.getCarte();
     vague = f.getVague();
     chargerGraphiques();
     ui->loadMap->setEnabled(false);
     ui->newWave->setEnabled(true);
+
+    path = f.getPath();
 }
 
 void MainWindow::on_newWave_clicked()
 {
-    Cafard *c = new Cafard(1,0,0,0);
-    Fourmi *f = new Fourmi(1.7,0,0,0);
-    Guepe *g = new Guepe(1,0,0,0);
-    Moustique *m = new Moustique(1,0,0,0);
-    S->addItem(g);
-    S->addItem(m);
-    timer->start(1000 / 20);
-    ui->pause->setEnabled(true);
-    verifierToursConstructibles();
+
+    int i,j,departX,departY;
+    bool found = false;
+
+    for(i=0; i<16 && !found; i++)
+    {
+        for(j=0; j < 16 && !found; j++)
+        {
+            if(carte[j][i] < 32 && carte[j][i] >= 17)
+            {
+                found = true;
+            }
+        }
+    }
+
+    departX = max(0,j-1);
+    departY = max(0,i-1);
+
+    // initialisation des vagues
+    for(i=0; i < vagues.size(); i++)
+    {
+        //vagues[i]->buildVague(departX*32,departY*32);
+    }
+
+    Cafard * test = dynamic_cast<Cafard*>(InsecteFactory::create(InsecteFactory::TYPE_CAFARD,1,path));
+    Fourmi * f = dynamic_cast<Fourmi*>(InsecteFactory::create(InsecteFactory::TYPE_FOURMI,1.7,path));
+    test->setPos(departX*32,departY*32);
+    f->setPos(departX*32,departY*32);
+
+    S->addItem(f);
+    S->addItem(test);
+    mainTimer->start(20);
 }
 
 void MainWindow::on_waterTowers_clicked()
@@ -382,6 +413,20 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     S->setTourDemandee("");
     ui->choice->setText("Vous avez choisi: ");
     verifierToursConstructibles();
+}
+
+void MainWindow::on_pause_button_clicked()
+{
+    if(mainTimer->isActive())
+    {
+        mainTimer->stop();
+        ui->pause_button->setText("Reprendre");
+    }
+    else
+    {
+        mainTimer->start();
+        ui->pause_button->setText("Pause");
+    }
 }
 
 void MainWindow::tourMouseTracking(int x, int y,std::string type)
