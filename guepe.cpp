@@ -19,6 +19,7 @@ Guepe::Guepe(const double taille,const int x, const int y,QGraphicsPixmapItem *p
 
     // Position
     this->setPos(x,y);
+    this->setData(0,"GUEPE");
 }
 
 void Guepe::recevoirDegats(double degats)

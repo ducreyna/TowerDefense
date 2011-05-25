@@ -19,6 +19,7 @@ Fourmi::Fourmi(const double taille,const int x, const int y,QGraphicsPixmapItem 
 
     // Position
     this->setPos(x,y);
+    this->setData(0,"FOURMI");
 }
 
 void Fourmi::recevoirDegats(double degats){

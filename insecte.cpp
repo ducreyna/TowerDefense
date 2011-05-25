@@ -23,6 +23,10 @@ void Insecte::setVitesse(double vitesse){
     this->vitesse = vitesse;
 }
 
+double Insecte::getTaille()const { return taille; }
+
+double Insecte::getVitalite()const { return vitalite; }
+
 void Insecte::increaseAnimationStep() {
 
     // Avance à la frame suivante de l'animation

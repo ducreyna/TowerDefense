@@ -2,6 +2,7 @@
 #define CAFARD_H
 
 #include "insecte.h"
+#include <iostream>
 
 namespace TOWERDEFENSE{
 
@@ -10,6 +11,7 @@ class Cafard : public Insecte
 public:
     Cafard();
     Cafard(const double taille,const int x, const int y, QGraphicsPixmapItem *parent=0);
+    ~Cafard();
 
     /*!
       * Methode permettant de traiter les degats recus par un cafard

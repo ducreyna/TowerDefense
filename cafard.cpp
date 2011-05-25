@@ -19,7 +19,10 @@ Cafard::Cafard(const double taille,const int x, const int y, QGraphicsPixmapItem
 
     // Position
     this->setPos(x,y);
+    this->setData(0,"CAFARD");
 }
+
+Cafard::~Cafard(){ std::cout << "Je suis détruit" << std::endl;}
 
 void Cafard::recevoirDegats(double degats){
     vitalite = vitalite - (degats-resistance);
@@ -37,7 +40,7 @@ void Cafard::advance(int phase)
     this->increaseAnimationStep();
 
 
-    this->setPos(x()+vitesse*+1,y()+vitesse*+1);
+    this->setPos(x()+vitesse*1,y()+vitesse*1);
 
     // Oriente l'image dans le bon sens
     // (nb : transformation par rapport au centre de l'image)

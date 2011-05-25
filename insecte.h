@@ -57,6 +57,9 @@ public:
       */
     virtual void recevoirDegats(double degats) = 0;
 
+    double getTaille()const;
+    double getVitalite()const;
+
     void increaseAnimationStep();
 };
 }
