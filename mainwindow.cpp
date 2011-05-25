@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->petanqueTowers->setEnabled(false);
     ui->upButton->setEnabled(false);
     ui->sellButton->setEnabled(false);
-    ui->lcdMoney->display(40);
+    ui->lcdMoney->display(400);
     ui->lcdtLives->display(50);
 
     S = new MyQGraphicsScene(ui->terrain);
@@ -170,7 +170,7 @@ void MainWindow::chargerGraphiques() {
             else // de l'herbe
             {
                 // on ajoute un item afin de respecter le quadrillage 16x16
-                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::NoPen),Qt::transparent)->setData(0,"HERBE");
+                S->addRect(j*32,i*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
             }
         }
     }
@@ -232,8 +232,9 @@ void MainWindow::on_newWave_clicked()
     Fourmi *f = new Fourmi(1.7,0,0,0);
     Guepe *g = new Guepe(1,0,0,0);
     Moustique *m = new Moustique(1,0,0,0);
-    S->addItem(g);
-    S->addItem(m);
+    //S->addItem(g);
+    //S->addItem(m);
+    S->addInsecte(c);
     timer->start(1000 / 20);
     ui->pause->setEnabled(true);
     verifierToursConstructibles();
@@ -312,7 +313,7 @@ void MainWindow::on_upButton_clicked()
         {
             S->removeItem(S->getTourPortee());
             D->ameliorer();
-            QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-1)*32/2,(D->y()/32)*32-(D->getPortee()-1)*32/2,32*D->getPortee(),32*D->getPortee(),QPen(Qt::white),Qt::transparent);
+            QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-0.5)*32,(D->y()/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::white),Qt::transparent);
             S->setTourPortee(I);
             ui->lcdMoney->display(ui->lcdMoney->value() - D->getAmelioration_1());
             ui->level->setText("Level: "+QString::number(D->getNiveau()));
@@ -322,7 +323,7 @@ void MainWindow::on_upButton_clicked()
         {
             S->removeItem(S->getTourPortee());
             bool ok = D->ameliorer();
-            QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-1)*32/2,(D->y()/32)*32-(D->getPortee()-1)*32/2,32*D->getPortee(),32*D->getPortee(),QPen(Qt::white),Qt::transparent);
+            QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-0.5)*32,(D->y()/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::white),Qt::transparent);
             S->setTourPortee(I);
             ui->level->setText("Level: "+QString::number(D->getNiveau()));
             if(ok) ui->lcdMoney->display(ui->lcdMoney->value() - D->getAmelioration_2());
@@ -340,7 +341,7 @@ void MainWindow::on_sellButton_clicked()
 {
     Defense *D = dynamic_cast<Defense*>(S->getTourAmelioration());
     ui->lcdMoney->display(ui->lcdMoney->value() + (D->getCout()/2));
-    S->removeItem(S->getTourAmelioration());
+    S->removeItem(D);
     S->removeItem(S->getTourPortee());
     S->setTourPortee(0);
     S->setTourAmelioration(0);
@@ -357,7 +358,7 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
 {
     if(type == "EAU")
     {
-        S->addItem(new Eau(1,(x/32)*32,(y/32)*32,0));
+        S->addItem(new Eau(1,(x/32)*32,(y/32)*32,S,0));
         ui->lcdMoney->display(ui->lcdMoney->value() - 8);
     }
 
@@ -389,26 +390,26 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
     QGraphicsItem *I;
     if(type == "EAU")
     {
-        Eau *e = new Eau(1,(x/32)*32,(y/32)*32,0);
-        I = S->addEllipse((x/32)*32-(e->getPortee()-1)*32/2,(y/32)*32-(e->getPortee()-1)*32/2,32*e->getPortee(),32*e->getPortee(),QPen(Qt::white),Qt::transparent);
+        Eau *e = new Eau(1,(x/32)*32,(y/32)*32,S,0);
+        I = S->addEllipse((x/32)*32-(e->getPortee()-0.5)*32,(y/32)*32-(e->getPortee()-0.5)*32,64*e->getPortee(),64*e->getPortee(),QPen(Qt::white),Qt::transparent);
         S->addItem(e);
     }
     else if(type == "PIERRE")
     {
         Pierre *p = new Pierre(1,(x/32)*32,(y/32)*32,0);
-        I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
+        I = S->addEllipse((x/32)*32-(p->getPortee()-0.5)*32,(y/32)*32-(p->getPortee()-0.5)*32,64*p->getPortee(),64*p->getPortee(),QPen(Qt::white),Qt::transparent);
         S->addItem(p);
     }
     else if(type == "PEINTURE")
     {
         Peinture *p = new Peinture(1,(x/32)*32,(y/32)*32,0);
-        I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
+        I = S->addEllipse((x/32)*32-(p->getPortee()-0.5)*32,(y/32)*32-(p->getPortee()-0.5)*32,64*p->getPortee(),64*p->getPortee(),QPen(Qt::white),Qt::transparent);
         S->addItem(p);
     }
     else
     {
         Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
-        I = S->addEllipse((x/32)*32-(p->getPortee()-1)*32/2,(y/32)*32-(p->getPortee()-1)*32/2,32*p->getPortee(),32*p->getPortee(),QPen(Qt::white),Qt::transparent);
+        I = S->addEllipse((x/32)*32-(p->getPortee()-0.5)*32,(y/32)*32-(p->getPortee()-0.5)*32,64*p->getPortee(),64*p->getPortee(),QPen(Qt::white),Qt::transparent);
         S->addItem(p);
     }
 
@@ -427,7 +428,7 @@ void MainWindow::tourSelectionnee(int x, int y, QGraphicsItem *tour)
     {
         Defense *D = dynamic_cast<Defense*>(tour);
         S->setTourAmelioration(D);
-        QGraphicsItem *I = S->addEllipse((x/32)*32-(D->getPortee()-1)*32/2,(y/32)*32-(D->getPortee()-1)*32/2,32*D->getPortee(),32*D->getPortee(),QPen(Qt::white),Qt::transparent);
+        QGraphicsItem *I = S->addEllipse((x/32)*32-(D->getPortee()-0.5)*32,(y/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::white),Qt::transparent);
         S->setTourPortee(I);
         ui->upButton->setEnabled(true);
         ui->sellButton->setEnabled(true);

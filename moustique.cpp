@@ -19,6 +19,7 @@ Moustique::Moustique(const double taille,const int x, const int y,QGraphicsPixma
 
     // Position
     this->setPos(x,y);
+    this->setData(0,"MOUSTIQUE");
 }
 
 void Moustique::recevoirDegats(double degats) {

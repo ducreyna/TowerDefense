@@ -8,6 +8,9 @@
 #include <QList>
 
 #include <iostream>
+#include "insecte.h"
+
+using namespace TOWERDEFENSE;
 
 class MyQGraphicsScene : public QGraphicsScene
 {
@@ -19,6 +22,7 @@ private:
     QGraphicsItem *precedent2;
     QGraphicsItem *tourPortee;
     QGraphicsItem *tourAmelioration;
+    QList<Insecte*> insectes;
 
 public:
     // Constructeur
@@ -36,6 +40,7 @@ public:
       */
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent );
 
+    void addInsecte(Insecte *item);
     void removeItem(QGraphicsItem *item);
 
     void setTourDemandee(std::string tour);
@@ -44,6 +49,7 @@ public:
     QGraphicsItem* getPrecedent2()const;
     QGraphicsItem* getTourPortee()const;
     QGraphicsItem* getTourAmelioration()const;
+    QList<Insecte*> getInsectes()const;
 
     void setPrecedent2(QGraphicsItem *I);
     void setTourPortee(QGraphicsItem *I);

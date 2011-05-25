@@ -84,6 +84,12 @@ void MyQGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
 void MyQGraphicsScene::removeItem(QGraphicsItem *item)
 {
+    Insecte *I = dynamic_cast<Insecte*>(item);
+    if(I != 0)
+    {
+        std::cout << "Je supprime l'insecte" << std::endl;
+        insectes.removeAt(insectes.indexOf(I));
+    }
     QGraphicsScene::removeItem(item);
     delete item;
 }
@@ -97,6 +103,19 @@ QGraphicsItem* MyQGraphicsScene::getPrecedent()const { return precedent; }
 QGraphicsItem* MyQGraphicsScene::getPrecedent2()const { return precedent2; }
 QGraphicsItem* MyQGraphicsScene::getTourPortee()const { return tourPortee; }
 QGraphicsItem* MyQGraphicsScene::getTourAmelioration()const { return tourAmelioration; }
+
+QList<Insecte*> MyQGraphicsScene::getInsectes()const
+{
+    return insectes;
+}
+
+void MyQGraphicsScene::addInsecte(Insecte *item)
+{
+    insectes.push_back(item);
+
+    // Ajout à la scène
+    QGraphicsScene::addItem(item);
+}
 
 void MyQGraphicsScene::setPrecedent2(QGraphicsItem *I)
 {
