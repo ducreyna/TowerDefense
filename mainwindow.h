@@ -59,7 +59,7 @@ private slots:
     void on_petanqueTowers_clicked();
     void on_upButton_clicked();
     void on_sellButton_clicked();
-    void on_pause_button_clicked();
+    void on_pause_clicked();
 
 public slots:
     void ajouterTour(int x, int y, std::string type);

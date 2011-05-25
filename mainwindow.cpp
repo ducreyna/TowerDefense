@@ -226,7 +226,7 @@ void MainWindow::on_loadMap_clicked()
     f.chargerPath();
 
     carte = f.getCarte();
-    vague = f.getVague();
+    vagues = f.getVagues();
     chargerGraphiques();
     ui->loadMap->setEnabled(false);
     ui->newWave->setEnabled(true);
@@ -415,17 +415,17 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     verifierToursConstructibles();
 }
 
-void MainWindow::on_pause_button_clicked()
+void MainWindow::on_pause_clicked()
 {
     if(mainTimer->isActive())
     {
         mainTimer->stop();
-        ui->pause_button->setText("Reprendre");
+        ui->pause->setText("Reprendre");
     }
     else
     {
         mainTimer->start();
-        ui->pause_button->setText("Pause");
+        ui->pause->setText("Pause");
     }
 }
 
