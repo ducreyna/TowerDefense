@@ -82,7 +82,7 @@ void Eau::advance(int phase)
             return;
 
         // Détection des ennemis aux alentours
-        QList<Insecte*> insectes = carte->getInsectes();
+        QList<Insecte*> insectes;// = carte->getInsectes();
 
         // Recherche des ennemis de la map
         for(int i = 0 ; i < insectes.size() ; ++i) {

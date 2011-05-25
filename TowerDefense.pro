@@ -18,7 +18,6 @@ SOURCES += \
     vague.cpp \
     insectefactory.cpp
 
-
 HEADERS += \
     fichier.h \
     insecte.h \
@@ -36,6 +35,9 @@ HEADERS += \
     constantes.h \
     projectile.h \
     vague.h \
+    insectefactory.h \
+    vague.h \
+    projectile.h \
     insectefactory.h
 
 FORMS += \

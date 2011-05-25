@@ -20,7 +20,7 @@ void Projectile::advance(int phase)
 
         // Collision avec ennemi
         // . Recherche des ennemis de la map
-        QList<Insecte*> insectes = carte->getInsectes();
+        QList<Insecte*> insectes;// = carte->getInsectes();
 
         for(int i = 0 ; i < insectes.length() ; ++i)
         {

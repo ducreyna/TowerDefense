@@ -5,6 +5,9 @@
 #include <fstream>
 #include <iostream>
 #include <QTextStream>
+#include <QFile>
+#include <QString>
+#include <QStringList>
 #include "vague.h"
 #include <stdexcept>
 

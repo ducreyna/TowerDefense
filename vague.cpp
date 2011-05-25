@@ -4,7 +4,6 @@ namespace TOWERDEFENSE {
 
 Vague::Vague()
 {
-
 }
 
 VagueConcrete::VagueConcrete(int type, int nombre, int taille, int intervalle, string commentaire) :
@@ -13,25 +12,31 @@ VagueConcrete::VagueConcrete(int type, int nombre, int taille, int intervalle, s
         taille(taille),
         intervalle(intervalle),
         commentaire(commentaire),
+        counterInsecte(0),
         Vague()
 {
+    this->timer = new QTimer();
+
+    QObject::connect(timer, SIGNAL(timeout()), this, SLOT(ajouterInsecte()));
 }
 
 VagueCompose::VagueCompose(QVector<Vague *> vagues) : composition(vagues), Vague()
 {
 }
 
-
-void VagueCompose::buildVague(int initX, int initY, QList<int>* path)
+void VagueCompose::buildVague(int initX, int initY, QList<int>* path, MyQGraphicsScene * scene)
 {
-    for(int i=0; this->composition.size(); i++)
+    for(int i=0; i<this->composition.size(); i++)
     {
-        this->composition[i]->buildVague(initX,initY,path);
+        this->composition[i]->buildVague(initX,initY,path, scene);
     }
 }
 
-void VagueConcrete::buildVague(int initX, int initY, QList<int>* path)
+void VagueConcrete::buildVague(int initX, int initY, QList<int>* path, MyQGraphicsScene * scene)
 {
+
+    this->scene = scene;
+
     Insecte * insecte;
 
     for(int i=0;i<this->nombre;i++)
@@ -43,22 +48,36 @@ void VagueConcrete::buildVague(int initX, int initY, QList<int>* path)
     }
 }
 
-QVector<Insecte *> VagueConcrete::getInsectes() const
+QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene) const
 {
-    return this->insectes;
+    QVector<Insecte *> tempInsecte;
+
+    if(onlyOnScene)
+    {
+        for(int i=0; i<this->insectes.size(); i++)
+        {
+            if(this->scene->items().indexOf(this->insectes[i]) != -1)
+                tempInsecte.append(this->insectes[i]);
+        }
+    }
+    else
+    {
+        tempInsecte = this->insectes;
+    }
+
+    return tempInsecte;
 }
 
-QVector<Insecte *> VagueCompose::getInsectes() const
+QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene) const
 {
     QVector<Insecte *> insectes, temp;
-    QList<Insecte *> pouet;
 
-    pouet.toVector();
+
     int i,j;
 
     for(i=0; i<composition.size(); i++)
     {
-        temp = composition[i]->getInsectes();
+        temp = composition[i]->getInsectes(onlyOnScene);
         for(j=0;j<temp.size();j++)
         {
             insectes.append(temp[j]);;
@@ -66,6 +85,42 @@ QVector<Insecte *> VagueCompose::getInsectes() const
     }
 
     return insectes;
+}
+
+void VagueConcrete::launchVague()
+{
+    this->timer->start(this->intervalle*20);
+}
+
+void VagueCompose::launchVague()
+{
+    for(int i=0; i<this->composition.size(); i++)
+    {
+        composition[i]->launchVague();
+    }
+}
+
+void VagueConcrete::display() const
+{
+    std::cout << type << std::endl;
+}
+
+void VagueCompose::display() const
+{
+    for(int i=0; i<this->composition.size(); i++)
+    {
+        composition[i]->display();
+    }
+}
+
+void VagueConcrete::ajouterInsecte()
+{
+    std::cout << this->getInsectes().size() << std::endl;
+    if(counterInsecte < this->getInsectes().size())
+    {
+        this->scene->addItem(this->getInsectes().at(counterInsecte));
+        counterInsecte++;
+    }
 }
 
 }
