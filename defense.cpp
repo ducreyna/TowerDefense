@@ -10,6 +10,8 @@ Defense::Defense(const double niveau,const double portee,const double cadence, c
 {
 }
 
+Defense::~Defense(){}
+
 double Defense::getNiveau()const { return niveau; }
 
 double Defense::getPortee()const { return portee; }
