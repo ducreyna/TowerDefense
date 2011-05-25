@@ -5,20 +5,18 @@
 #include <fstream>
 #include <iostream>
 #include <QTextStream>
+#include "vague.h"
+#include <stdexcept>
+
+using namespace std;
 
 namespace TOWERDEFENSE{
 class Fichier
 {
     int** carte;
-    double** vague; //le nombre d'ennemis est limite lors d'un jeu
-    /*
-        la premiere case du tableau vague indique le numero
-        /!\ Par convention 1 = Fourmi
-                           2 = Cafard
-                           3 = Guepe
-                           4 = Moustique
-                           0 = pas de vague
-     */
+    QVector<Vague *> vagues;
+    QList<int> * path;
+
 public:
     Fichier();
     virtual ~Fichier();
@@ -31,9 +29,15 @@ public:
 
     /*!
       * Accesseur renvoyant les vagues du jeu
-      * \return double** tableau 2 dimensions
+      * \return QVector<Vague *> un vecteur de Vague
       */
-    double** getVague() const;
+    QVector<Vague *> getVagues() const;
+
+    QList<int> * getPath() const;
+
+    bool chargerPath();
+
+    QList<int> buildPathRecursively(int currX, int currY, int prevX, int prevY);
 
     /*!
       * Methode chargant la carte du jeu a partir d'un fichier et effectuant un parsing de celui-ci afin de le traduire dans un tableau a 2 dimensions
@@ -44,15 +48,9 @@ public:
 
     /*!
       * Methode chargant les differentes vagues d'ennemis a partir d'un fichier et effectuant un parsing de celui-ci
-      * \return bool true si la carte a bien ete charge, false sinon
+      * \return QVector<Vague*> La liste des vagues
       */
     bool chargerVague(const std::string& chemin);
-
-    /*!
-      * Methode permettant de compter le nombre de vagues chargees
-      * \return int le nombre de vagues
-      */
-    int NombreVagues() const;
 };
 }
 

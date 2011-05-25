@@ -14,7 +14,10 @@ SOURCES += \
     pierre.cpp \
     peinture.cpp \
     petanque.cpp \
-    projectile.cpp
+    projectile.cpp \
+    vague.cpp \
+    insectefactory.cpp
+
 
 HEADERS += \
     fichier.h \
@@ -31,7 +34,9 @@ HEADERS += \
     peinture.h \
     petanque.h \
     constantes.h \
-    projectile.h
+    projectile.h \
+    vague.h \
+    insectefactory.h
 
 FORMS += \
     mainwindow.ui

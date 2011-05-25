@@ -18,14 +18,18 @@ protected:
     double vitalite;
     double resistance;
     double vitesse;
-    Type_deplacement deplacement;
+    QList<int> *path;
 
+    Type_deplacement deplacement;
     QList<QPixmap*> animPixmap;
     int animState;
+    int counter;
+
+    void advance(int phase);
 
 public:
     Insecte();
-    Insecte(const double taille, const double vitalite, const double resistance, const double vitesse, const Type_deplacement deplacement,QGraphicsPixmapItem *parent=0);
+    Insecte(const double taille, const double vitalite, const double resistance, const double vitesse, const Type_deplacement deplacement, QGraphicsPixmapItem *parent=0);
 
     /*!
       * Accesseur modifiant l'attribut vitalite
@@ -50,6 +54,8 @@ public:
       * \param deplacement le nouveau type de deplacement de l'insecte
       */
     void setDeplacement(Type_deplacement deplacement);
+
+    void setPath(QList<int> *path);
 
     /*!
       * Methode virtuelle pure permettant de traiter les degats recus par un insecte
