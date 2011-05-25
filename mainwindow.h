@@ -39,9 +39,12 @@ private:
     MyQGraphicsScene * S;
     Fichier f;
     QTimer * mainTimer;
+    QTimer * vagueTimer;
+    int counterVague;
     int** carte;
 
     QVector<Vague *> vagues;
+
     QList<int> * path;
 
 private slots:

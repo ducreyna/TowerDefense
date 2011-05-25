@@ -123,10 +123,104 @@ QList<int> Fichier::buildPathRecursively(int currX, int currY, int prevX, int pr
 
 bool Fichier::chargerVague(const std::string &chemin)
 {
-    std::ifstream fichier(chemin.c_str(), std::ios::in);  // on ouvre le fichier en lecture
+
+    QFile descripteurFichier(chemin.c_str());
+    if(descripteurFichier.open(QIODevice::ReadOnly))
+    {
+        // Le fichier a ete ouvert correctement
+        QString contenu = descripteurFichier.readAll();
+        QStringList lignes = contenu.split("\n");
+        QStringList vagueParse;
+        QStringList parameters;
+        string commentaire;
+        float taille;
+        int type;
+        int nombre;
+        int intervalle;
+
+        QVector<Vague *> composition, vagueContainer;
+        Vague * tempVague;
+
+        for(int i=0; i<lignes.size(); i++)
+        {
+            vagueParse = lignes.at(i).split(";");
+            composition.clear();
+
+            for(int j=0; j<vagueParse.size(); j++)
+            {
+                if(j == 0)
+                {
+                    commentaire = vagueParse.at(j).toStdString();
+                }
+                else
+                {
+                    parameters = vagueParse.at(j).split(":");
+
+                    for(int k=0; k<parameters.size(); k++)
+                    {
+                        if(k == 0)
+                        {
+                            if(parameters.at(k).compare("fourmi") == 0)
+                            {
+                                type = InsecteFactory::TYPE_FOURMI;
+                            }
+                            else if(parameters.at(k).compare("guepe") == 0)
+                            {
+                                type = InsecteFactory::TYPE_GUEPE;
+                            }
+                            else if(parameters.at(k).compare("cafard") == 0)
+                            {
+                                type = InsecteFactory::TYPE_CAFARD;
+                            }
+                            else if(parameters.at(k).compare("moustique") == 0)
+                            {
+                                type = InsecteFactory::TYPE_MOUSTIQUE;
+                            }
+                            else
+                            {
+                                throw runtime_error(0);
+                            }
+                        }
+                        else if(k == 1)
+                        {
+                            taille = parameters.at(k).toFloat();
+                        }
+                        else if(k == 2)
+                        {
+                            nombre = parameters.at(k).toInt();
+                        }
+                        else if(k == 3)
+                        {
+                            intervalle = parameters.at(k).toInt();
+                        }
+                    }
+
+                    tempVague = new VagueConcrete(type,nombre,taille,intervalle,commentaire);
+                    composition.append(tempVague);
+                }
+            }
+
+            if(composition.size() > 1)
+            {
+                tempVague = new VagueCompose(composition);
+            }
+
+            vagueContainer.append(tempVague);
+        }
+
+        this->vagues = vagueContainer;
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+    /*std::ifstream fichier(chemin.c_str(), std::ios::in);  // on ouvre le fichier en lecture
 
         if(fichier)  // si l'ouverture a réussi
         {
+
             int j(0);
             std::string ligne;
             QString commentaire;
@@ -140,22 +234,27 @@ bool Fichier::chargerVague(const std::string &chemin)
             QVector<Vague*> composition;
             QVector<Vague*> vagues;
 
+
+
             while(getline(fichier, ligne))
             {
                 j = 0;
 
                 // récupération du commentaire
+                commentaire.clear();
                 while(ligne[j] != ';')
                 {
                     commentaire.push_back(QChar(ligne[j]));
                     j++;
                 }
 
-                composition.clear(); // on vide le vecteur temporaire de composition
+                j++;
 
-                while(ligne[j]!=';' && ligne[j] != '\n')
+                //composition.clear(); // on vide le vecteur temporaire de composition
+
+                while(ligne[j] != '\n' && ligne[j] != '\r')
                 {
-
+                    typeInsecte.clear();
                     while(ligne[j] != ':')
                     {
                         typeInsecte.push_back(QChar(ligne[j]));
@@ -185,6 +284,7 @@ bool Fichier::chargerVague(const std::string &chemin)
                         throw runtime_error(0);
                     }
 
+                    taille.clear();
                     while(ligne[j] != ':')
                     {
                         taille.push_back(QChar(ligne[j]));
@@ -193,6 +293,7 @@ bool Fichier::chargerVague(const std::string &chemin)
 
                     j++;
 
+                    nombre.clear();
                     while(ligne[j] != ':')
                     {
                         nombre.push_back(QChar(ligne[j]));
@@ -201,16 +302,19 @@ bool Fichier::chargerVague(const std::string &chemin)
 
                     j++;
 
-                    while(ligne[j] != ':' && ligne[j] != ';' && ligne[j] != '\n')
+                    intervalle.clear();
+                    while(ligne[j] != ';' && ligne[j] != '\n')
                     {
                         intervalle.push_back(QChar(ligne[j]));
                         j++;
                     }
 
-                    vague = new VagueConcrete(type,taille.toInt(),nombre.toInt(),intervalle.toInt(),commentaire.toStdString());
+                    vague = new VagueConcrete(type,nombre.toInt(),taille.toInt(),intervalle.toInt(),commentaire.toStdString());
                     composition.push_back(vague);
 
+
                     j++;
+                    std::cout << ligne[j] << endl;
                 }
 
                 // si on a une vague composée
@@ -228,7 +332,7 @@ bool Fichier::chargerVague(const std::string &chemin)
         else
         {
             return false;
-        }
+        }*/
 
 }
 

@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     S = new MyQGraphicsScene(ui->terrain);
     mainTimer = new QTimer();
+    vagueTimer = new QTimer();
+
+    counterVague = 0;
 
     QObject::connect(S,SIGNAL(ajouterTour(int,int,std::string)),this,SLOT(ajouterTour(int,int,std::string)));
     QObject::connect(S,SIGNAL(tourMouseTracking(int,int,std::string)),this,SLOT(tourMouseTracking(int,int,std::string)));
@@ -170,12 +173,11 @@ void MainWindow::ChargerGraphiques() {
 void MainWindow::on_loadMap_clicked()
 {
     f.chargerCarte("data/map.txt");
-    //f.chargerVague("data/waves.txt");
+    f.chargerVague("data/waves.txt");
     f.chargerPath();
 
     carte = f.getCarte();
     vagues = f.getVagues();
-
     path = f.getPath();
 
     ChargerGraphiques();
@@ -200,20 +202,20 @@ void MainWindow::on_newWave_clicked()
     departX = max(0,j-1);
     departY = max(0,i-1);
 
-    // initialisation des vagues
-    for(i=0; i < vagues.size(); i++)
+    mainTimer->start(20);
+
+    if(counterVague == vagues.size())
     {
-        //vagues[i]->buildVague(departX*32,departY*32);
+        // le jeu est fini : WIN \o/
+        ui->newWave->setEnabled(false);
+    }
+    else
+    {
+        vagues.at(counterVague)->buildVague(departX*32,departY*32,this->path,this->S);
+        vagues.at(counterVague)->launchVague();
+        counterVague++;
     }
 
-    Cafard * test = dynamic_cast<Cafard*>(InsecteFactory::create(InsecteFactory::TYPE_CAFARD,1,path));
-    Fourmi * f = dynamic_cast<Fourmi*>(InsecteFactory::create(InsecteFactory::TYPE_FOURMI,1.7,path));
-    test->setPos(departX*32,departY*32);
-    f->setPos(departX*32,departY*32);
-
-    S->addItem(f);
-    S->addItem(test);
-    mainTimer->start(20);
 }
 
 void MainWindow::on_waterTowers_clicked()

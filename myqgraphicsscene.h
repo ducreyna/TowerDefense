@@ -8,6 +8,9 @@
 #include <QList>
 
 #include <iostream>
+#include "insecte.h"
+
+using namespace TOWERDEFENSE;
 
 class MyQGraphicsScene : public QGraphicsScene
 {
@@ -46,7 +49,6 @@ public:
 signals:
     void ajouterTour(int x, int y, std::string type);
     void tourMouseTracking(int x, int y,std::string type);
-
 };
 
 #endif // MYQGRAPHICSSCENE_H

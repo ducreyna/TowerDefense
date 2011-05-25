@@ -125,8 +125,6 @@ void Insecte::advance(int phase)
     }
 
     if(deltaX != 0 || deltaY != 0) {
-
-        std::cout << deltaX << std::endl;
         counter++;
     }
 }

@@ -3,7 +3,8 @@
 #include <iostream>
 
 MyQGraphicsScene::MyQGraphicsScene(QGraphicsView *parent):QGraphicsScene(parent),tourDemandee(""),precedent(0),precedent2(0)
-{}
+{
+}
 
 void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
