@@ -276,8 +276,8 @@ void MainWindow::on_newWave_clicked()
     test->setPos(departX*32,departY*32);
     f->setPos(departX*32,departY*32);
 
-    S->addItem(f);
-    S->addItem(test);
+    S->addInsecte(f);
+    //S->addItem(test);
     mainTimer->start(20);
 }
 

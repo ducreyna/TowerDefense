@@ -22,7 +22,7 @@ Cafard::Cafard(const double taille,const int x, const int y, QGraphicsPixmapItem
     this->setData(0,"CAFARD");
 }
 
-Cafard::~Cafard(){ std::cout << "Je suis détruit" << std::endl;}
+Cafard::~Cafard(){}
 
 void Cafard::recevoirDegats(double degats){
     vitalite = vitalite - (degats-resistance);
