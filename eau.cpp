@@ -2,7 +2,7 @@
 
 namespace TOWERDEFENSE{
 
-Eau::Eau(const double niveau,const int x, const int y,MyQGraphicsScene* carte,QGraphicsPixmapItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,(double)1.5),8,20,45,40,parent),carte(carte)
+Eau::Eau(const double niveau,const int x, const int y,QGraphicsPixmapItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,(double)1.5),8,20,45,40,parent)
 {
     setData(0,"EAU");
 
@@ -82,7 +82,7 @@ void Eau::advance(int phase)
             return;
 
         // Détection des ennemis aux alentours
-        QList<Insecte*> insectes;// = carte->getInsectes();
+        QVector<Insecte*> insectes = vagueEnCours->getInsectes();
 
         // Recherche des ennemis de la map
         for(int i = 0 ; i < insectes.size() ; ++i) {
@@ -113,8 +113,8 @@ void Eau::advance(int phase)
 
 void Eau::shootTarget()
 {
-    Projectile *shot = new Projectile(vitesse,frappe,this->x()+14,this->y()+14,cibleX,cibleY,carte);
-    carte->addItem(shot);
+    Projectile *shot = new Projectile(vitesse,frappe,this->x()+14,this->y()+14,cibleX,cibleY,vagueEnCours);
+    this->scene()->addItem(shot);
 }
 
 }

@@ -8,10 +8,12 @@
 #include <QMessageBox>
 #include <QTimer>
 #include <QList>
+#include <QObject>
 
 #include "constantes.h"
 #include "insecte.h"
 #include "projectile.h"
+#include "vague.h"
 
 #include <math.h>
 
@@ -35,6 +37,8 @@ protected:
     bool isShooting;
     QTimer *shootTimer;
 
+    Vague *vagueEnCours;
+
 public:
     Defense();
     Defense(const double niveau,const double portee,const double cadence, const double frappe,const int cout,const int amelioration_1,const int amelioration_2, const double vitesse, QGraphicsItem *parent=0, const Type_deplacement cible = VIDE,const Type_projectile projectile = EAU);
@@ -48,6 +52,8 @@ public:
     int getCout()const;
     int getAmelioration_1()const;
     int getAmelioration_2()const;
+    void setVague(Vague* vague);
+
 };
 }
 

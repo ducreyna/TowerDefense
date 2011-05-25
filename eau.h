@@ -2,7 +2,7 @@
 #define EAU_H
 
 #include "defense.h"
-#include "myqgraphicsscene.h"
+#include "vague.h"
 #include <QObject>
 
 #include <iostream>
@@ -16,7 +16,7 @@ class Eau : public Defense
     Q_OBJECT
 public:
     Eau();
-    Eau(const double niveau,const int x,const int y, MyQGraphicsScene* carte,QGraphicsPixmapItem *parent=0);
+    Eau(const double niveau,const int x,const int y,QGraphicsPixmapItem *parent=0);
 
     double attaquer();
     bool ameliorer();
@@ -26,7 +26,6 @@ public:
 
 protected:
     void advance(int phase);
-    MyQGraphicsScene *carte;
 
 public slots:
     void shootTarget();

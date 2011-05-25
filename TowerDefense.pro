@@ -38,7 +38,8 @@ HEADERS += \
     insectefactory.h \
     vague.h \
     projectile.h \
-    insectefactory.h
+    insectefactory.h \
+    entite.h
 
 FORMS += \
     mainwindow.ui

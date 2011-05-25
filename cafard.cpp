@@ -41,8 +41,6 @@ void Cafard::advance(int phase)
 
     // deprecated
 
-    this->setPos(x()+vitesse*1,y()+vitesse*1);
-
 
     // Oriente l'image dans le bon sens
     // (nb : transformation par rapport au centre de l'image)
@@ -50,5 +48,6 @@ void Cafard::advance(int phase)
     //this->setRotation(1*90);
 
     Insecte::advance(phase);
+
 }
 }

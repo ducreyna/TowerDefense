@@ -102,15 +102,15 @@ void VagueCompose::launchVague()
 
 void VagueConcrete::display() const
 {
-    std::cout << type << std::endl;
+    //std::cout << type << std::endl;
 }
 
 void VagueCompose::display() const
 {
-    for(int i=0; i<this->composition.size(); i++)
+    /*for(int i=0; i<this->composition.size(); i++)
     {
         composition[i]->display();
-    }
+    }*/
 }
 
 void VagueConcrete::ajouterInsecte()

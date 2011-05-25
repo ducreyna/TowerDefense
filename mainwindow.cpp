@@ -182,9 +182,9 @@ void MainWindow::chargerGraphiques() {
         }
     }
     ui->terrain->setScene(S);
-    ui->terrain->setRenderHint(QPainter::Antialiasing);
-    ui->terrain->setCacheMode(QGraphicsView::CacheBackground);
-    ui->terrain->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
+    //ui->terrain->setRenderHint(QPainter::Antialiasing);
+    //ui->terrain->setCacheMode(QGraphicsView::CacheBackground);
+    //ui->terrain->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     verifierToursConstructibles();
 }
 
@@ -268,6 +268,10 @@ void MainWindow::on_newWave_clicked()
         vagues.at(counterVague)->buildVague(departX*32,departY*32,this->path,this->S);
         vagues.at(counterVague)->launchVague();
         counterVague++;
+    }
+    for(int j = 0; j < defenses.size(); ++j)
+    {
+        defenses.at(j)->setVague(vagues.at(counterVague-1));
     }
 }
 
@@ -389,7 +393,9 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
 {
     if(type == "EAU")
     {
-        S->addItem(new Eau(1,(x/32)*32,(y/32)*32,S,0));
+        Eau *e = new Eau(1,(x/32)*32,(y/32)*32,0);
+        defenses.push_back(e);
+        S->addItem(e);
         ui->lcdMoney->display(ui->lcdMoney->value() - 8);
     }
 
@@ -435,7 +441,7 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
     QGraphicsItem *I;
     if(type == "EAU")
     {
-        Eau *e = new Eau(1,(x/32)*32,(y/32)*32,S,0);
+        Eau *e = new Eau(1,(x/32)*32,(y/32)*32,0);
         I = S->addEllipse((x/32)*32-(e->getPortee()-0.5)*32,(y/32)*32-(e->getPortee()-0.5)*32,64*e->getPortee(),64*e->getPortee(),QPen(Qt::white),Qt::transparent);
         S->addItem(e);
     }

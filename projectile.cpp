@@ -2,7 +2,7 @@
 
 namespace TOWERDEFENSE{
 
-Projectile::Projectile(const double vitesse, const double frappe, const int x, const int y, const double cibleX, const double cibleY, MyQGraphicsScene *carte):vitesse(vitesse),frappe(frappe),cibleX(cibleX),cibleY(cibleY),carte(carte)
+Projectile::Projectile(const double vitesse, const double frappe, const int x, const int y, const double cibleX, const double cibleY, Vague *vague):vitesse(vitesse),frappe(frappe),cibleX(cibleX),cibleY(cibleY),vagueEnCours(vague)
 {
     this->setPos(x,y);
 
@@ -18,11 +18,10 @@ void Projectile::advance(int phase)
     if(!phase)
             return;
 
-        // Collision avec ennemi
         // . Recherche des ennemis de la map
-        QList<Insecte*> insectes;// = carte->getInsectes();
+        QVector<Insecte*> insectes = vagueEnCours->getInsectes();
 
-        for(int i = 0 ; i < insectes.length() ; ++i)
+        for(int i = 0 ; i < insectes.size() ; ++i)
         {
                 if(this->collidesWithItem(insectes.at(i),Qt::IntersectsItemBoundingRect))
                 {
@@ -42,7 +41,7 @@ void Projectile::advance(int phase)
 
         // Si le projectile est en dehors de l'écran, on le supprime
         if(newx < 0 || newx > 512 || newy < 0 || newy > 512){
-            carte->removeItem(this);
+            this->scene()->removeItem(this);
             return;
         }
         this->setPos(newx,newy);

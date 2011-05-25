@@ -4,7 +4,7 @@
 #include <QGraphicsItem>
 #include <QPainter>
 #include <QPointF>
-#include <myqgraphicsscene.h>
+#include <vague.h>
 #include <math.h>
 #include "insecte.h"
 #include <iostream>
@@ -19,12 +19,12 @@ private:
         double cibleX;
         double cibleY;
         QPointF mouvementVecteur;
-        MyQGraphicsScene *carte;
+        Vague *vagueEnCours;
 
     virtual void advance(int phase);
 
 public:
-    Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,MyQGraphicsScene* carte=0);
+    Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,Vague* vague=0);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

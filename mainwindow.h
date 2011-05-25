@@ -22,6 +22,7 @@
 #include "pierre.h"
 #include "peinture.h"
 #include "petanque.h"
+#include "defense.h"
 
 using namespace TOWERDEFENSE;
 
@@ -45,6 +46,7 @@ private:
     QTimer * vagueTimer;
     int counterVague;
     int** carte;
+    QList<Defense*> defenses;
 
     QVector<Vague *> vagues;
 
