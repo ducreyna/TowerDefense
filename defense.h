@@ -37,7 +37,7 @@ protected:
     bool isShooting;
     QTimer *shootTimer;
 
-    Vague *vagueEnCours;
+    QVector<Insecte*> vagueEnCours;
 
 public:
     Defense();
@@ -52,7 +52,7 @@ public:
     int getCout()const;
     int getAmelioration_1()const;
     int getAmelioration_2()const;
-    void setVague(Vague* vague);
+    void setVague(QVector<Insecte*> vague);
 
 };
 }

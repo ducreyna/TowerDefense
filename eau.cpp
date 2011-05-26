@@ -82,7 +82,7 @@ void Eau::advance(int phase)
             return;
 
         // Détection des ennemis aux alentours
-        QVector<Insecte*> insectes = vagueEnCours->getInsectes();
+        QVector<Insecte*> insectes = vagueEnCours;
 
         // Recherche des ennemis de la map
         for(int i = 0 ; i < insectes.size() ; ++i) {

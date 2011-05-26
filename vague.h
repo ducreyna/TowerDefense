@@ -14,6 +14,8 @@ namespace TOWERDEFENSE {
 
  class Vague : public QObject
 {
+protected:
+     QVector<Insecte*> insectes;
 
 public:
     Vague();
@@ -47,7 +49,7 @@ private:
     int counterInsecte;
     QTimer * timer;
     string commentaire;
-    QVector<Insecte *> insectes;
+    //QVector<Insecte *> insectes;
     MyQGraphicsScene * scene;
 
 public:

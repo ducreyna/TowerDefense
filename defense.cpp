@@ -22,7 +22,7 @@ int Defense::getAmelioration_1()const { return amelioration_1; }
 
 int Defense::getAmelioration_2()const { return amelioration_2; }
 
-void Defense::setVague(Vague *vague)
+void Defense::setVague(QVector<Insecte*> vague)
 {
     this->vagueEnCours = vague;
 }

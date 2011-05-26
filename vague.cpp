@@ -50,7 +50,7 @@ void VagueConcrete::buildVague(int initX, int initY, QList<int>* path, MyQGraphi
 
 QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene) const
 {
-    QVector<Insecte *> tempInsecte;
+    /*QVector<Insecte *> tempInsecte;
 
     if(onlyOnScene)
     {
@@ -65,12 +65,13 @@ QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene) const
         tempInsecte = this->insectes;
     }
 
-    return tempInsecte;
+    return tempInsecte;*/
+    return this->insectes;
 }
 
 QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene) const
 {
-    QVector<Insecte *> insectes, temp;
+    /*QVector<Insecte *> insectes, temp;
 
 
     int i,j;
@@ -84,7 +85,8 @@ QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene) const
         }
     }
 
-    return insectes;
+    return insectes;*/
+    return this->insectes;
 }
 
 void VagueConcrete::launchVague()

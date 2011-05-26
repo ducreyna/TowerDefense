@@ -271,7 +271,7 @@ void MainWindow::on_newWave_clicked()
     }
     for(int j = 0; j < defenses.size(); ++j)
     {
-        defenses.at(j)->setVague(vagues.at(counterVague-1));
+        defenses.at(j)->setVague(vagues.at(counterVague-1)->getInsectes());
     }
 }
 

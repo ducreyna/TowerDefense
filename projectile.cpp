@@ -2,7 +2,7 @@
 
 namespace TOWERDEFENSE{
 
-Projectile::Projectile(const double vitesse, const double frappe, const int x, const int y, const double cibleX, const double cibleY, Vague *vague):vitesse(vitesse),frappe(frappe),cibleX(cibleX),cibleY(cibleY),vagueEnCours(vague)
+Projectile::Projectile(const double vitesse, const double frappe, const int x, const int y, const double cibleX, const double cibleY, QVector<Insecte*> vague):vitesse(vitesse),frappe(frappe),cibleX(cibleX),cibleY(cibleY),vagueEnCours(vague)
 {
     this->setPos(x,y);
 
@@ -19,7 +19,7 @@ void Projectile::advance(int phase)
             return;
 
         // . Recherche des ennemis de la map
-        QVector<Insecte*> insectes = vagueEnCours->getInsectes();
+        QVector<Insecte*> insectes = vagueEnCours;
 
         for(int i = 0 ; i < insectes.size() ; ++i)
         {

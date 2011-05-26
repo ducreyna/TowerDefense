@@ -19,12 +19,12 @@ private:
         double cibleX;
         double cibleY;
         QPointF mouvementVecteur;
-        Vague *vagueEnCours;
+        QVector<Insecte*> vagueEnCours;
 
     virtual void advance(int phase);
 
 public:
-    Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,Vague* vague=0);
+    Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,QVector<Insecte*> vague);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
