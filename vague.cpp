@@ -34,7 +34,6 @@ void VagueCompose::buildVague(int initX, int initY, QList<int>* path, MyQGraphic
 
 void VagueConcrete::buildVague(int initX, int initY, QList<int>* path, MyQGraphicsScene * scene)
 {
-
     this->scene = scene;
 
     Insecte * insecte;
@@ -45,47 +44,28 @@ void VagueConcrete::buildVague(int initX, int initY, QList<int>* path, MyQGraphi
         insecte->setX(initX);
         insecte->setY(initY);
         this->insectes.push_back(insecte);
+        QObject::connect(insecte,SIGNAL(supprimerInsecte(Insecte*)),this,SLOT(supprimerInsecte(Insecte*)));
     }
 }
 
-QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene) const
+QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene)
 {
-    /*QVector<Insecte *> tempInsecte;
-
-    if(onlyOnScene)
-    {
-        for(int i=0; i<this->insectes.size(); i++)
-        {
-            if(this->scene->items().indexOf(this->insectes[i]) != -1)
-                tempInsecte.append(this->insectes[i]);
-        }
-    }
-    else
-    {
-        tempInsecte = this->insectes;
-    }
-
-    return tempInsecte;*/
+    //std::cout << "Je rentre_1" << std::endl;
     return this->insectes;
 }
 
-QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene) const
+QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene)
 {
-    /*QVector<Insecte *> insectes, temp;
-
-
-    int i,j;
-
-    for(i=0; i<composition.size(); i++)
+    for(int i = composition.size()-1; i >= 0; i--)
     {
-        temp = composition[i]->getInsectes(onlyOnScene);
-        for(j=0;j<temp.size();j++)
-        {
-            insectes.append(temp[j]);;
-        }
+        insectes += composition.at(i)->getInsectes();
     }
 
-    return insectes;*/
+    for(int i=0; i < insectes.size(); i++)
+    {
+        std::cout << "Je rentre" << std::endl;
+        std::cout << qPrintable(insectes.at(i)->data(0).toString()) << std::endl;
+    }
     return this->insectes;
 }
 
@@ -117,12 +97,28 @@ void VagueCompose::display() const
 
 void VagueConcrete::ajouterInsecte()
 {
-    std::cout << this->getInsectes().size() << std::endl;
     if(counterInsecte < this->getInsectes().size())
     {
         this->scene->addItem(this->getInsectes().at(counterInsecte));
         counterInsecte++;
     }
+}
+
+void VagueConcrete::supprimerInsecte(Insecte *I)
+{
+    //std::cout << "Je rentre" << std::endl;
+    for(int i = 0; i < insectes.size() ; ++i)
+    {
+
+        if(insectes.at(i) == I)
+        {
+            insectes.remove(i);
+           // QObject::disconnect(ptr);
+            this->scene->removeItem(I);
+            break;
+        }
+    }
+    emit this->miseAJour();
 }
 
 }

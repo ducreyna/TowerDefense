@@ -24,7 +24,7 @@ Guepe::Guepe(const double taille,const int x, const int y,QGraphicsPixmapItem *p
 
 void Guepe::recevoirDegats(double degats)
 {
-    vitalite = vitalite - (degats-resistance);
+    Insecte::recevoirDegats(degats);
 }
 
 double Guepe::degatsCauses()

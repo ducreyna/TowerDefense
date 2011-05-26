@@ -6,7 +6,7 @@ Peinture::Peinture()
 {
 }
 
-Peinture::Peinture(const double niveau,const int x,const int y,QGraphicsItem *parent):Defense(niveau,4+niveau/2,2,4*pow(niveau,1.5),12,25,60,30,parent,VIDE,PEINTURE)
+Peinture::Peinture(const double niveau,const int x,const int y,QGraphicsItem *parent)//:Defense(niveau,4+niveau/2,2,4*pow(niveau,1.5),12,25,60,30,parent,VIDE,PEINTURE)
 {
     setData(0,"PEINTURE");
 

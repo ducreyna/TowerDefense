@@ -70,7 +70,7 @@ public slots:
     void ajouterTour(int x, int y, std::string type);
     void tourMouseTracking(int x, int y,std::string type);
     void tourSelectionnee(int x, int y, QGraphicsItem *tour);
-
+    void miseAJour();
 };
 
 #endif // MAINWINDOW_H

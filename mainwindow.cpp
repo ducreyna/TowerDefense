@@ -265,14 +265,12 @@ void MainWindow::on_newWave_clicked()
     }
     else
     {
+        QObject::connect(vagues.at(counterVague),SIGNAL(miseAJour()),this,SLOT(miseAJour()));
         vagues.at(counterVague)->buildVague(departX*32,departY*32,this->path,this->S);
-        vagues.at(counterVague)->launchVague();
+        vagues.at(counterVague)->launchVague();       
         counterVague++;
     }
-    for(int j = 0; j < defenses.size(); ++j)
-    {
-        defenses.at(j)->setVague(vagues.at(counterVague-1)->getInsectes());
-    }
+    this->miseAJour();
 }
 
 void MainWindow::on_waterTowers_clicked()
@@ -492,5 +490,14 @@ void MainWindow::tourSelectionnee(int x, int y, QGraphicsItem *tour)
         ui->sellButton->setEnabled(false);
         ui->type->setText("Type: ");
         ui->level->setText("Level: ");
+    }
+}
+
+void MainWindow::miseAJour()
+{
+    //std::cout << vagues.at(counterVague-1)->getInsectes().size() << std::endl;
+    for(int j = 0; j < defenses.size(); ++j)
+    {
+        defenses.at(j)->setVague(vagues.at(counterVague-1)->getInsectes());
     }
 }

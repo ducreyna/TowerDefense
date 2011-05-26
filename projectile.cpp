@@ -31,8 +31,8 @@ void Projectile::advance(int phase)
                     insectes[i]->recevoirDegats(frappe);
                     return;
                 }
+                this->cibleVitesse = insectes.at(i)->getVitesse();
         }
-
 
 
         // Déplacement du projectile selon le vecteur de déplacement et la vitesse

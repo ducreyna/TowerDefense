@@ -85,7 +85,7 @@ void MyQGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 void MyQGraphicsScene::removeItem(QGraphicsItem *item)
 {
     QGraphicsScene::removeItem(item);
-    delete item;
+    //delete item;
 }
 
 void MyQGraphicsScene::setTourDemandee(std::string tour)

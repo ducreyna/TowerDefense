@@ -25,7 +25,7 @@ Cafard::Cafard(const double taille,const int x, const int y, QGraphicsPixmapItem
 Cafard::~Cafard(){}
 
 void Cafard::recevoirDegats(double degats){
-    vitalite = vitalite - (degats-resistance);
+    Insecte::recevoirDegats(degats);
 }
 
 void Cafard::advance(int phase)

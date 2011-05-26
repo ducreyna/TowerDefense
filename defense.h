@@ -14,13 +14,15 @@
 #include "insecte.h"
 #include "projectile.h"
 #include "vague.h"
+#include "entite.h"
 
 #include <math.h>
 
 namespace TOWERDEFENSE{
 
-class Defense : public QGraphicsPixmapItem,public QObject
+class Defense : public Entite
 {
+    Q_OBJECT
 protected:
     Type_deplacement cible;
     double niveau;

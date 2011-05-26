@@ -83,6 +83,7 @@ void Eau::advance(int phase)
 
         // Détection des ennemis aux alentours
         QVector<Insecte*> insectes = vagueEnCours;
+        //std::cout << "size_vague: " << vagueEnCours.size() << std::endl;
 
         // Recherche des ennemis de la map
         for(int i = 0 ; i < insectes.size() ; ++i) {
@@ -113,7 +114,8 @@ void Eau::advance(int phase)
 
 void Eau::shootTarget()
 {
-    Projectile *shot = new Projectile(vitesse,frappe,this->x()+14,this->y()+14,cibleX,cibleY,vagueEnCours);
+    //std::cout << this->vagueEnCours.size() << std::endl;
+    Projectile *shot = new Projectile(vitesse,frappe,this->x()+16,this->y()+16,cibleX,cibleY,vagueEnCours);
     this->scene()->addItem(shot);
 }
 

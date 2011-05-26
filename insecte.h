@@ -1,18 +1,21 @@
 #ifndef INSECTE_H
 #define INSECTE_H
 
-#include <QGraphicsPixmapItem>
+//#include <QGraphicsPixmapItem>
 #include <Qlist>
 #include <QString>
 
 #include "math.h"
+#include "entite.h"
 
-#include <constantes.h>
+#include "constantes.h"
+#include <iostream>
 
 namespace TOWERDEFENSE{
 
-class Insecte : public QGraphicsPixmapItem
+class Insecte : public Entite
 {
+    Q_OBJECT
 protected:
     double taille;
     double vitalite;
@@ -61,12 +64,16 @@ public:
       * Methode virtuelle pure permettant de traiter les degats recus par un insecte
       * \param degats les degats subis par l'attaque
       */
-    virtual void recevoirDegats(double degats) = 0;
+    virtual void recevoirDegats(double degats);
 
     double getTaille()const;
     double getVitalite()const;
+    double getVitesse()const;
 
     void increaseAnimationStep();
+
+signals:
+    void supprimerInsecte(Insecte* I);
 };
 }
 

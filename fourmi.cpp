@@ -23,8 +23,8 @@ Fourmi::Fourmi(const double taille,const int x, const int y,QGraphicsPixmapItem 
 }
 
 void Fourmi::recevoirDegats(double degats){
+    Insecte::recevoirDegats(degats);
     vitesse = vitesse  * 1.5;               /*    /!\  A MODIFIER !!!   */
-    vitalite = vitalite - (degats-resistance);
 }
 
 void Fourmi::advance(int phase)

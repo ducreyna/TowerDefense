@@ -14,14 +14,16 @@ namespace TOWERDEFENSE{
     class Projectile : public QGraphicsItem
 {
 private:
-        double vitesse;
-        double frappe;
-        double cibleX;
-        double cibleY;
-        QPointF mouvementVecteur;
-        QVector<Insecte*> vagueEnCours;
+    double vitesse;
+    double frappe;
+    double cibleX;
+    double cibleY;
+    QPointF mouvementVecteur;
+    QVector<Insecte*> vagueEnCours;
 
     virtual void advance(int phase);
+
+    double cibleVitesse;
 
 public:
     Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,QVector<Insecte*> vague);

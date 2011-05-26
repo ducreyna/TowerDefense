@@ -16,7 +16,8 @@ SOURCES += \
     petanque.cpp \
     projectile.cpp \
     vague.cpp \
-    insectefactory.cpp
+    insectefactory.cpp \
+    entite.cpp
 
 HEADERS += \
     fichier.h \
@@ -39,6 +40,7 @@ HEADERS += \
     vague.h \
     projectile.h \
     insectefactory.h \
+    entite.h \
     entite.h
 
 FORMS += \

@@ -23,7 +23,7 @@ Moustique::Moustique(const double taille,const int x, const int y,QGraphicsPixma
 }
 
 void Moustique::recevoirDegats(double degats) {
-    vitalite = vitalite - (degats-resistance);
+    Insecte::recevoirDegats(degats);
     toRampant();
 }
 
