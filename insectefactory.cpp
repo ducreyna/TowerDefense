@@ -8,7 +8,7 @@ int const InsecteFactory::TYPE_GUEPE        = 3;
 int const InsecteFactory::TYPE_MOUSTIQUE    = 4;
 
 
-Insecte* InsecteFactory::create(int type, int size, QList<int> *path)
+Insecte* InsecteFactory::create(int type, double size, QList<int> *path)
 {
     Insecte * insecteToCreate;
 

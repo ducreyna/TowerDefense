@@ -23,7 +23,7 @@ class InsecteFactory
         int static const TYPE_FOURMI;
         int static const TYPE_MOUSTIQUE;
 
-        static Insecte* create(int type, int size, QList<int> * path);
+        static Insecte* create(int type, double size, QList<int> * path);
 };
 
 }

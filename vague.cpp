@@ -6,7 +6,7 @@ Vague::Vague()
 {
 }
 
-VagueConcrete::VagueConcrete(int type, int nombre, int taille, int intervalle, string commentaire) :
+VagueConcrete::VagueConcrete(int type, int nombre, double taille, int intervalle, string commentaire) :
         type(type),
         nombre(nombre),
         taille(taille),
@@ -18,6 +18,7 @@ VagueConcrete::VagueConcrete(int type, int nombre, int taille, int intervalle, s
     this->timer = new QTimer();
 
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(ajouterInsecte()));
+
 }
 
 VagueCompose::VagueCompose(QVector<Vague *> vagues) : composition(vagues), Vague()
@@ -29,6 +30,11 @@ void VagueCompose::buildVague(int initX, int initY, QList<int>* path, MyQGraphic
     for(int i=0; i<this->composition.size(); i++)
     {
         this->composition[i]->buildVague(initX,initY,path, scene);
+
+        /*for(int j = 0; j < this->insectes.size(); j++)
+        {
+            QObject::connect(insectes.at(j),SIGNAL(supprimerInsecte(Insecte*)),composition[i],SLOT(supprimerInsecte(Insecte*)));
+        }*/
     }
 }
 
@@ -50,23 +56,37 @@ void VagueConcrete::buildVague(int initX, int initY, QList<int>* path, MyQGraphi
 
 QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene)
 {
-    //std::cout << "Je rentre_1" << std::endl;
     return this->insectes;
+}
+
+void VagueConcrete::setInsectes(QVector<Insecte *> insectes)
+{
+    this->insectes += insectes;
 }
 
 QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene)
 {
-    for(int i = composition.size()-1; i >= 0; i--)
+    /*for(int i = composition.size()-1; i >= 0; i--)
     {
-        insectes += composition.at(i)->getInsectes();
+        composition[i]->insectes += composition.at(i)->getInsectes();
     }
+    return this->insectes;*/
 
-    for(int i=0; i < insectes.size(); i++)
-    {
-        std::cout << "Je rentre" << std::endl;
-        std::cout << qPrintable(insectes.at(i)->data(0).toString()) << std::endl;
-    }
-    return this->insectes;
+    QVector<Insecte *> insectes, temp;
+
+
+        int i,j;
+
+        for(i=0; i<composition.size(); i++)
+        {
+            temp = composition[i]->getInsectes(onlyOnScene);
+            for(j=0;j<temp.size();j++)
+            {
+                insectes.append(temp[j]);;
+            }
+        }
+
+        return insectes;
 }
 
 void VagueConcrete::launchVague()
@@ -99,14 +119,31 @@ void VagueConcrete::ajouterInsecte()
 {
     if(counterInsecte < this->getInsectes().size())
     {
-        this->scene->addItem(this->getInsectes().at(counterInsecte));
+        this->scene->addItem(this->insectes.at(counterInsecte));
         counterInsecte++;
     }
 }
 
 void VagueConcrete::supprimerInsecte(Insecte *I)
 {
-    //std::cout << "Je rentre" << std::endl;
+    //std::cout << insectes.size() << std::endl;
+    for(int i = 0; i < insectes.size() ; ++i)
+    {
+
+        if(insectes.at(i) == I)
+        {
+            this->scene->removeItem(I);
+            insectes.remove(i);
+            this->counterInsecte--;
+            break;
+        }
+    }
+    emit this->miseAJour();
+}
+
+/*void VagueCompose::supprimerInsecte(Insecte *I)
+{
+    std::cout << "Je rentre" << std::endl;
     for(int i = 0; i < insectes.size() ; ++i)
     {
 
@@ -115,10 +152,11 @@ void VagueConcrete::supprimerInsecte(Insecte *I)
             insectes.remove(i);
            // QObject::disconnect(ptr);
             this->scene->removeItem(I);
+            this->counterInsecte--;
             break;
         }
     }
     emit this->miseAJour();
-}
+}*/
 
 }
