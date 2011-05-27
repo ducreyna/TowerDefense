@@ -2,7 +2,7 @@
 
 namespace TOWERDEFENSE{
 
-Projectile::Projectile(const double vitesse, const double frappe, const int x, const int y, const double cibleX, const double cibleY, QVector<Insecte*> vague):vitesse(vitesse),frappe(frappe),cibleX(cibleX),cibleY(cibleY),vagueEnCours(vague)
+Projectile::Projectile(const double vitesse, const double frappe, const int x, const int y, const double cibleX, const double cibleY, QVector<Insecte*> vague,Type_projectile projectile):vitesse(vitesse),frappe(frappe),cibleX(cibleX),cibleY(cibleY),vagueEnCours(vague),projectile(projectile)
 {
     this->setPos(x,y);
 

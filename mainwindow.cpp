@@ -399,19 +399,25 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
 
     else if(type == "PIERRE")
     {
-        S->addItem(new Pierre(1,(x/32)*32,(y/32)*32,0));
+        Pierre *p = new Pierre(1,(x/32)*32,(y/32)*32,0);
+        defenses.push_back(p);
+        S->addItem(p);
         ui->lcdMoney->display(ui->lcdMoney->value() - 12);
     }
 
     else if(type == "PEINTURE")
     {
-        S->addItem(new Peinture(1,(x/32)*32,(y/32)*32,0));
+        Peinture *p = new Peinture(1,(x/32)*32,(y/32)*32,0);
+        defenses.push_back(p);
+        S->addItem(p);
         ui->lcdMoney->display(ui->lcdMoney->value() - 12);
     }
 
     else
     {
-        S->addItem(new Petanque(1,(x/32)*32,(y/32)*32,0));
+        Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
+        defenses.push_back(p);
+        S->addItem(p);
         ui->lcdMoney->display(ui->lcdMoney->value() - 15);
     }
 

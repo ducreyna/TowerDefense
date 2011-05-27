@@ -7,6 +7,7 @@
 #include <vague.h>
 #include <math.h>
 #include "insecte.h"
+#include "constantes.h"
 #include <iostream>
 
 namespace TOWERDEFENSE{
@@ -18,6 +19,7 @@ private:
     double frappe;
     double cibleX;
     double cibleY;
+    Type_projectile projectile;
     QPointF mouvementVecteur;
     QVector<Insecte*> vagueEnCours;
 
@@ -26,7 +28,7 @@ private:
     double cibleVitesse;
 
 public:
-    Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,QVector<Insecte*> vague);
+    Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,QVector<Insecte*> vague,Type_projectile projectile);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

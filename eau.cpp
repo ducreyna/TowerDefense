@@ -4,6 +4,7 @@ namespace TOWERDEFENSE{
 
 Eau::Eau(const double niveau,const int x, const int y,QGraphicsPixmapItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,(double)1.5),8,20,45,40,parent)
 {
+    this->projectile = EAU;
     setData(0,"EAU");
 
     QPixmap* tour = new QPixmap("data/Tour/tourEau.png");
@@ -110,7 +111,7 @@ void Eau::advance(int phase)
 
 void Eau::shootTarget()
 {
-    Projectile *shot = new Projectile(vitesse,frappe,this->x()+16,this->y()+16,cibleX,cibleY,vagueEnCours);
+    Projectile *shot = new Projectile(vitesse,frappe,this->x()+16,this->y()+16,cibleX,cibleY,vagueEnCours,this->projectile);
     this->scene()->addItem(shot);
 }
 
