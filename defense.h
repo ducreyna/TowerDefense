@@ -9,14 +9,13 @@
 #include <QTimer>
 #include <QList>
 #include <QObject>
+#include <math.h>
 
 #include "constantes.h"
 #include "insecte.h"
-#include "projectile.h"
 #include "vague.h"
 #include "entite.h"
-
-#include <math.h>
+#include "projectile.h"
 
 namespace TOWERDEFENSE{
 
@@ -34,16 +33,18 @@ protected:
     int amelioration_2;
     Type_projectile projectile;
     double vitesse;
-    double cibleX;
-    double cibleY;
+
     bool isShooting;
     QTimer *shootTimer;
 
-    QVector<Insecte*> vagueEnCours;
+    Vague * currentWave;
+    Insecte * currentTarget;
+
+    void advance(int phase);
 
 public:
     Defense();
-    Defense(const double niveau,const double portee,const double cadence, const double frappe,const int cout,const int amelioration_1,const int amelioration_2, const double vitesse, QGraphicsItem *parent=0, const Type_deplacement cible = VIDE,const Type_projectile projectile = EAU);
+    Defense(const double niveau,const double portee,const double cadence, const double frappe,const int cout,const int amelioration_1,const int amelioration_2, const double vitesse,QGraphicsItem *parent=0,const Type_deplacement cible = VIDE,const Type_projectile projectile = EAU);
     virtual ~Defense();
 
     virtual double attaquer() = 0;
@@ -51,11 +52,23 @@ public:
 
     double getNiveau()const;
     double getPortee()const;
+    inline double getFrappe() const { return this->frappe; }
+    inline double getVitesseProjectile() const { return this->vitesse; }
+    inline Type_projectile getTypeProjectile() const { return this->projectile; }
     int getCout()const;
     int getAmelioration_1()const;
     int getAmelioration_2()const;
-    void setVague(QVector<Insecte*> vague);
+    inline void setCurrentWave(Vague * currWave) { this->currentWave = currWave; }
+    inline void setCurrentTarget(Insecte * target) { this->currentTarget = target; }
+    inline Insecte * getCurrentTarget() const { return this->currentTarget; }
 
+    void setIsShooting(bool state);
+
+protected:
+
+
+public slots:
+    void shootTarget();
 };
 }
 

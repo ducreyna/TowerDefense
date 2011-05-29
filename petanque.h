@@ -1,8 +1,8 @@
 #ifndef PETANQUE_H
 #define PETANQUE_H
 
+#include <QObject>
 #include "defense.h"
-#include "projectile.h"
 
 namespace TOWERDEFENSE{
 
@@ -15,15 +15,6 @@ public:
 
     double attaquer();
     bool ameliorer();
-
-    void setTarget(double cibleX,double cibleY);
-    void setIsShooting(bool state);
-
-protected:
-    void advance(int phase);
-
-public slots:
-    void shootTarget();
 };
 
 }

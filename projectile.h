@@ -6,27 +6,22 @@
 #include <QPointF>
 #include <vague.h>
 #include <math.h>
-#include "insecte.h"
+
 #include "constantes.h"
-#include <iostream>
 
 namespace TOWERDEFENSE{
 
-    class Projectile : public QGraphicsPixmapItem
+class Defense; // à cause du problème d'entrecroisement des includes
+
+class Projectile : public QGraphicsPixmapItem
 {
 private:
-    double vitesse;
-    double frappe;
-    double cibleX;
-    double cibleY;
-    Type_projectile projectile;
     QPointF mouvementVecteur;
-    QVector<Insecte*> vagueEnCours;
-
+    Defense * tour;
     virtual void advance(int phase);
 
 public:
-    Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,QVector<Insecte*> vague,Type_projectile projectile);
+    Projectile(Defense * tour);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

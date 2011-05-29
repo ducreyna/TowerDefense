@@ -108,19 +108,21 @@ void MainWindow::on_newWave_clicked()
     mainTimer->start(20);
     ui->pause->setEnabled(true);
 
-    if(counterVague == vagues.size())
+    if(counterVague+1 == vagues.size())
     {
         // le jeu est fini : WIN \o/
         ui->newWave->setEnabled(false);
     }
     else
     {
-        QObject::connect(vagues.at(counterVague),SIGNAL(miseAJour()),this,SLOT(miseAJour()));
         vagues.at(counterVague)->buildVague(departX*32,departY*32,this->path,this->S);
+        for(int j=0;j<defenses.size();j++)
+        {
+            defenses.at(j)->setCurrentWave(vagues.at(counterVague));
+        }
         vagues.at(counterVague)->launchVague();       
         counterVague++;
     }
-    this->miseAJour();
 }
 
 void MainWindow::on_waterTowers_clicked()
@@ -244,8 +246,13 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     {
         Eau *e = new Eau(1,(x/32)*32,(y/32)*32,0);
         defenses.push_back(e);
-        this->miseAJour();
         S->addItem(e);
+
+        if(counterVague != 0)
+        {
+            e->setCurrentWave(vagues.at(counterVague-1));
+        }
+
         emit this->achatTour(8);
     }
 
@@ -253,8 +260,13 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     {
         Pierre *p = new Pierre(1,(x/32)*32,(y/32)*32,0);
         defenses.push_back(p);
-        this->miseAJour();
         S->addItem(p);
+
+        if(counterVague != 0)
+        {
+            p->setCurrentWave(vagues.at(counterVague-1));
+        }
+
         emit this->achatTour(12);
     }
 
@@ -262,8 +274,13 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     {
         Peinture *p = new Peinture(1,(x/32)*32,(y/32)*32,0);
         defenses.push_back(p);
-        this->miseAJour();
         S->addItem(p);
+
+        if(counterVague != 0)
+        {
+            p->setCurrentWave(vagues.at(counterVague-1));
+        }
+
         emit this->achatTour(12);
     }
 
@@ -271,8 +288,13 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
     {
         Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
         defenses.push_back(p);
-        this->miseAJour();
         S->addItem(p);
+
+        if(counterVague != 0)
+        {
+            p->setCurrentWave(vagues.at(counterVague-1));
+        }
+
         emit this->achatTour(15);
     }
 
@@ -356,18 +378,6 @@ void MainWindow::tourSelectionnee(int x, int y, QGraphicsItem *tour)
         ui->sellButton->setEnabled(false);
         ui->type->setText("Type: ");
         ui->level->setText("Level: ");
-    }
-}
-
-void MainWindow::miseAJour()
-{
-    //std::cout << vagues.at(counterVague-1)->getInsectes().size() << std::endl;
-    if(counterVague > 0)
-    {
-        for(int j = 0; j < defenses.size(); ++j)
-        {
-            defenses.at(j)->setVague(vagues.at(counterVague-1)->getInsectes());
-        }
     }
 }
 
