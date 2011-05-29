@@ -1,13 +1,18 @@
 #include "projectile.h"
+#include "defense.h"
 
 namespace TOWERDEFENSE{
 
-Projectile::Projectile(const double vitesse, const double frappe, const int x, const int y, const double cibleX, const double cibleY, QVector<Insecte*> vague,Type_projectile projectile):vitesse(vitesse),frappe(frappe),cibleX(cibleX),cibleY(cibleY),vagueEnCours(vague),projectile(projectile)
+Projectile::Projectile(Defense * tour)
 {
-    this->setPos(x,y);
+    this->tour = tour;
+    this->setPos(this->tour->x()+16,this->tour->y()+16);
 
-    double vecteurX = cibleX - this->x();
-    double vecteurY = cibleY - this->y();
+    double XScaledSize = this->tour->getCurrentTarget()->x()+this->tour->getCurrentTarget()->getTaille()*16;
+    double YScaledSize = this->tour->getCurrentTarget()->y()+this->tour->getCurrentTarget()->getTaille()*16;
+
+    double vecteurX = XScaledSize - this->x();
+    double vecteurY = YScaledSize - this->y();
 
     this->mouvementVecteur.setX(vecteurX/sqrt(pow(vecteurX,2) + pow(vecteurY,2)));
     this->mouvementVecteur.setY(vecteurY/sqrt(pow(vecteurX,2) + pow(vecteurY,2)));
@@ -18,33 +23,22 @@ void Projectile::advance(int phase)
     if(!phase)
             return;
 
-        // . Recherche des ennemis de la map
-        QVector<Insecte*> insectes = vagueEnCours;
+    if(this->collidesWithItem(this->tour->getCurrentTarget(),Qt::IntersectsItemBoundingRect))
+    {
+        this->scene()->removeItem(this);
+        this->tour->getCurrentTarget()->recevoirDegats(this->tour->getFrappe());
+    }
 
-        for(int i = 0 ; i < insectes.size() ; ++i)
-        {
-                if(this->collidesWithItem(insectes.at(i),Qt::IntersectsItemBoundingRect))
-                {
-                    // On retire le projectile de la scène
-                    this->scene()->removeItem(this);
-                    // Inflige des dommages au monstre
-                    insectes[i]->recevoirDegats(frappe);
-                    return;
-                }
-                this->cibleVitesse = insectes.at(i)->getVitesse();
-        }
+    // Déplacement du projectile selon le vecteur de déplacement et la vitesse
+    double newx = this->x() + this->tour->getVitesseProjectile()*mouvementVecteur.x();
+    double newy = this->y() + this->tour->getVitesseProjectile()*mouvementVecteur.y();
 
-
-        // Déplacement du projectile selon le vecteur de déplacement et la vitesse
-        double newx = this->x() + vitesse*mouvementVecteur.x();
-        double newy = this->y() + vitesse*mouvementVecteur.y();
-
-        // Si le projectile est en dehors de l'écran, on le supprime
-        if(newx < 0 || newx > 512 || newy < 0 || newy > 512){
-            this->scene()->removeItem(this);
-            return;
-        }
-        this->setPos(newx,newy);
+    // Si le projectile est en dehors de l'écran, on le supprime
+    if(newx < 0 || newx > 512 || newy < 0 || newy > 512){
+        this->scene()->removeItem(this);
+        return;
+    }
+    this->setPos(newx,newy);
 }
 
 QRectF Projectile::boundingRect()const

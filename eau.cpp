@@ -55,64 +55,36 @@ bool Eau::ameliorer()
     }
 }
 
-void Eau::setTarget(double cibleX,double cibleY) {
-    // Sauvegarde la position de la cible courante
-    this->cibleX = cibleX;
-    this->cibleY = cibleY;
-}
+//void Eau::advance(int phase)
+//{
+//    // si la vague courante n'est pas initialisée...
+//    if(!phase || this->currentWave == 0)
+//            return;
 
-void Eau::setIsShooting(bool state) {
+//        // Recherche des ennemis de la map
+//        for(int i = 0 ; i < this->currentWave->getInsectes().size() ; ++i) {
 
-    isShooting = state;
+//                double _cibleX = currentWave->getInsectes().at(i)->x();
+//                double _cibleY = currentWave->getInsectes().at(i)->y();
 
-    // MODE TIR ACTIVÉ
-    if(state)
-    {
-        shootTimer->start(1000/cadence);
-    }
-    else
-    {
-        // Désactive le timer
-        shootTimer->stop();
-    }
-}
+//                if(sqrt(pow(fabs(this->x() - _cibleX),2) + pow(fabs(this->y() - _cibleY),2))  <= this->portee*32)
+//                {
+//                    // Si le défenseur ne tirait pas encore
+//                    if(!isShooting)
+//                    {
+//                        this->setIsShooting(true); // Modification via la méthode pour les effets visuels
+//                    }
+//                    // Actualise la position de la cible
+//                    this->setCurrentTarget(this->currentWave->getInsectes().at(i));
 
-void Eau::advance(int phase)
-{
-    if(!phase)
-            return;
+//                    return; // On vise la première cible rencontrée
 
-        // Recherche des ennemis de la map
-        for(int i = 0 ; i < vagueEnCours.size() ; ++i) {
+//                } // end distanceTest
 
-                double _cibleX = vagueEnCours.at(i)->x();
-                double _cibleY = vagueEnCours.at(i)->y();
+//        } //eof
 
-                if(sqrt(pow(fabs(this->x() - _cibleX),2) + pow(fabs(this->y() - _cibleY),2))  <= this->portee*32)
-                {
-                    // Si le défenseur ne tirait pas encore
-                    if(!isShooting)
-                    {
-                        this->setIsShooting(true); // Modification via la méthode pour les effets visuels
-                    }
-                    // Actualise la position de la cible
-
-                    this->setTarget(_cibleX+vagueEnCours.at(i)->getTaille()*16,_cibleY+vagueEnCours.at(i)->getTaille()*16);
-
-                    return; // On vise la première cible rencontrée
-
-                } // end distanceTest
-
-        } //eof
-
-        // Si aucun monstre n'a été rencontré
-        this->setIsShooting(false);  // Modification via la méthode pour les effets visuels
-}
-
-void Eau::shootTarget()
-{
-    Projectile *shot = new Projectile(vitesse,frappe,this->x()+16,this->y()+16,cibleX,cibleY,vagueEnCours,this->projectile);
-    this->scene()->addItem(shot);
-}
+//        // Si aucun monstre n'a été rencontré
+//        this->setIsShooting(false);  // Modification via la méthode pour les effets visuels
+//}
 
 }
