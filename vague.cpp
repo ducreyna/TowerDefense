@@ -18,7 +18,6 @@ VagueConcrete::VagueConcrete(int type, int nombre, double taille, int intervalle
     this->timer = new QTimer();
 
     QObject::connect(timer, SIGNAL(timeout()), this, SLOT(ajouterInsecte()));
-
 }
 
 VagueCompose::VagueCompose(QVector<Vague *> vagues) : composition(vagues), Vague()
@@ -106,7 +105,6 @@ void VagueConcrete::supprimerInsecte(Insecte *I)
             break;
         }
     }
-    emit this->miseAJour();
 }
 
 }
