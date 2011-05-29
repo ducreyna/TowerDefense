@@ -30,11 +30,6 @@ void VagueCompose::buildVague(int initX, int initY, QList<int>* path, MyQGraphic
     for(int i=0; i<this->composition.size(); i++)
     {
         this->composition[i]->buildVague(initX,initY,path, scene);
-
-        /*for(int j = 0; j < this->insectes.size(); j++)
-        {
-            QObject::connect(insectes.at(j),SIGNAL(supprimerInsecte(Insecte*)),composition[i],SLOT(supprimerInsecte(Insecte*)));
-        }*/
     }
 }
 
@@ -59,21 +54,9 @@ QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene)
     return this->insectes;
 }
 
-void VagueConcrete::setInsectes(QVector<Insecte *> insectes)
-{
-    this->insectes += insectes;
-}
-
 QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene)
 {
-    /*for(int i = composition.size()-1; i >= 0; i--)
-    {
-        composition[i]->insectes += composition.at(i)->getInsectes();
-    }
-    return this->insectes;*/
-
     QVector<Insecte *> insectes, temp;
-
 
         int i,j;
 
@@ -102,19 +85,6 @@ void VagueCompose::launchVague()
     }
 }
 
-void VagueConcrete::display() const
-{
-    //std::cout << type << std::endl;
-}
-
-void VagueCompose::display() const
-{
-    /*for(int i=0; i<this->composition.size(); i++)
-    {
-        composition[i]->display();
-    }*/
-}
-
 void VagueConcrete::ajouterInsecte()
 {
     if(counterInsecte < this->getInsectes().size())
@@ -126,10 +96,8 @@ void VagueConcrete::ajouterInsecte()
 
 void VagueConcrete::supprimerInsecte(Insecte *I)
 {
-    //std::cout << insectes.size() << std::endl;
     for(int i = 0; i < insectes.size() ; ++i)
     {
-
         if(insectes.at(i) == I)
         {
             this->scene->removeItem(I);
@@ -140,23 +108,5 @@ void VagueConcrete::supprimerInsecte(Insecte *I)
     }
     emit this->miseAJour();
 }
-
-/*void VagueCompose::supprimerInsecte(Insecte *I)
-{
-    std::cout << "Je rentre" << std::endl;
-    for(int i = 0; i < insectes.size() ; ++i)
-    {
-
-        if(insectes.at(i) == I)
-        {
-            insectes.remove(i);
-           // QObject::disconnect(ptr);
-            this->scene->removeItem(I);
-            this->counterInsecte--;
-            break;
-        }
-    }
-    emit this->miseAJour();
-}*/
 
 }
