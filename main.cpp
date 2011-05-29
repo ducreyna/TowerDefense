@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "fichier.h"
-#include "fourmi.h"
 #include "mainwindow.h"
 
 using namespace TOWERDEFENSE;

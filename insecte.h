@@ -2,7 +2,7 @@
 #define INSECTE_H
 
 //#include <QGraphicsPixmapItem>
-#include <Qlist>
+#include <QList>
 #include <QString>
 
 #include "math.h"
