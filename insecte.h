@@ -73,7 +73,7 @@ public:
     void increaseAnimationStep();
 
 signals:
-    void supprimerInsecte(Insecte* I);
+    void supprimerInsecte(Insecte* I,bool vivant);
 };
 }
 

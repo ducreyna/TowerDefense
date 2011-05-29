@@ -11,9 +11,9 @@
 
 namespace TOWERDEFENSE{
 
-class Defense;
+class Defense; // à cause du problème d'entrecroisement des includes
 
-class Projectile : public QGraphicsItem
+class Projectile : public QGraphicsPixmapItem
 {
 private:
     QPointF mouvementVecteur;

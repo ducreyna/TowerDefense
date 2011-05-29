@@ -44,7 +44,7 @@ void VagueConcrete::buildVague(int initX, int initY, QList<int>* path, MyQGraphi
         insecte->setX(initX);
         insecte->setY(initY);
         this->insectes.push_back(insecte);
-        QObject::connect(insecte,SIGNAL(supprimerInsecte(Insecte*)),this,SLOT(supprimerInsecte(Insecte*)));
+        QObject::connect(insecte,SIGNAL(supprimerInsecte(Insecte*,bool)),this,SLOT(supprimerInsecte(Insecte*,bool)));
     }
 }
 
@@ -93,13 +93,14 @@ void VagueConcrete::ajouterInsecte()
     }
 }
 
-void VagueConcrete::supprimerInsecte(Insecte *I)
+void VagueConcrete::supprimerInsecte(Insecte *I, bool vivant)
 {
     for(int i = 0; i < insectes.size() ; ++i)
     {
         if(insectes.at(i) == I)
         {
-            this->scene->removeItem(I);
+            //this->scene->removeItem(I);
+            this->scene->removeInsecte(I,vivant);
             insectes.remove(i);
             this->counterInsecte--;
             break;

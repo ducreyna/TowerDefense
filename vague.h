@@ -60,7 +60,7 @@ public:
 
 public slots:
     void ajouterInsecte();
-    void supprimerInsecte(Insecte* I);
+    void supprimerInsecte(Insecte* I,bool vivant);
 
 signals:
     void ajouterInsecteSurScene(Insecte * i);

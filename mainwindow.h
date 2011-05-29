@@ -13,16 +13,13 @@
 
 #include <iostream>
 #include "fichier.h"
-#include "cafard.h"
-#include "fourmi.h"
-#include "guepe.h"
-#include "moustique.h"
 #include "myqgraphicsscene.h"
 #include "eau.h"
 #include "pierre.h"
 #include "peinture.h"
 #include "petanque.h"
 #include "defense.h"
+#include "joueur.h"
 
 using namespace TOWERDEFENSE;
 
@@ -41,18 +38,16 @@ public:
 private:
     Ui::MainWindow *ui;
     MyQGraphicsScene * S;
+    Joueur *J;
     Fichier f;
     QTimer * mainTimer;
     QTimer * vagueTimer;
     int counterVague;
     int** carte;
     QList<Defense*> defenses;
-
     QVector<Vague *> vagues;
-
     QList<int> * path;
 
-    void chargerGraphiques();
     void verifierToursConstructibles();
 
 private slots:
@@ -70,6 +65,11 @@ public slots:
     void ajouterTour(int x, int y, std::string type);
     void tourMouseTracking(int x, int y,std::string type);
     void tourSelectionnee(int x, int y, QGraphicsItem *tour);
+    void finDuJeu();
+
+signals:
+    void achatTour(int prix);
+    void venteTour(int gain);
 };
 
 #endif // MAINWINDOW_H

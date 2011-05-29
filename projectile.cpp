@@ -1,5 +1,5 @@
 #include "projectile.h"
-#include "defense.h"
+#include "defense.h" // à cause du problème d'entrecroisement des includes
 
 namespace TOWERDEFENSE{
 
@@ -48,8 +48,27 @@ QRectF Projectile::boundingRect()const
 
 void Projectile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::blue);
-    painter->drawRect(0,0,5,5);
+    painter->setPen(Qt::NoPen);
+    if(this->tour->getTypeProjectile() == EAU)
+    {
+        painter->setBrush(Qt::darkBlue);
+        painter->drawEllipse(0,0,5,5);
+    }
+    else if(this->tour->getTypeProjectile() == PIERRE)
+    {
+        painter->setBrush(Qt::darkRed);
+        painter->drawEllipse(0,0,5,5);
+    }
+    else if(this->tour->getTypeProjectile() == PEINTURE)
+    {
+        painter->setBrush(Qt::darkRed);
+        painter->drawEllipse(0,0,5,5);
+    }
+    else
+    {
+        painter->setBrush(Qt::darkCyan);
+        painter->drawEllipse(0,0,5,5);
+    }
 }
 
 }

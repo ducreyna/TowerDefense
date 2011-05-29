@@ -34,7 +34,7 @@ void Insecte::recevoirDegats(double degats)
     vitalite -= (degats - resistance);
     if(this->vitalite <= 0)
     {
-        emit supprimerInsecte(this);
+        emit supprimerInsecte(this,false);
     }
 }
 
@@ -54,7 +54,11 @@ void Insecte::advance(int phase)
     // ...sinon, on met à jour la position de l'item
 
     if(path->count() == counter)
+    {
+        emit this->supprimerInsecte(this,true);
         return;
+    }
+        //return;
 
     int dir = path->at(counter), deltaX, deltaY;
     double newX = x(), newY = y();

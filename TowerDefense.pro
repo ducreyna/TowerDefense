@@ -17,7 +17,8 @@ SOURCES += \
     projectile.cpp \
     vague.cpp \
     insectefactory.cpp \
-    entite.cpp
+    entite.cpp \
+    joueur.cpp
 
 HEADERS += \
     fichier.h \
@@ -41,7 +42,8 @@ HEADERS += \
     projectile.h \
     insectefactory.h \
     entite.h \
-    entite.h
+    entite.h \
+    joueur.h
 
 FORMS += \
     mainwindow.ui
