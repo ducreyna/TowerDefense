@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include "insecte.h"
+#include "joueur.h"
 
 using namespace TOWERDEFENSE;
 
@@ -22,10 +23,11 @@ private:
     QGraphicsItem *precedent2;
     QGraphicsItem *tourPortee;
     QGraphicsItem *tourAmelioration;
+    Joueur *J;
 
 public:
     // Constructeur
-    MyQGraphicsScene(QGraphicsView *parent);
+    MyQGraphicsScene(QGraphicsView *parent,Joueur *J);
 
     /*!
       * Methode gerant les cliques de la souris sur la scene
@@ -39,7 +41,9 @@ public:
       */
     void mouseMoveEvent ( QGraphicsSceneMouseEvent * mouseEvent );
 
-    void removeItem(QGraphicsItem *item);
+    void chargerGraphiques(int **carte);
+
+    void removeInsecte(QGraphicsItem *insecte,bool vivant=false);
 
     void setTourDemandee(std::string tour);
 
@@ -56,6 +60,8 @@ signals:
     void ajouterTour(int x, int y, std::string type);
     void tourMouseTracking(int x, int y,std::string type);
     void tourSelectionnee(int x, int y, QGraphicsItem *tour);
+    void augmenterArgent();
+    void perdreVie();
 };
 
 #endif // MYQGRAPHICSSCENE_H

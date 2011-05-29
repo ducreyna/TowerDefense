@@ -12,7 +12,7 @@
 
 namespace TOWERDEFENSE{
 
-    class Projectile : public QGraphicsItem
+    class Projectile : public QGraphicsPixmapItem
 {
 private:
     double vitesse;
@@ -24,8 +24,6 @@ private:
     QVector<Insecte*> vagueEnCours;
 
     virtual void advance(int phase);
-
-    double cibleVitesse;
 
 public:
     Projectile(const double vitesse,const double frappe,const int x,const int y,const double cibleX,const double cibleY,QVector<Insecte*> vague,Type_projectile projectile);

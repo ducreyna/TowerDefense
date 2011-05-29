@@ -18,22 +18,19 @@ void Projectile::advance(int phase)
     if(!phase)
             return;
 
-        // . Recherche des ennemis de la map
-        QVector<Insecte*> insectes = vagueEnCours;
+        // Recherche des insectes sur la carte
 
-        for(int i = 0 ; i < insectes.size() ; ++i)
+        for(int i = 0 ; i < this->vagueEnCours.size() ; ++i)
         {
-                if(this->collidesWithItem(insectes.at(i),Qt::IntersectsItemBoundingRect))
+                if(this->collidesWithItem(vagueEnCours.at(i),Qt::IntersectsItemBoundingRect))
                 {
                     // On retire le projectile de la scène
                     this->scene()->removeItem(this);
                     // Inflige des dommages au monstre
-                    insectes[i]->recevoirDegats(frappe);
+                    vagueEnCours[i]->recevoirDegats(frappe);
                     return;
-                }
-                this->cibleVitesse = insectes.at(i)->getVitesse();
+                };
         }
-
 
         // Déplacement du projectile selon le vecteur de déplacement et la vitesse
         double newx = this->x() + vitesse*mouvementVecteur.x();
@@ -54,8 +51,27 @@ QRectF Projectile::boundingRect()const
 
 void Projectile::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::blue);
-    painter->drawRect(0,0,5,5);
+    painter->setPen(Qt::NoPen);
+    if(this->projectile == EAU)
+    {
+        painter->setBrush(Qt::darkBlue);
+        painter->drawEllipse(0,0,5,5);
+    }
+    else if(this->projectile == PIERRE)
+    {
+        painter->setBrush(Qt::darkRed);
+        painter->drawEllipse(0,0,5,5);
+    }
+    else if(this->projectile == PEINTURE)
+    {
+        painter->setBrush(Qt::darkRed);
+        painter->drawEllipse(0,0,5,5);
+    }
+    else
+    {
+        painter->setBrush(Qt::darkCyan);
+        painter->drawEllipse(0,0,5,5);
+    }
 }
 
 }
