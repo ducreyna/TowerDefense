@@ -7,6 +7,7 @@ namespace TOWERDEFENSE{
 
 class Guepe: public Insecte
 {
+    Q_OBJECT
 public:
     Guepe();
     Guepe(const double taille,const int x, const int y, QGraphicsPixmapItem *parent=0);
@@ -17,14 +18,11 @@ public:
       */
     void recevoirDegats(double degats);
 
-    /*!
-     * Methode retournant les dommages causees lors de la mort d'une guepe
-     * \return double les degats causes
-     */
-    double degatsCauses();
-
 protected:
     void advance(int phase);
+
+signals:
+    void degatsCrash(double degats,Guepe *g);
 };
 }
 

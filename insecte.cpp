@@ -4,7 +4,10 @@ namespace TOWERDEFENSE{
 
 Insecte::Insecte(){}
 
-Insecte::Insecte(const double taille, const double vitalite, const double resistance, const double vitesse, const Type_deplacement deplacement,QGraphicsPixmapItem *parent):/*QGraphicsPixmapItem(parent),*/taille(taille),vitalite(vitalite),resistance(resistance),vitesse(vitesse),deplacement(deplacement), counter(0){
+Insecte::Insecte(const double taille, const double vitalite, const double resistance, const double vitesse, const Type_deplacement deplacement,QGraphicsPixmapItem *parent):taille(taille),vitalite(vitalite),resistance(resistance),vitesse(vitesse),deplacement(deplacement), counter(0)
+{
+    this->vitesseStandard = vitesse;
+    this->counterTempsRalentissement = 200;
 }
 
 void Insecte::setDeplacement(Type_deplacement deplacement){
@@ -23,11 +26,22 @@ void Insecte::setVitesse(double vitesse){
     this->vitesse = vitesse;
 }
 
+void Insecte::setCounter(int counter)
+{
+    this->counter = counter;
+}
+
 double Insecte::getTaille()const { return taille; }
 
 double Insecte::getVitalite()const { return vitalite; }
 
 double Insecte::getVitesse()const { return vitesse; }
+
+QList<int>* Insecte::getPath()const { return path; }
+
+int Insecte::getCounter()const { return counter; }
+
+Type_deplacement Insecte::getDeplacement()const { return deplacement; }
 
 void Insecte::recevoirDegats(double degats)
 {
@@ -35,6 +49,14 @@ void Insecte::recevoirDegats(double degats)
     if(this->vitalite <= 0)
     {
         emit supprimerInsecte(this,false);
+    }
+}
+
+void Insecte::ralentir()
+{
+    if(this->vitesse > 1)
+    {
+        this->vitesse = this->vitesse/2;
     }
 }
 
@@ -52,6 +74,19 @@ void Insecte::advance(int phase)
     if(!phase)
         return;
     // ...sinon, on met à jour la position de l'item
+
+    this->setPixmap(*animPixmap[animState]);
+    this->increaseAnimationStep();
+
+    if(vitesse < vitesseStandard)
+    {
+        counterTempsRalentissement--;
+        if(counterTempsRalentissement == 0)
+        {
+            vitesse = vitesseStandard;
+            counterTempsRalentissement = 200;
+        }
+    }
 
     if(path->count() == counter)
     {

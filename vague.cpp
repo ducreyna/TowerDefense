@@ -45,6 +45,7 @@ void VagueConcrete::buildVague(int initX, int initY, QList<int>* path, MyQGraphi
         insecte->setY(initY);
         this->insectes.push_back(insecte);
         QObject::connect(insecte,SIGNAL(supprimerInsecte(Insecte*,bool)),this,SLOT(supprimerInsecte(Insecte*,bool)));
+        if(dynamic_cast<Cafard*>(insecte) != 0) QObject::connect(insecte,SIGNAL(ajouterInsecteEnfant(int,double,int,int,QList<int>*,int,int)),this,SLOT(ajouterInsecteEnfant(int,double,int,int,QList<int>*,int,int)));
     }
 }
 
@@ -55,20 +56,12 @@ QVector<Insecte *> VagueConcrete::getInsectes(bool onlyOnScene)
 
 QVector<Insecte *> VagueCompose::getInsectes(bool onlyOnScene)
 {
-    QVector<Insecte *> insectes, temp;
-
-        int i,j;
-
-        for(i=0; i<composition.size(); i++)
-        {
-            temp = composition[i]->getInsectes(onlyOnScene);
-            for(j=0;j<temp.size();j++)
-            {
-                insectes.append(temp[j]);;
-            }
-        }
-
-        return insectes;
+    QVector<Insecte*> insectes;
+    for(int i = composition.size()-1; i>= 0; --i)
+    {
+        insectes += composition[i]->getInsectes();
+    }
+    return insectes;
 }
 
 void VagueConcrete::launchVague()
@@ -84,6 +77,19 @@ void VagueCompose::launchVague()
     }
 }
 
+void VagueConcrete::stopVague()
+{
+    this->timer->stop();
+}
+
+void VagueCompose::stopVague()
+{
+    for(int i=0; i<this->composition.size(); i++)
+    {
+        composition[i]->stopVague();
+    }
+}
+
 void VagueConcrete::ajouterInsecte()
 {
     if(counterInsecte < this->getInsectes().size())
@@ -93,13 +99,27 @@ void VagueConcrete::ajouterInsecte()
     }
 }
 
+void VagueConcrete::ajouterInsecteEnfant(int type, double taille, int x, int y, QList<int> *path, int counter, int numEnfant)
+{
+    Insecte *insecte;
+    insecte = InsecteFactory::create(type,taille,path);
+    insecte->setX(x);
+    insecte->setY(y);
+    insecte->setCounter(counter);
+    this->insectes.push_back(insecte);
+    QObject::connect(insecte,SIGNAL(supprimerInsecte(Insecte*,bool)),this,SLOT(supprimerInsecte(Insecte*,bool)));
+    this->scene->addItem(insecte);
+    counterInsecte++;
+    if(numEnfant == 1) for(int i = 0 ; i < 8 ; ++i) insecte->advance(1);
+    emit this->miseAJour();
+}
+
 void VagueConcrete::supprimerInsecte(Insecte *I, bool vivant)
 {
     for(int i = 0; i < insectes.size() ; ++i)
     {
         if(insectes.at(i) == I)
         {
-            //this->scene->removeItem(I);
             this->scene->removeInsecte(I,vivant);
             insectes.remove(i);
             this->counterInsecte--;

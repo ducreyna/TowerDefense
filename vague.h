@@ -20,6 +20,7 @@ public:
     virtual void buildVague(int initX,int initY, QList<int> * path, MyQGraphicsScene* scene) = 0;
     virtual QVector<Insecte *> getInsectes(bool onlyOnScene = false) = 0;
     virtual void launchVague() = 0;
+    virtual void stopVague() = 0;
 
 signals:
     void miseAJour();
@@ -37,6 +38,7 @@ public:
     void buildVague(int initX,int initY, QList<int> * path, MyQGraphicsScene * scene);
     QVector<Insecte *> getInsectes(bool onlyOnScene = false);
     void launchVague();
+    void stopVague();
 };
 
 class VagueConcrete : public Vague
@@ -57,13 +59,15 @@ public:
     void buildVague(int initX,int initY, QList<int> * path, MyQGraphicsScene * scene);
     QVector<Insecte *> getInsectes(bool onlyOnScene = false);
     void launchVague();
+    void stopVague();
 
 public slots:
     void ajouterInsecte();
+    void ajouterInsecteEnfant(int type,double taille,int x, int y,QList<int> *path,int counter,int numEnfant);
     void supprimerInsecte(Insecte* I,bool vivant);
 
 signals:
-    void ajouterInsecteSurScene(Insecte * i);
+    void miseAJour();
 };
 
 }

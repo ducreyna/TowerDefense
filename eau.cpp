@@ -7,10 +7,14 @@ Eau::Eau(const double niveau,const int x, const int y,QGraphicsPixmapItem *paren
     this->projectile = EAU;
     setData(0,"EAU");
 
-    QPixmap* tour = new QPixmap("data/Tour/tourEau.png");
+    for(int i = 0; i < 3; ++i)
+    {
+        QPixmap* tour = new QPixmap("data/Tour/tourEauGrade" + QString::number(i+1) + ".png");
+        this->etatTour.push_back(tour);
+    }
 
     // Image et taille
-    this->setPixmap(*tour);
+    this->setPixmap(*etatTour.first());
 
     // Position
     this->setPos(x,y);
@@ -35,6 +39,7 @@ bool Eau::ameliorer()
             cadence = 4 - niveau/2;
             frappe = 5 * pow(niveau,1.5);
             cout += amelioration_1;
+            this->setPixmap(*etatTour.at(1));
             return true;
         }
         else if(niveau == 2)
@@ -44,6 +49,7 @@ bool Eau::ameliorer()
             cadence = 4 - niveau/2;
             frappe = 5 * pow(niveau,1.5);
             cout += amelioration_2;
+            this->setPixmap(*etatTour.at(2));
             return true;
         }
         else throw std::exception();

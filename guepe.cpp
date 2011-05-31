@@ -25,41 +25,11 @@ Guepe::Guepe(const double taille,const int x, const int y,QGraphicsPixmapItem *p
 void Guepe::recevoirDegats(double degats)
 {
     Insecte::recevoirDegats(degats);
-}
-
-double Guepe::degatsCauses()
-{
-    if(deplacement == RAMPANT)
-    {
-        return 0;
-    }
-    else
-    {
-        return 5*pow(taille,2);
-    }
+    if(this->vitalite <= 0) emit this->degatsCrash(5*pow(taille,2),this);
 }
 
 void Guepe::advance(int phase)
 {
-// Si 'phase' vaut 0, rien ne se passe
-    if(!phase)
-        return;
-    // ...sinon, on met à jour l'item
-
-    // Met à jour l'image de l'animation
-    this->setPixmap(*animPixmap[animState]);
-    this->increaseAnimationStep();
-
-
-    //deprecated
-
-    //this->setPos(x()+vitesse*+1,y()+vitesse*+1);
-
-    // Oriente l'image dans le bon sens
-    // (nb : transformation par rapport au centre de l'image)
-    //this->setTransformOriginPoint(this->boundingRect().center().x(),this->boundingRect().center().y());
-    //this->setRotation(1*90);
-
     Insecte::advance(phase);
 }
 }

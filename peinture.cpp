@@ -11,10 +11,14 @@ Peinture::Peinture(const double niveau,const int x,const int y,QGraphicsItem *pa
     this->projectile = PEINTURE;
     setData(0,"PEINTURE");
 
-    QPixmap* tour = new QPixmap("data/Tour/tourPeinture.png");
+    for(int i = 0; i < 3; ++i)
+    {
+        QPixmap* tour = new QPixmap("data/Tour/tourPeintureGrade" + QString::number(i+1) + ".png");
+        this->etatTour.push_back(tour);
+    }
 
     // Image et taille
-    this->setPixmap(*tour);
+    this->setPixmap(*etatTour.first());
 
     // Position
     this->setPos(x,y);
@@ -38,6 +42,7 @@ bool Peinture::ameliorer()
             portee = 4 + niveau/2;
             frappe = 4 * pow(niveau,1.5);
             cout += amelioration_1;
+            this->setPixmap(*etatTour.at(1));
             return true;
         }
         else if(niveau == 2)
@@ -46,6 +51,7 @@ bool Peinture::ameliorer()
             portee = 4 + niveau/2;
             frappe = 4 * pow(niveau,1.5);
             cout += amelioration_2;
+            this->setPixmap(*etatTour.at(2));
             return true;
         }
         else throw std::exception();

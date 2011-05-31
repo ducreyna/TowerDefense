@@ -12,19 +12,20 @@ Moustique::Moustique(const double taille,const int x, const int y,QGraphicsPixma
         *animTemp = animTemp->scaled(taille*32,taille*32);
         animPixmap.push_back(animTemp);
     }
-    animState = 0; // Première frame de l'animation à 0
+    animState = 0;
 
-    // Image et taille
     this->setPixmap(*animPixmap.first());
 
-    // Position
     this->setPos(x,y);
     this->setData(0,"MOUSTIQUE");
+
+    this->counterTempsVol = 350;
+    this->counterTempsSol = 150;
 }
 
 void Moustique::recevoirDegats(double degats) {
     Insecte::recevoirDegats(degats);
-    toRampant();
+    if(this->deplacement == VOLANT) this->toRampant();
 }
 
 void Moustique::toRampant(){
@@ -41,24 +42,24 @@ void Moustique::toVolant(){
 
 void Moustique::advance(int phase)
 {
-// Si 'phase' vaut 0, rien ne se passe
-    if(!phase)
-        return;
-    // ...sinon, on met à jour l'item
-
-    // Met à jour l'image de l'animation
-    this->setPixmap(*animPixmap[animState]);
-    this->increaseAnimationStep();
-
-
-    //deprecated
-    //this->setPos(x()+vitesse*+1,y()+vitesse*+1);
-
-    // Oriente l'image dans le bon sens
-    // (nb : transformation par rapport au centre de l'image)
-    //this->setTransformOriginPoint(this->boundingRect().center().x(),this->boundingRect().center().y());
-    //this->setRotation(1*90);
-
+    if(this->deplacement == VOLANT)
+    {
+        this->counterTempsVol--;
+        if(this->counterTempsVol == 0) // si le moustique a epuise son temps de vol
+        {
+            this->toRampant();
+            this->counterTempsVol = 350;
+        }
+    }
+    else
+    {
+        this->counterTempsSol--;
+        if(this->counterTempsSol == 0) // si le moustique a epuise le temps au sol
+        {
+            this->toVolant();
+            this->counterTempsSol = 150;
+        }
+    }
     Insecte::advance(phase);
 }
 }

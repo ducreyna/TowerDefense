@@ -14,7 +14,6 @@ public:
 
     double attaquer();
     bool ameliorer();
-
 };
 }
 

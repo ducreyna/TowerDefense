@@ -147,7 +147,7 @@ void MyQGraphicsScene::chargerGraphiques(int **carte)
                 else // de l'herbe
                 {
                     // on ajoute un item afin de respecter le quadrillage 16x16
-                    this->addRect(i*32,j*32,1*32,1*32,QPen(Qt::black),Qt::transparent)->setData(0,"HERBE");
+                    this->addRect(i*32,j*32,1*32,1*32,QPen(Qt::NoPen),Qt::transparent)->setData(0,"HERBE");
                 }
             }
         }
@@ -175,9 +175,11 @@ void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 
     if(mouseEvent->button() == Qt::RightButton)
     {
-        this->removeItem(I);
+        /*this->removeItem(I);
         I = this->itemAt(x,y);
-        this->removeItem(I);
+        this->removeItem(I);*/
+        this->removeItem(getPrecedent());
+        this->removeItem(getPrecedent2());
         this->tourDemandee = "";
     }
 

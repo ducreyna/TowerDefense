@@ -71,7 +71,7 @@ void MainWindow::verifierToursConstructibles()
 
 void MainWindow::on_loadMap_clicked()
 {
-    f.chargerCarte("data/map.txt");
+    f.chargerCarte("data/map2.txt");
     f.chargerVague("data/waves.txt");
     f.chargerPath();
 
@@ -116,12 +116,14 @@ void MainWindow::on_newWave_clicked()
     else
     {
         vagues.at(counterVague)->buildVague(departX*32,departY*32,this->path,this->S);
-        for(int j=0;j<defenses.size();j++)
+        QObject::connect(vagues.at(counterVague),SIGNAL(miseAJour()),this,SLOT(miseAJour()));
+        /*for(int j=0;j<defenses.size();j++)
         {
             defenses.at(j)->setCurrentWave(vagues.at(counterVague));
-        }
+        }*/
         vagues.at(counterVague)->launchVague();       
         counterVague++;
+        this->miseAJour();
     }
 }
 
@@ -309,11 +311,13 @@ void MainWindow::on_pause_clicked()
     {
         mainTimer->stop();
         ui->pause->setText("REPRENDRE");
+        vagues.at(counterVague-1)->stopVague();
     }
     else
     {
         mainTimer->start();
         ui->pause->setText("PAUSE");
+        vagues.at(counterVague-1)->launchVague();
     }
 }
 
@@ -378,6 +382,14 @@ void MainWindow::tourSelectionnee(int x, int y, QGraphicsItem *tour)
         ui->sellButton->setEnabled(false);
         ui->type->setText("Type: ");
         ui->level->setText("Level: ");
+    }
+}
+
+void MainWindow::miseAJour()
+{
+    for(int j=0;j<defenses.size();j++)
+    {
+        defenses.at(j)->setCurrentWave(vagues.at(counterVague-1));
     }
 }
 

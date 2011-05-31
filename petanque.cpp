@@ -11,10 +11,14 @@ Petanque::Petanque(const double niveau,const int x,const int y,QGraphicsItem *pa
     this->projectile = BOULE;
     setData(0,"PETANQUE");
 
-    QPixmap* tour = new QPixmap("data/Tour/tourPetanque.png");
+    for(int i = 0; i < 3; ++i)
+    {
+        QPixmap* tour = new QPixmap("data/Tour/tourPetanqueGrade" + QString::number(i+1) + ".png");
+        this->etatTour.push_back(tour);
+    }
 
     // Image et taille
-    this->setPixmap(*tour);
+    this->setPixmap(*etatTour.first());
 
     // Position
     this->setPos(x,y);
@@ -38,6 +42,7 @@ bool Petanque::ameliorer()
             portee = 3 + niveau;
             frappe = 15 * pow(niveau,1.5);
             cout += amelioration_1;
+            this->setPixmap(*etatTour.at(1));
             return true;
         }
         else if(niveau == 2)
@@ -46,6 +51,7 @@ bool Petanque::ameliorer()
             portee = 3 + niveau;
             frappe = 15 * pow(niveau,1.5);
             cout += amelioration_2;
+            this->setPixmap(*etatTour.at(2));
             return true;
         }
         else throw std::exception();

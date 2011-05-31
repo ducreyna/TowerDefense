@@ -7,6 +7,10 @@ namespace TOWERDEFENSE{
 
 class Fourmi : public Insecte
 {
+private:
+    int counterTempsAcceleration;
+    double vitesseBase;
+
 public:
     Fourmi();
     Fourmi(const double taille,const int x, const int y, QGraphicsPixmapItem *parent=0);

@@ -26,28 +26,15 @@ Cafard::~Cafard(){}
 
 void Cafard::recevoirDegats(double degats){
     Insecte::recevoirDegats(degats);
+    if(this->vitalite <= 0 && this->taille >= 2)
+    {
+        emit this->ajouterInsecteEnfant(1,this->taille-1,this->x(),this->y(),this->getPath(),this->getCounter(),1);
+        emit this->ajouterInsecteEnfant(1,this->taille-1,this->x(),this->y(),this->getPath(),this->getCounter(),2);
+    }
 }
 
 void Cafard::advance(int phase)
 {
-// Si 'phase' vaut 0, rien ne se passe
-    if(!phase)
-        return;
-    // ...sinon, on met à jour l'item
-
-    // Met à jour l'image de l'animation
-    this->setPixmap(*animPixmap[animState]);
-    this->increaseAnimationStep();
-
-    // deprecated
-
-
-    // Oriente l'image dans le bon sens
-    // (nb : transformation par rapport au centre de l'image)
-    //this->setTransformOriginPoint(this->boundingRect().center().x(),this->boundingRect().center().y());
-    //this->setRotation(1*90);
-
     Insecte::advance(phase);
-
 }
 }

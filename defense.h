@@ -40,6 +40,8 @@ protected:
     Vague * currentWave;
     Insecte * currentTarget;
 
+    QList<QPixmap*> etatTour;
+
     void advance(int phase);
 
 public:
@@ -58,6 +60,7 @@ public:
     int getCout()const;
     int getAmelioration_1()const;
     int getAmelioration_2()const;
+    Vague* getCurrentWave()const;
     inline void setCurrentWave(Vague * currWave) { this->currentWave = currWave; }
     inline void setCurrentTarget(Insecte * target) { this->currentTarget = target; }
     inline Insecte * getCurrentTarget() const { return this->currentTarget; }
@@ -69,6 +72,7 @@ protected:
 
 public slots:
     void shootTarget();
+    void degatsCrashGuepe(double degats,Guepe *g);
 };
 }
 

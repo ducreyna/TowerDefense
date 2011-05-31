@@ -27,9 +27,29 @@ void Projectile::advance(int phase)
     {
         this->scene()->removeItem(this);
         this->tour->getCurrentTarget()->recevoirDegats(this->tour->getFrappe());
+
+        if(this->tour->getTypeProjectile() == PEINTURE)
+        {
+            this->tour->getCurrentTarget()->ralentir();
+        }
+
+        if(this->tour->getTypeProjectile() == BOULE)
+        {
+            for(int i = 0; i < this->tour->getCurrentWave()->getInsectes().size(); ++i)
+            {
+                double _cibleX = this->tour->getCurrentWave()->getInsectes().at(i)->x();
+                double _cibleY = this->tour->getCurrentWave()->getInsectes().at(i)->y();
+
+                if((sqrt(pow(fabs(this->x() - _cibleX),2) + pow(fabs(this->y() - _cibleY),2))  <= 32))
+                {
+                    std::cout << "Je rentre" << std::endl;
+                    this->tour->getCurrentWave()->getInsectes().at(i)->recevoirDegats(10*pow(this->tour->getNiveau(),1.5));
+                }
+            }
+        }
     }
 
-    // Déplacement du projectile selon le vecteur de déplacement et la vitesse
+    // Déplacement du projectile selon le vecteur de deplacement et la vitesse
     double newx = this->x() + this->tour->getVitesseProjectile()*mouvementVecteur.x();
     double newy = this->y() + this->tour->getVitesseProjectile()*mouvementVecteur.y();
 

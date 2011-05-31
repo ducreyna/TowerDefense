@@ -7,6 +7,10 @@ namespace TOWERDEFENSE{
 
 class Moustique : public Insecte
 {
+private:
+    int counterTempsVol;
+    int counterTempsSol;
+
 public:
     Moustique();
     Moustique(const double taille,const int x, const int y, QGraphicsPixmapItem *parent=0);

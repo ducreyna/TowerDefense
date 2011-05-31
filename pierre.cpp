@@ -11,10 +11,14 @@ Pierre::Pierre(const double niveau,const int x,const int y,QGraphicsItem *parent
     this->projectile = PIERRE;
     setData(0,"PIERRE");
 
-    QPixmap* tour = new QPixmap("data/Tour/tourPierre.png");
+    for(int i = 0; i < 3; ++i)
+    {
+        QPixmap* tour = new QPixmap("data/Tour/tourPierreGrade" + QString::number(i+1) + ".png");
+        this->etatTour.push_back(tour);
+    }
 
-    // Image
-    this->setPixmap(*tour);
+    // Image et taille
+    this->setPixmap(*etatTour.first());
 
     // Position
     this->setPos(x,y);
@@ -38,6 +42,7 @@ bool Pierre::ameliorer()
             portee = 3 + niveau/2;
             frappe = 10 * pow(niveau,1.5);
             cout += amelioration_1;
+            this->setPixmap(*etatTour.at(1));
             return true;
         }
         else if(niveau == 2)
@@ -46,6 +51,7 @@ bool Pierre::ameliorer()
             portee = 3 + niveau/2;
             frappe = 10 * pow(niveau,1.5);
             cout += amelioration_2;
+            this->setPixmap(*etatTour.at(2));
             return true;
         }
         else throw std::exception();
@@ -56,5 +62,4 @@ bool Pierre::ameliorer()
         return false;
     }
 }
-
 }
