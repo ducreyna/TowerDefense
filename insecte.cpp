@@ -164,26 +164,30 @@ void Insecte::advance(int phase)
         this->translate(16,16);
         this->rotate(-90);
         this->translate(-16,-16);
-        this->translate(tailleInsectePixel/4,-tailleInsectePixel/4);
+        if(taille > 1)
+            this->translate(tailleInsectePixel/4,-tailleInsectePixel/4);
     }
     if(path->at(tempCounter) == 2)
     {
         this->translate(16,16);
         this->rotate(90);
         this->translate(-16,-16);
-        this->translate(tailleInsectePixel/4,-tailleInsectePixel/4);
+        if(taille > 1)
+            this->translate(tailleInsectePixel/4,-tailleInsectePixel/4);
     }
     if(path->at(tempCounter) == 4)
     {
         // défault
-        this->translate(-tailleInsectePixel/4,-tailleInsectePixel/4);
+        if(taille > 1)
+            this->translate(-tailleInsectePixel/4,-tailleInsectePixel/4);
     }
     if(path->at(tempCounter) == 8)
     {
         this->translate(16,16);
         this->rotate(180);
         this->translate(-16,-16);
-        this->translate(-tailleInsectePixel/4,-tailleInsectePixel/4);
+        if(taille > 1)
+            this->translate(-tailleInsectePixel/4,-tailleInsectePixel/4);
     }
 
     if(deltaX != 0 || deltaY != 0) {

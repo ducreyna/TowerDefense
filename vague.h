@@ -24,7 +24,6 @@ public:
 
 signals:
     void miseAJour();
-
 };
 
 class VagueCompose : public Vague
@@ -39,6 +38,10 @@ public:
     QVector<Insecte *> getInsectes(bool onlyOnScene = false);
     void launchVague();
     void stopVague();
+
+public slots:
+    void broadcast();
+
 };
 
 class VagueConcrete : public Vague

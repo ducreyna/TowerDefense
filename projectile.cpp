@@ -6,6 +6,7 @@ namespace TOWERDEFENSE{
 Projectile::Projectile(Defense * tour)
 {
     this->tour = tour;
+
     this->setPos(this->tour->x()+16,this->tour->y()+16);
 
     double XScaledSize = this->tour->getCurrentTarget()->x()+this->tour->getCurrentTarget()->getTaille()*16;
@@ -42,7 +43,6 @@ void Projectile::advance(int phase)
 
                 if((sqrt(pow(fabs(this->x() - _cibleX),2) + pow(fabs(this->y() - _cibleY),2))  <= 32))
                 {
-                    std::cout << "Je rentre" << std::endl;
                     this->tour->getCurrentWave()->getInsectes().at(i)->recevoirDegats(10*pow(this->tour->getNiveau(),1.5));
                 }
             }
