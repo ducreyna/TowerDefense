@@ -22,8 +22,6 @@ Cafard::Cafard(const double taille,const int x, const int y, QGraphicsPixmapItem
     this->setData(0,"CAFARD");
 }
 
-Cafard::~Cafard(){}
-
 void Cafard::recevoirDegats(double degats){
     Insecte::recevoirDegats(degats);
     if(this->vitalite <= 0 && this->taille >= 2)

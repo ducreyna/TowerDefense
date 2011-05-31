@@ -2,7 +2,7 @@
 
 namespace TOWERDEFENSE{
 
-Eau::Eau(const double niveau,const int x, const int y,QGraphicsPixmapItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,(double)1.5),8,20,45,40,parent)
+Eau::Eau(const double niveau,const int x, const int y,QGraphicsPixmapItem *parent):Defense(niveau,2+niveau/2,(4-niveau/2),5*pow(niveau,(double)1.5),8,20,45,40,EAU,parent)
 {
     this->projectile = EAU;
     setData(0,"EAU");

@@ -23,6 +23,13 @@ class InsecteFactory
         int static const TYPE_FOURMI;
         int static const TYPE_MOUSTIQUE;
 
+        /*!
+          * Methode creant un insecte
+          * \param type type de l'insecte
+          * \param size taille de l'insecte
+          * \param *path pointeur sur la liste contenant le path
+          * \return Insecte* l'insecte cree
+          */
         static Insecte* create(int type, double size, QList<int> * path);
 };
 

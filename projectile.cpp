@@ -42,7 +42,6 @@ void Projectile::advance(int phase)
 
                 if((sqrt(pow(fabs(this->x() - _cibleX),2) + pow(fabs(this->y() - _cibleY),2))  <= 32))
                 {
-                    std::cout << "Je rentre" << std::endl;
                     this->tour->getCurrentWave()->getInsectes().at(i)->recevoirDegats(10*pow(this->tour->getNiveau(),1.5));
                 }
             }

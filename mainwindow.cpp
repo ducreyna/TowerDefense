@@ -71,7 +71,7 @@ void MainWindow::verifierToursConstructibles()
 
 void MainWindow::on_loadMap_clicked()
 {
-    f.chargerCarte("data/map2.txt");
+    f.chargerCarte("data/map.txt");
     f.chargerVague("data/waves.txt");
     f.chargerPath();
 

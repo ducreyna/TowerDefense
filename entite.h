@@ -6,6 +6,9 @@
 class Entite :public QGraphicsPixmapItem, public QObject
 {
 public:
+    /*!
+      * Constructeur par defaut
+      */
     Entite();
 };
 

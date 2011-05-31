@@ -1,17 +1,12 @@
 #ifndef FICHIER_H
 #define FICHIER_H
 
-#include <string>
 #include <fstream>
-#include <iostream>
 #include <QTextStream>
 #include <QFile>
 #include <QString>
 #include <QStringList>
 #include "vague.h"
-#include <stdexcept>
-
-using namespace std;
 
 namespace TOWERDEFENSE{
 class Fichier
@@ -20,27 +15,50 @@ class Fichier
     QVector<Vague *> vagues;
     QList<int> * path;
 
+    /*!
+      * Methode privee creant le chemin (path) recursivement
+      * \param currX emplacement courant sur l'axe x
+      * \param currY emplacement courant sur l'axe y
+      * \param prevX emplacement precedent sur l'axe x
+      * \param prevY emplacement precedent sur l'axe y
+      * \return QList<int> une liste d'entiers contenant le chemin fraichement construit
+      */
+    QList<int> buildPathRecursively(int currX, int currY, int prevX, int prevY);
+
 public:
+    /*!
+      * Constructeur par defaut
+      */
     Fichier();
+
+    /*!
+      * Destructeur de la classe
+      */
     virtual ~Fichier();
 
     /*!
-      * Accesseur renvoyant la carte du jeu
+      * Accesseur constant renvoyant la carte du jeu
       * \return int** tableau 2 dimensions
       */
     int** getCarte() const;
 
     /*!
-      * Accesseur renvoyant les vagues du jeu
+      * Accesseur constant renvoyant les vagues du jeu
       * \return QVector<Vague *> un vecteur de Vague
       */
     QVector<Vague *> getVagues() const;
 
+    /*!
+      * Accesseur constant renvoyant le chemin a suivre pour les insectes
+      * \return QList<int>* un pointeur de liste contenant le chemin
+      */
     QList<int> * getPath() const;
 
+    /*!
+      * Methode permettant de charger le chemin (path)
+      * \return true = chargement reussie   false = chargement impossible
+      */
     bool chargerPath();
-
-    QList<int> buildPathRecursively(int currX, int currY, int prevX, int prevY);
 
     /*!
       * Methode chargant la carte du jeu a partir d'un fichier et effectuant un parsing de celui-ci afin de le traduire dans un tableau a 2 dimensions

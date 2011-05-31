@@ -6,7 +6,7 @@ Defense::Defense()
 {
 }
 
-Defense::Defense(const double niveau,const double portee,const double cadence, const double frappe,const int cout,const int amelioration_1,const int amelioration_2, const double vitesse, QGraphicsItem *parent,const Type_deplacement cible,const Type_projectile projectile):cible(cible),niveau(niveau),portee(portee),cadence(cadence),frappe(frappe),cout(cout),amelioration_1(amelioration_1),amelioration_2(amelioration_2),projectile(projectile),vitesse(vitesse)
+Defense::Defense(const double niveau,const double portee,const double cadence, const double frappe,const int cout,const int amelioration_1,const int amelioration_2, const double vitesse,const Type_projectile projectile,QGraphicsItem *parent):niveau(niveau),portee(portee),cadence(cadence),frappe(frappe),cout(cout),amelioration_1(amelioration_1),amelioration_2(amelioration_2),projectile(projectile),vitesse(vitesse)
 {
     this->currentWave = 0;
 }

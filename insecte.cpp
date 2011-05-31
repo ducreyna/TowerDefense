@@ -10,22 +10,6 @@ Insecte::Insecte(const double taille, const double vitalite, const double resist
     this->counterTempsRalentissement = 200;
 }
 
-void Insecte::setDeplacement(Type_deplacement deplacement){
-    this->deplacement = deplacement;
-}
-
-void Insecte::setResistance(double resistance){
-    this->resistance = resistance;
-}
-
-void Insecte::setVitalite(double vitalite){
-    this->vitalite = vitalite;
-}
-
-void Insecte::setVitesse(double vitesse){
-    this->vitesse = vitesse;
-}
-
 void Insecte::setCounter(int counter)
 {
     this->counter = counter;

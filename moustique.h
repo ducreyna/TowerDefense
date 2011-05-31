@@ -12,7 +12,18 @@ private:
     int counterTempsSol;
 
 public:
+    /*!
+      * Constructeur par defaut
+      */
     Moustique();
+
+    /*!
+      * Construteur parametre appele par la factory
+      * \param taille la taille du moustique
+      * \param x la position du moustique suivant l'axe x
+      * \param y la position du moustique suivant l'axe y
+      * \param parent l'item parent du moustique initialise a 0
+      */
     Moustique(const double taille,const int x, const int y, QGraphicsPixmapItem *parent=0);
 
     /*!
@@ -32,6 +43,10 @@ public:
     void toVolant();
 
 protected:
+    /*!
+      * Methode permettant l'animation de l'item sur la scene
+      * \param phase la phase d'appel de l'item
+      */
     void advance(int phase);
 };
 }
