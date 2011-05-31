@@ -84,6 +84,8 @@ void MainWindow::on_loadMap_clicked()
     S->chargerGraphiques(carte);
     ui->terrain->setScene(S);
     this->verifierToursConstructibles();
+
+    counterVague = 0;
 }
 
 void MainWindow::on_newWave_clicked()
@@ -108,7 +110,7 @@ void MainWindow::on_newWave_clicked()
     mainTimer->start(20);
     ui->pause->setEnabled(true);
 
-    if(counterVague+1 == vagues.size())
+    if(counterVague == vagues.size())
     {
         // le jeu est fini : WIN \o/
         ui->newWave->setEnabled(false);
@@ -117,10 +119,6 @@ void MainWindow::on_newWave_clicked()
     {
         vagues.at(counterVague)->buildVague(departX*32,departY*32,this->path,this->S);
         QObject::connect(vagues.at(counterVague),SIGNAL(miseAJour()),this,SLOT(miseAJour()));
-        /*for(int j=0;j<defenses.size();j++)
-        {
-            defenses.at(j)->setCurrentWave(vagues.at(counterVague));
-        }*/
         vagues.at(counterVague)->launchVague();       
         counterVague++;
         this->miseAJour();
@@ -215,12 +213,18 @@ void MainWindow::on_upButton_clicked()
             S->setTourPortee(I);
             ui->level->setText("Level: "+QString::number(D->getNiveau()));
             if(ok) emit this->achatTour(D->getAmelioration_2());
+            ui->upButton->setEnabled(false);
         }
-        else throw std::exception();
+
+        if((D->getNiveau() == 1 && D->getAmelioration_1() > ui->lcdMoney->value()) || (D->getNiveau() == 2 && D->getAmelioration_2() > ui->lcdMoney->value()))
+            ui->upButton->setEnabled(false);
+        else if(D->getNiveau() != 3)
+            ui->upButton->setEnabled(true);
+        //else ///throw std::exception();
     }
     catch(std::exception e)
     {
-        QMessageBox(QMessageBox::Warning,"Amelioration impossible","Credits insuffisants ! ! !").exec();
+        QMessageBox(QMessageBox::Warning,"Erreur","Une erreur est survenue...relancez le jeu").exec();
     }
     this->verifierToursConstructibles();
 }
@@ -312,6 +316,10 @@ void MainWindow::on_pause_clicked()
         mainTimer->stop();
         ui->pause->setText("REPRENDRE");
         vagues.at(counterVague-1)->stopVague();
+        for(int j=0;j<defenses.size();j++)
+        {
+            defenses.at(j)->setIsShooting(false);
+        }
     }
     else
     {
@@ -371,8 +379,28 @@ void MainWindow::tourSelectionnee(int x, int y, QGraphicsItem *tour)
         QGraphicsItem *I = S->addEllipse((x/32)*32-(D->getPortee()-0.5)*32,(y/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::NoPen),Qt::white);
         I->setOpacity(0.5f);
         S->setTourPortee(I);
-        ui->upButton->setEnabled(true);
-        ui->sellButton->setEnabled(true);
+
+        if(D->getNiveau() == 3)
+        {
+            ui->upButton->setEnabled(false);
+        }
+        else
+        {
+            if((D->getNiveau() == 1 && D->getAmelioration_1() > ui->lcdMoney->value()) || (D->getNiveau() == 2 && D->getAmelioration_2() > ui->lcdMoney->value()))
+                ui->upButton->setEnabled(false);
+            else
+                ui->upButton->setEnabled(true);
+        }
+
+        if(counterVague > 0 && vagues.at(counterVague-1)->getInsectes().empty())
+        {
+            ui->sellButton->setEnabled(true);
+        }
+        else
+        {
+            ui->sellButton->setEnabled(false);
+        }
+
         ui->type->setText(ui->type->text()+D->data(0).toString());
         ui->level->setText(ui->level->text()+QString::number(D->getNiveau()));
     }
@@ -387,9 +415,26 @@ void MainWindow::tourSelectionnee(int x, int y, QGraphicsItem *tour)
 
 void MainWindow::miseAJour()
 {
+    ui->sellButton->setEnabled(false);
+    ui->newWave->setEnabled(false);
+    this->verifierToursConstructibles();
+
     for(int j=0;j<defenses.size();j++)
     {
         defenses.at(j)->setCurrentWave(vagues.at(counterVague-1));
+    }
+
+    if(counterVague > 0 && vagues.at(counterVague-1)->getInsectes().empty())
+    {
+        if(counterVague == vagues.size())
+        {
+            QMessageBox(QMessageBox::Information,"Fin du jeu","Vous avez gagne !").exec();
+        }
+        else
+        {
+            ui->newWave->setEnabled(true);
+            ui->pause->setEnabled(false);
+        }
     }
 }
 

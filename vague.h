@@ -49,7 +49,6 @@ signals:
       * Signal envoye quand les insectes sur la scene ont ete mis a jour
       */
     void miseAJour();
-
 };
 
 class VagueCompose : public Vague
@@ -90,6 +89,10 @@ public:
       * Methode permettant de stopper la vague d'ennemis sur la scene
       */
     void stopVague();
+
+public slots:
+    void broadcast();
+
 };
 
 class VagueConcrete : public Vague

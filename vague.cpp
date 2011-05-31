@@ -74,6 +74,7 @@ void VagueCompose::launchVague()
     for(int i=0; i<this->composition.size(); i++)
     {
         composition[i]->launchVague();
+        QObject::connect(composition.at(i),SIGNAL(miseAJour()),this,SLOT(broadcast()));
     }
 }
 
@@ -88,6 +89,11 @@ void VagueCompose::stopVague()
     {
         composition[i]->stopVague();
     }
+}
+
+void VagueCompose::broadcast()
+{
+    emit this->miseAJour();
 }
 
 void VagueConcrete::ajouterInsecte()
@@ -126,6 +132,8 @@ void VagueConcrete::supprimerInsecte(Insecte *I, bool vivant)
             break;
         }
     }
+
+    emit this->miseAJour();
 }
 
 }

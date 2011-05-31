@@ -77,7 +77,6 @@ void Insecte::advance(int phase)
         emit this->supprimerInsecte(this,true);
         return;
     }
-        //return;
 
     int dir = path->at(counter), deltaX, deltaY;
     double newX = x(), newY = y();
@@ -139,27 +138,40 @@ void Insecte::advance(int phase)
         tempCounter++;
     }
 
+    double tailleInsectePixel = taille*32, tailleCase = 32, centreCaseX = floor(newX / 32)*32+16, centreCaseY = floor(newY / 32)*32+16;
+
+    double moveX, moveY;
+
+
     if(path->at(tempCounter) == 1)
     {
         this->translate(16,16);
         this->rotate(-90);
         this->translate(-16,-16);
+        if(taille > 1)
+            this->translate(tailleInsectePixel/4,-tailleInsectePixel/4);
     }
     if(path->at(tempCounter) == 2)
     {
         this->translate(16,16);
         this->rotate(90);
         this->translate(-16,-16);
+        if(taille > 1)
+            this->translate(tailleInsectePixel/4,-tailleInsectePixel/4);
     }
     if(path->at(tempCounter) == 4)
     {
         // défault
+        if(taille > 1)
+            this->translate(-tailleInsectePixel/4,-tailleInsectePixel/4);
     }
     if(path->at(tempCounter) == 8)
     {
         this->translate(16,16);
         this->rotate(180);
         this->translate(-16,-16);
+        if(taille > 1)
+            this->translate(-tailleInsectePixel/4,-tailleInsectePixel/4);
     }
 
     if(deltaX != 0 || deltaY != 0) {

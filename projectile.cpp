@@ -6,6 +6,7 @@ namespace TOWERDEFENSE{
 Projectile::Projectile(Defense * tour)
 {
     this->tour = tour;
+
     this->setPos(this->tour->x()+16,this->tour->y()+16);
 
     double XScaledSize = this->tour->getCurrentTarget()->x()+this->tour->getCurrentTarget()->getTaille()*16;
