@@ -18,7 +18,8 @@ SOURCES += \
     vague.cpp \
     insectefactory.cpp \
     entite.cpp \
-    joueur.cpp
+    joueur.cpp \
+    musicien.cpp
 
 HEADERS += \
     fichier.h \
@@ -43,7 +44,8 @@ HEADERS += \
     insectefactory.h \
     entite.h \
     entite.h \
-    joueur.h
+    joueur.h \
+    musicien.h
 
 FORMS += \
     mainwindow.ui

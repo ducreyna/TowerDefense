@@ -65,7 +65,7 @@
     <property name="geometry">
      <rect>
       <x>620</x>
-      <y>410</y>
+      <y>430</y>
       <width>231</width>
       <height>141</height>
      </rect>
@@ -138,7 +138,7 @@
       <x>620</x>
       <y>250</y>
       <width>231</width>
-      <height>151</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
@@ -240,13 +240,29 @@ p, li { white-space: pre-wrap; }
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>120</y>
+       <y>140</y>
        <width>211</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
       <string>Vous avez choisi: </string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="musicianTowers">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>110</y>
+       <width>114</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>MUSICIEN</string>
      </property>
     </widget>
    </widget>

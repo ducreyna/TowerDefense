@@ -17,6 +17,7 @@
 #include "pierre.h"
 #include "peinture.h"
 #include "petanque.h"
+#include "musicien.h"
 #include "defense.h"
 #include "joueur.h"
 
@@ -44,6 +45,7 @@ private:
     int counterVague;
     int** carte;
     QList<Defense*> defenses;
+    QList<Musicien*> musiciens;
     QVector<Vague *> vagues;
     QList<int> * path;
 
@@ -79,6 +81,11 @@ private slots:
       * Slot correspondant au clic sur le bouton "PETANQUE"
       */
     void on_petanqueTowers_clicked();
+
+    /*!
+      * Slot correspondant au clic sur le bouton "PETANQUE"
+      */
+    void on_musicianTowers_clicked();
 
     /*!
       * Slot correspondant au clic sur le bouton "Ameliorer"

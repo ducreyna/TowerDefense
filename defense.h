@@ -96,6 +96,8 @@ public:
       */
     inline double getFrappe() const { return this->frappe; }
 
+    inline void setFrappe(double frappe) { this->frappe = frappe; }
+
     /*!
       * Accesseur constant inline renvoyant la vitesse du projectile
       * \return double la vitesse du projectile

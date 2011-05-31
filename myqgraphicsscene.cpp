@@ -151,12 +151,6 @@ void MyQGraphicsScene::chargerGraphiques(int **carte)
                 }
             }
         }
-        //ui->terrain->setScene(S);
-        //ui->terrain->setRenderHint(QPainter::Antialiasing);
-        //ui->terrain->setCacheMode(QGraphicsView::CacheBackground);
-        //ui->terrain->setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
-        //verifierToursConstructibles();
-
 }
 
 void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
@@ -205,8 +199,12 @@ void MyQGraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
         {
             emit this->ajouterTour(x,y,"PETANQUE");
         }
+        else if(tourDemandee == "MUSICIEN" && I->data(0).toString() == "HERBE")
+        {
+            emit this->ajouterTour(x,y,"MUSICIEN");
+        }
      }
-    if(I->data(0).toString() == "EAU" || I->data(0).toString() == "PIERRE" || I->data(0).toString() == "PEINTURE" || I->data(0).toString() == "PETANQUE")
+    if(I->data(0).toString() == "EAU" || I->data(0).toString() == "PIERRE" || I->data(0).toString() == "PEINTURE" || I->data(0).toString() == "PETANQUE" || I->data(0).toString() == "MUSICIEN")
     {
         emit this->tourSelectionnee(x,y,I);
     }
@@ -241,6 +239,11 @@ void MyQGraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
         else if(tourDemandee == "PETANQUE")
         {
             emit tourMouseTracking(x,y,"PETANQUE");
+            precedent = itemAt((x/32)*32+32/2,(y/32)*32+32/2);
+        }
+        else if(tourDemandee == "MUSICIEN")
+        {
+            emit tourMouseTracking(x,y,"MUSICIEN");
             precedent = itemAt((x/32)*32+32/2,(y/32)*32+32/2);
         }
     }

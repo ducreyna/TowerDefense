@@ -61,36 +61,4 @@ bool Eau::ameliorer()
     }
 }
 
-//void Eau::advance(int phase)
-//{
-//    // si la vague courante n'est pas initialisée...
-//    if(!phase || this->currentWave == 0)
-//            return;
-
-//        // Recherche des ennemis de la map
-//        for(int i = 0 ; i < this->currentWave->getInsectes().size() ; ++i) {
-
-//                double _cibleX = currentWave->getInsectes().at(i)->x();
-//                double _cibleY = currentWave->getInsectes().at(i)->y();
-
-//                if(sqrt(pow(fabs(this->x() - _cibleX),2) + pow(fabs(this->y() - _cibleY),2))  <= this->portee*32)
-//                {
-//                    // Si le défenseur ne tirait pas encore
-//                    if(!isShooting)
-//                    {
-//                        this->setIsShooting(true); // Modification via la méthode pour les effets visuels
-//                    }
-//                    // Actualise la position de la cible
-//                    this->setCurrentTarget(this->currentWave->getInsectes().at(i));
-
-//                    return; // On vise la première cible rencontrée
-
-//                } // end distanceTest
-
-//        } //eof
-
-//        // Si aucun monstre n'a été rencontré
-//        this->setIsShooting(false);  // Modification via la méthode pour les effets visuels
-//}
-
 }

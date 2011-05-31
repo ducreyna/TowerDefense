@@ -138,9 +138,7 @@ void Insecte::advance(int phase)
         tempCounter++;
     }
 
-    double tailleInsectePixel = taille*32, tailleCase = 32, centreCaseX = floor(newX / 32)*32+16, centreCaseY = floor(newY / 32)*32+16;
-
-    double moveX, moveY;
+    double tailleInsectePixel = taille*32;
 
 
     if(path->at(tempCounter) == 1)

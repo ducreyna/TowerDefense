@@ -43,6 +43,7 @@ void MainWindow::verifierToursConstructibles()
         ui->stoneTowers->setEnabled(true);
         ui->paintTowers->setEnabled(true);
         ui->petanqueTowers->setEnabled(true);
+        ui->musicianTowers->setEnabled(true);
     }
     else if(ui->lcdMoney->value() >= 12)
     {
@@ -50,6 +51,7 @@ void MainWindow::verifierToursConstructibles()
         ui->stoneTowers->setEnabled(true);
         ui->paintTowers->setEnabled(true);
         ui->petanqueTowers->setEnabled(false);
+        ui->musicianTowers->setEnabled(false);
     }
     else if(ui->lcdMoney->value() >= 8)
     {
@@ -57,6 +59,7 @@ void MainWindow::verifierToursConstructibles()
         ui->stoneTowers->setEnabled(false);
         ui->paintTowers->setEnabled(false);
         ui->petanqueTowers->setEnabled(false);
+        ui->musicianTowers->setEnabled(false);
     }
     else
     {
@@ -64,6 +67,7 @@ void MainWindow::verifierToursConstructibles()
         ui->stoneTowers->setEnabled(false);
         ui->paintTowers->setEnabled(false);
         ui->petanqueTowers->setEnabled(false);
+        ui->musicianTowers->setEnabled(false);
     }
 }
 
@@ -189,43 +193,52 @@ void MainWindow::on_petanqueTowers_clicked()
     ui->level->setText("Level: ");
 }
 
+void MainWindow::on_musicianTowers_clicked()
+{
+    ui->choice->setText("Vous avez choisi: ");
+    S->setTourDemandee("MUSICIEN");
+    ui->choice->setText(ui->choice->text()+"MUSICIEN");
+    if(S->getTourPortee() != 0)
+    {
+        S->removeItem(S->getTourPortee());
+        S->setTourPortee(0);
+        ui->upButton->setEnabled(false);
+        ui->sellButton->setEnabled(false);
+    }
+    ui->type->setText("Type: ");
+    ui->level->setText("Level: ");
+}
+
 void MainWindow::on_upButton_clicked()
 {
-    try
+    Defense *D = dynamic_cast<Defense*>(S->getTourAmelioration());
+    S->removeItem(S->getTourPortee());
+    if(D->getNiveau() == 1 && D->getAmelioration_1() <= ui->lcdMoney->value())
     {
-        Defense *D = dynamic_cast<Defense*>(S->getTourAmelioration());
-        S->removeItem(S->getTourPortee());
-        if(D->getNiveau() == 1 && D->getAmelioration_1() <= ui->lcdMoney->value())
-        {
-            D->ameliorer();
-            QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-0.5)*32,(D->y()/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::NoPen),Qt::white);
-            I->setOpacity(0.5f);
-            S->setTourPortee(I);
-            emit this->achatTour(D->getAmelioration_1());
-            ui->level->setText("Level: "+QString::number(D->getNiveau()));
+        D->ameliorer();
+        QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-0.5)*32,(D->y()/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::NoPen),Qt::white);
+        I->setOpacity(0.5f);
+        S->setTourPortee(I);
+        emit this->achatTour(D->getAmelioration_1());
+        ui->level->setText("Level: "+QString::number(D->getNiveau()));
 
-        }
-        else if(D->getAmelioration_2() <= ui->lcdMoney->value())
-        {
-            bool ok = D->ameliorer();
-            QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-0.5)*32,(D->y()/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::NoPen),Qt::white);
-            I->setOpacity(0.5f);
-            S->setTourPortee(I);
-            ui->level->setText("Level: "+QString::number(D->getNiveau()));
-            if(ok) emit this->achatTour(D->getAmelioration_2());
-            ui->upButton->setEnabled(false);
-        }
-
-        if((D->getNiveau() == 1 && D->getAmelioration_1() > ui->lcdMoney->value()) || (D->getNiveau() == 2 && D->getAmelioration_2() > ui->lcdMoney->value()))
-            ui->upButton->setEnabled(false);
-        else if(D->getNiveau() != 3)
-            ui->upButton->setEnabled(true);
-        //else ///throw std::exception();
     }
-    catch(std::exception e)
+    else if(D->getAmelioration_2() <= ui->lcdMoney->value())
     {
-        QMessageBox(QMessageBox::Warning,"Erreur","Une erreur est survenue...relancez le jeu").exec();
+        bool ok = D->ameliorer();
+        QGraphicsItem *I = S->addEllipse((D->x()/32)*32-(D->getPortee()-0.5)*32,(D->y()/32)*32-(D->getPortee()-0.5)*32,64*D->getPortee(),64*D->getPortee(),QPen(Qt::NoPen),Qt::white);
+        I->setOpacity(0.5f);
+        S->setTourPortee(I);
+        ui->level->setText("Level: "+QString::number(D->getNiveau()));
+        if(ok) emit this->achatTour(D->getAmelioration_2());
+        ui->upButton->setEnabled(false);
     }
+
+    if((D->getNiveau() == 1 && D->getAmelioration_1() > ui->lcdMoney->value()) || (D->getNiveau() == 2 && D->getAmelioration_2() > ui->lcdMoney->value()))
+        ui->upButton->setEnabled(false);
+    else if(D->getNiveau() != 3)
+        ui->upButton->setEnabled(true);
+
     this->verifierToursConstructibles();
 }
 
@@ -290,7 +303,7 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
         emit this->achatTour(12);
     }
 
-    else
+    else if(type == "PETANQUE")
     {
         Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
         defenses.push_back(p);
@@ -302,6 +315,19 @@ void MainWindow::ajouterTour(int x, int y, std::string type)
         }
 
         emit this->achatTour(15);
+    }
+    else
+    {
+        Musicien *m = new Musicien(1,(x/32)*32,(y/32)*32,defenses,0);
+        musiciens.push_back(m);
+        S->addItem(m);
+
+        emit this->achatTour(15);
+    }
+    for(int i = 0; i < musiciens.size(); ++i)
+    {
+        musiciens.at(i)->setDefenses(defenses);
+        musiciens.at(i)->bonus();
     }
 
     S->setTourDemandee("");
@@ -353,12 +379,19 @@ void MainWindow::tourMouseTracking(int x, int y,std::string type)
         I->setOpacity(0.5f);
         S->addItem(p);
     }
-    else
+    else if(type == "PETANQUE")
     {
         Petanque *p = new Petanque(1,(x/32)*32,(y/32)*32,0);
         I = S->addEllipse((x/32)*32-(p->getPortee()-0.5)*32,(y/32)*32-(p->getPortee()-0.5)*32,64*p->getPortee(),64*p->getPortee(),QPen(Qt::NoPen),Qt::white);
         I->setOpacity(0.5f);
         S->addItem(p);
+    }
+    else
+    {
+        Musicien *m = new Musicien(1,(x/32)*32,(y/32)*32,defenses,0);
+        I = S->addEllipse((x/32)*32-(m->getPortee()-0.5)*32,(y/32)*32-(m->getPortee()-0.5)*32,64*m->getPortee(),64*m->getPortee(),QPen(Qt::NoPen),Qt::white);
+        I->setOpacity(0.5f);
+        S->addItem(m);
     }
 
     I->setData(0,"HERBE");
@@ -392,7 +425,7 @@ void MainWindow::tourSelectionnee(int x, int y, QGraphicsItem *tour)
                 ui->upButton->setEnabled(true);
         }
 
-        if(counterVague > 0 && vagues.at(counterVague-1)->getInsectes().empty())
+        if(counterVague > 0 && vagues.at(counterVague-1)->getInsectes().empty() || counterVague == 0)
         {
             ui->sellButton->setEnabled(true);
         }
@@ -429,6 +462,7 @@ void MainWindow::miseAJour()
         if(counterVague == vagues.size())
         {
             QMessageBox(QMessageBox::Information,"Fin du jeu","Vous avez gagne !").exec();
+            this->close();
         }
         else
         {

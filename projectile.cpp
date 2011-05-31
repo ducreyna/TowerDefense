@@ -1,5 +1,5 @@
 #include "projectile.h"
-#include "defense.h" // à cause du problème d'entrecroisement des includes
+#include "defense.h"
 
 namespace TOWERDEFENSE{
 
